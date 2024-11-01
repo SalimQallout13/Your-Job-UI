@@ -2,6 +2,7 @@ import { LoginForm } from "@/components/pages/login-page/login-form.tsx"
 import { siteConfig } from "@/lib/configs/site.ts"
 import { useEffect } from "react"
 import frame from "@/assets/img/Frame_39.png"
+import Paragraph from "@/components/commons/ui/paragraph.tsx";
 
 const LoginPage = () => {
 
@@ -24,14 +25,6 @@ const LoginPage = () => {
 		letterSpacing: "-0.06em"
 	}
 
-	const styleDesc = {
-		fontFamily: "Inter",
-		fontSize: "16px",
-		fontWeight: 500,
-		lineHeight: "19.36px",
-		letterSpacing: "-6%"
-	}
-
 	return (
 		<div>
 			{/* Main content container */}
@@ -47,7 +40,7 @@ const LoginPage = () => {
 						<div className="mb-10" style={styleMsg}>
 							{siteConfig.description}
 						</div>
-						<p style={styleDesc}>Entrez vos informations de connexion pour accéder à la plateforme.</p>
+						<Paragraph>Entrez vos informations de connexion pour accéder à la plateforme.</Paragraph>
 					</div>
 					<div className="mx-auto w-full max-w-[500px]">
 						<LoginForm />

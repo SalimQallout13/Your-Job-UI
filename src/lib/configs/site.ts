@@ -1,4 +1,3 @@
-export type SiteConfig = typeof siteConfig
 import logoWithoutText from "@/assets/img/logo-hexacoffre-without-text.webp"
 import logo from "@/assets/img/logoYourJob.png"
 
