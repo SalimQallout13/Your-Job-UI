@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": false, // Désactiver cette option pour vérifier les types dans les fichiers de bibliothèque
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
+    /* Strict Type-Checking Options */
+    "strictNullChecks": true,         // S'assurer que null et undefined sont pris en compte
+    "strictPropertyInitialization": true, // Forcer l'initialisation des propriétés des classes
+    "noImplicitAny": true,            // Éviter les types "any" implicites
+    "noImplicitThis": true,           // Éviter l'utilisation de "this" non typé
+    "alwaysStrict": true,             // Activer le mode strict globalement
+    "noImplicitReturns": true,        // Forcer les fonctions à toujours renvoyer une valeur
+    "forceConsistentCasingInFileNames": true, // Respecter la casse des noms de fichiers dans les imports
+
+    /* Additional checks */
+    "noUncheckedIndexedAccess": true, // Forcer les vérifications des accès aux index sur les tableaux et objets
+    "noImplicitOverride": true,       // S'assurer que les méthodes surchargées sont marquées avec "override"
+    "allowUnusedLabels": false,       // Désactiver les labels non utilisés
+    "allowUnreachableCode": false     // Désactiver le code non atteignable
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
