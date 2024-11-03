@@ -67,7 +67,7 @@ const CvAndAvis = () => {
 							</p>
 
 							{!userData ? (
-								<div className="flex flex-wrap gap-4">
+								<div className="flex flex-wrap justify-center gap-4 md:!justify-start">
 									<Button variant="outline" className="rounded-full px-8 py-4 text-base">
 										Connexion
 									</Button>
@@ -76,7 +76,7 @@ const CvAndAvis = () => {
 									</Button>
 								</div>
 							) : (
-								<div className="flex flex-wrap gap-4">
+								<div className="flex flex-wrap justify-center gap-4 md:!justify-normal">
 									<Button variant="gradient2" className="rounded-full px-8 py-4 text-base">
 										Dépose ton CV
 									</Button>
@@ -86,7 +86,7 @@ const CvAndAvis = () => {
 					</div>
 
 					<div className="w-full lg:w-1/2">
-						<img
+					<img
 							src={CvAndAvisImage}
 							alt="Interview scene"
 							className="h-auto w-full rounded-3xl object-cover"
