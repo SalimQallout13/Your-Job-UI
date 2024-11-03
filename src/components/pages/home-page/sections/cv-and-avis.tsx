@@ -168,7 +168,7 @@ const CvAndAvis = () => {
 										key={index}
 										onClick={() => scrollTo(index)}
 										className={`size-2 rounded-full transition-all duration-300 ease-in-out ${
-											index === current ? "bg-purple scale-110" : "bg-gray-300 hover:bg-gray-400"
+											index === current ? "scale-110 bg-purple" : "bg-gray-300 hover:bg-gray-400"
 										}`}
 										aria-label={`Aller à l'avis ${index + 1}`}
 									/>

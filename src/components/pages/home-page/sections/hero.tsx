@@ -17,7 +17,7 @@ const Hero = () => {
 						<input
 							type="text"
 							placeholder="Rechercher"
-							className="text-black-primary flex-1 bg-transparent outline-none"
+							className="flex-1 bg-transparent text-black-primary outline-none"
 						/>
 						<Button variant="gradient2" size="lg" className="rounded-full px-6 text-white">
 							Trouve ton job
@@ -71,7 +71,7 @@ const Hero = () => {
 						<span className="text-sm text-white">Emplois sélectionnés par catégories</span>
 					</div>
 
-					<h2 className="text-black-primary mb-12 text-3xl font-bold md:text-5xl">
+					<h2 className="mb-12 text-3xl font-bold text-black-primary md:text-5xl">
 						Trouve ton job par <span className="text-purple-highlight">Catégories</span>
 					</h2>
 
