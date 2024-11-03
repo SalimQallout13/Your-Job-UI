@@ -6,8 +6,11 @@ import CocaColaLogo from "@/assets/img/cocacola.png";
 import LevuppLogo from "@/assets/img/levup.png";
 import PernodRicardLogo from "@/assets/img/pernod-ricard.png";
 import { Icons } from "@/components/commons/others/icons.jsx";
+import { useLocalStorage } from 'usehooks-ts';
 
 const Emplois = () => {
+	const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
+
 	return (
 		<div className="bg-emplois-section">
 			<div className="mx-auto max-w-5xl px-4">
@@ -37,14 +40,22 @@ const Emplois = () => {
 								Cela vous donne la possibilité de trouver le métier de vos rêves.
 							</p>
 
-							<div className="flex flex-wrap gap-4">
-								<Button variant="outline" className="rounded-full px-8 py-4">
-									Connexion
-								</Button>
-								<Button variant="gradient2" className="rounded-full px-8 py-4">
-									Créer mon compte
-								</Button>
-							</div>
+							{!userData ? (
+								<div className="flex flex-wrap gap-4">
+									<Button variant="outline" className="rounded-full px-8 py-4">
+										Connexion
+									</Button>
+									<Button variant="gradient2" className="rounded-full px-8 py-4">
+										Créer mon compte
+									</Button>
+								</div>
+							) : (
+								<div className="flex flex-wrap gap-4">
+									<Button variant="gradient2" className="rounded-full px-8 py-4">
+										Trouver des emplois
+									</Button>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>
@@ -103,6 +114,7 @@ const Emplois = () => {
 };
 
 export default Emplois;
+
 
 const jobs = [
 	{

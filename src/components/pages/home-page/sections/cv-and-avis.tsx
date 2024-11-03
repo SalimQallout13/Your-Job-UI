@@ -6,14 +6,16 @@ import {
 	CarouselNext,
 	CarouselPrevious
 } from "@/components/commons/ui/carousel.jsx"
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/commons/ui/button.jsx"
 import CvAndAvisImage from "@/assets/img/cv-and-avis-section.png"
 import { Icons } from "@/components/commons/others/icons.jsx"
+import { useLocalStorage } from 'usehooks-ts';
 
 const CvAndAvis = () => {
-	const [api, setApi] = useState<CarouselApi>()
+	const [api, setApi] = useState<CarouselApi | null>(null)
 	const [current, setCurrent] = useState(0)
+	const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
 
 	useEffect(() => {
 		if (!api) return
@@ -30,10 +32,8 @@ const CvAndAvis = () => {
 		}
 	}, [api])
 
-	const scrollTo = (index: SetStateAction<number>) => {
-		if (typeof index === "number") {
-			api?.scrollTo(index)
-		}
+	const scrollTo = (index: number) => {
+		api?.scrollTo(index)
 		setCurrent(index);
 	};
 
@@ -66,14 +66,22 @@ const CvAndAvis = () => {
 								rêves.
 							</p>
 
-							<div className="flex flex-wrap gap-4">
-								<Button variant="outline" className="rounded-full px-8 py-4 text-base">
-									Connexion
-								</Button>
-								<Button variant="gradient2" className="rounded-full px-8 py-4 text-base">
-									Dépose ton CV
-								</Button>
-							</div>
+							{!userData ? (
+								<div className="flex flex-wrap gap-4">
+									<Button variant="outline" className="rounded-full px-8 py-4 text-base">
+										Connexion
+									</Button>
+									<Button variant="gradient2" className="rounded-full px-8 py-4 text-base">
+										Dépose ton CV
+									</Button>
+								</div>
+							) : (
+								<div className="flex flex-wrap gap-4">
+									<Button variant="gradient2" className="rounded-full px-8 py-4 text-base">
+										Dépose ton CV
+									</Button>
+								</div>
+							)}
 						</div>
 					</div>
 
@@ -101,6 +109,7 @@ const CvAndAvis = () => {
 						</h2>
 					</div>
 
+
 					{/* Reviews Carousel */}
 					<div className="relative">
 						<Carousel setApi={setApi} className="w-full" opts={{ align: "start", loop: true }}>
@@ -112,7 +121,7 @@ const CvAndAvis = () => {
 									>
 										<div
 											className={`rounded-3xl p-8 transition-colors duration-300 ${
-												index === current ? "bg-purple text-white" : "bg-gray-50 font-medium text-gray-900"
+												index === current ? "bg-purple text-white" : "bg-gray-100 font-medium text-gray-900"
 											}`}
 										>
 											<div className="mb-6 flex items-center justify-center">
@@ -145,7 +154,7 @@ const CvAndAvis = () => {
 							</CarouselContent>
 							<CarouselPrevious
 								onClick={() => scrollTo(current === 0 ? reviews.length - 1 : current - 1)}
-								className="-right-6 size-12 bg-black text-white transition-colors hover:bg-gray-800 hover:text-white"
+								className="-left-6 size-12 bg-black text-white transition-colors hover:bg-gray-800 hover:text-white"
 							/>
 							<CarouselNext
 								onClick={() => scrollTo(current === reviews.length - 1 ? 0 : current + 1)}

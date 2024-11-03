@@ -1,8 +1,11 @@
 import { Button } from "@/components/commons/ui/button.jsx";
 import { Link } from "react-router-dom";
 import { Icons } from "@/components/commons/others/icons.jsx";
+import { useLocalStorage } from 'usehooks-ts';
 
 const Footer = () => {
+  const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
+
   return (
     <footer className="border-t bg-white">
       <div className="container mx-auto flex flex-col items-center justify-between px-4 py-8 lg:flex-row">
@@ -24,14 +27,16 @@ const Footer = () => {
           <Link to="/recruiter" className="text-gray-600 transition hover:text-gray-900">
             Recruteur
           </Link>
-          <div className="flex items-center space-x-4">
-            <Link to="/login" className="font-semibold text-gray-900 transition hover:text-gray-900">
-              Connexion
-            </Link>
-            <Button variant="gradient" className="rounded-full px-6">
-              Créer mon compte
-            </Button>
-          </div>
+          {!userData && (
+            <div className="flex items-center space-x-4">
+              <Link to="/login" className="font-semibold text-gray-900 transition hover:text-gray-900">
+                Connexion
+              </Link>
+              <Button variant="gradient" className="rounded-full px-6">
+                Créer mon compte
+              </Button>
+            </div>
+          )}
         </nav>
 
         {/* Auth and Social */}
