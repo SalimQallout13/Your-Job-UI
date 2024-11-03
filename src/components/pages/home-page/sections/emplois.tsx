@@ -24,7 +24,7 @@ const Emplois = () => {
 								className="w-full rounded-3xl object-cover"
 							/>
 						</div>
-						<div className="mt-5 w-full space-y-8 lg:w-1/2">
+						<div className="mt-5 w-full space-y-8 text-center md:text-left lg:w-1/2">
 							<div className="inline-flex items-center space-x-2 rounded-full bg-black px-4 py-2 text-white">
 								<Icons.dream className="size-4" />
 								<span className="text-sm">Croire en ses rêves</span>
@@ -50,7 +50,7 @@ const Emplois = () => {
 									</Button>
 								</div>
 							) : (
-								<div className="flex flex-wrap gap-4">
+								<div className="flex flex-wrap gap-4 justify-center md:justify-start">
 									<Button variant="gradient2" className="rounded-full px-8 py-4">
 										Trouver des emplois
 									</Button>

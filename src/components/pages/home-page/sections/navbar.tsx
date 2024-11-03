@@ -105,7 +105,7 @@ const Navbar = () => {
                 <span className="font-semibold text-white">
                   Bonjour, {userData.name}
                 </span>
-								<Button variant="outline" size="sm" onClick={logout}>
+								<Button variant="gradient2" size="sm" onClick={logout}>
 									Déconnexion
 								</Button>
 							</div>

@@ -42,7 +42,7 @@ const CvAndAvis = () => {
 			<div className="mx-auto max-w-5xl px-4 py-20">
 				<div className="flex flex-col items-start justify-between gap-14 lg:flex-row">
 					<div className="w-full lg:w-1/2">
-						<div className="space-y-6">
+						<div className="space-y-6  text-center md:text-left">
 							<div className="inline-flex items-center space-x-2 rounded-full bg-black px-4 py-2 text-white">
 								<Icons.dream className="size-4" />
 								<span className="text-sm">Croire en ses rêves</span>
