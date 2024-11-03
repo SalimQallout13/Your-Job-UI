@@ -14,7 +14,6 @@ const routes = [
     {path: ROUTES.LOGIN, element: <LoginPage/>},
     {path: "/*", element: <Dashboard/>},
     {path: "*", element: <NotFoundPage/>},
-    {path: "/connexion", element: <LoginPage/>},
     {path: "/", element: <HomePage/>},
 ];
 
@@ -26,7 +25,7 @@ function App() {
 
     return (
         <React.Fragment>
-            <div className="relative flex min-h-screen">
+            <div>
                 <div className={"w-full"}>{children}</div>
             </div>
             {import.meta.env.DEV && <TailwindIndicator/>}

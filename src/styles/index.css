@@ -8,7 +8,6 @@
   }
 
   body {
-    overflow: hidden;
     @apply bg-background text-foreground;
   }
 
@@ -140,8 +139,20 @@
   background-color: rgba(29, 33, 48, 1);
 }
 
+.bg-hero-section {
+  background: linear-gradient(180deg, #17181C 0%, #1D2130 100%, #FFFFFF 100%);
+}
+
 .bg-light-primary {
 background-color: rgba(255, 255, 255, 1);
+}
+
+.bg-emplois-section {
+  background: linear-gradient(180deg, #E8F1FD 0%, #F6F1FF 50%, #FFFFFF 100%);
+}
+
+.bg-purple {
+  background-color: rgba(152, 141, 254, 1);
 }
 
 /* Text Colors */
@@ -185,6 +196,14 @@ background-color: rgba(255, 255, 255, 1);
 a:hover {
   color: white!important; /* Empêche le changement de couleur au survol */
   text-decoration: none; /* Évite de remettre le soulignement au hover */
+}
+
+.h1 {
+  font-size: 70px;
+}
+
+.h2 {
+  font-size: 66px;
 }
 
 
