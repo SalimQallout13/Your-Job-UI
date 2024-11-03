@@ -22,10 +22,7 @@ const EmailAlerts = () => {
         <p className="mb-12 text-gray-400">Ne manquez aucune offre d'emploi.</p>
 
         {/* Formulaire d'inscription */}
-        <div className="mx-auto flex max-w-2xl flex-col items-center rounded-full bg-white p-1 sm:flex-row">
-          <div className="ml-4 size-8 rounded-full bg-gray-100">
-            {/* Placeholder pour l'icône de profil */}
-          </div>
+        <div className="mx-auto flex max-w-xl items-center rounded-full bg-white p-1">
           <input
             type="email"
             placeholder="Votre email"
@@ -33,7 +30,7 @@ const EmailAlerts = () => {
           />
           <Button
             variant="gradient2"
-            className="mt-4 rounded-full px-8 py-4 text-white transition-all hover:opacity-90 sm:mt-0"
+            className="rounded-full px-8 py-4 text-white transition-all hover:opacity-90 sm:mt-0"
           >
             Rester au courant
           </Button>
