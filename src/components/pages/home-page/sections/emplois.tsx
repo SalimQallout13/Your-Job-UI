@@ -1,11 +1,11 @@
-import { Star } from "lucide-react";
 import { Button } from "@/components/commons/ui/button.tsx"
 import { Card, CardContent } from "@/components/commons/ui/card.tsx"
 import EmploiSection from "@/assets/img/emploi-section.png"
-import TriIcon from "@/assets/img/tri-icon.png"
+import TriIcon from "@/assets/icons/tri-icon.png"
 import CocaCola from "@/assets/img/cocacola.png"
 import Levupp from "@/assets/img/levup.png"
 import PernodRicard from "@/assets/img/pernod-ricard.png"
+import { Icons } from "@/components/commons/others/icons";
 
 const Emplois = () => {
 	const jobs = [
@@ -65,7 +65,7 @@ const Emplois = () => {
 						</div>
 						<div className="mt-5 space-y-8 lg:w-1/2">
 							<div className="inline-flex items-center space-x-2 rounded-full bg-black px-4 py-2 text-white">
-								<Star className="size-4" />
+								<Icons.dream className="size-4" />
 								<span className="text-sm">Croire en ses rêves</span>
 							</div>
 

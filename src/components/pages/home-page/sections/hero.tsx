@@ -1,19 +1,20 @@
-import { MapPin, Target, PenTool, BarChart2, Users, BadgePercent, Headphones, Wallet } from 'lucide-react';
 import { Button } from "@/components/commons/ui/button.tsx";
 import heroImage from "@/assets/img/hero-image.png";
-import SearchIcon from "@/assets/img/search-icon.png";
-import TriIcon from "@/assets/img/tri-icon.png";
+import SearchIcon from "@/assets/icons/search-icon.png";
+import TriIcon from "@/assets/icons/tri-icon.png";
+import { Icons } from "@/components/commons/others/icons.tsx"
+import { MapPin } from "lucide-react"
 
 const Hero = () => {
 	const categories = [
-		{ icon: <Target />, title: "Marketing & Communication", jobs: "1058 Jobs Disponibles", bgColor: "bg-purple", textColor: "text-white" },
-		{ icon: <PenTool />, title: "Développement & Ingénierie", jobs: "1042 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
-		{ icon: <BarChart2 />, title: "Design & Création", jobs: "2347 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
-		{ icon: <Users />, title: "Gestion de projet", jobs: "231 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
-		{ icon: <BadgePercent />, title: "Vente et Business Développement", jobs: "7245 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
-		{ icon: <Headphones />, title: "Support & Service clients", jobs: "209 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
-		{ icon: <Wallet />, title: "Finance & Comptabilité", jobs: "364 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
-		{ icon: <Users />, title: "Ressources humaines", jobs: "1069 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
+		{ icon: <Icons.market className={"size-7"} />, title: "Marketing & Communication", jobs: "1058 Jobs Disponibles", bgColor: "bg-purple", textColor: "text-white" },
+		{ icon: <Icons.develop className={"size-7"} />, title: "Développement & Ingénierie", jobs: "1042 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
+		{ icon: <Icons.design className={"size-7"} />, title: "Design & Création", jobs: "2347 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
+		{ icon: <Icons.gestion className={"size-7"} />, title: "Gestion de projet", jobs: "231 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
+		{ icon: <Icons.vente className={"size-7"} />, title: "Vente / Business Développement", jobs: "7245 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
+		{ icon: <Icons.serviceClient className={"size-7"} />, title: "Support & Service clients", jobs: "209 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
+		{ icon: <Icons.finance className={"size-7"} />, title: "Finance & Comptabilité", jobs: "364 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
+		{ icon: <Icons.rh className={"size-7"} />, title: "Ressources humaines", jobs: "1069 Jobs Disponibles", bgColor: "bg-gray-100", textColor: "text-gray-900" },
 	];
 
 	return (
@@ -24,7 +25,7 @@ const Hero = () => {
 
 					{/* Barre de recherche */}
 					<div className="flex w-full max-w-lg items-center rounded-full bg-white p-1 shadow-md">
-						<img src={SearchIcon} alt="Search Icon" className="ml-4 mr-2 size-5" />
+						<img src={SearchIcon} alt="Search Icon" className="ml-4 mr-2 size-7" />
 						<input type="text" placeholder="Rechercher" className="text-black-primary flex-1 bg-transparent outline-none" />
 						<Button variant="default" size="lg" className="rounded-full bg-gradient-to-r from-blue-500 to-violet-500 px-6 text-white">
 							Trouve ton job
@@ -64,7 +65,7 @@ const Hero = () => {
 			{/* Section catégories */}
 			<div className="container mx-auto mt-24 text-center">
 				<div className="w-full pt-3">
-					<div className="bg-black-solid m-auto mb-10 flex w-fit items-center space-x-2 rounded-full px-4 py-1">
+					<div className="bg-black-solid m-auto mb-6 flex w-fit items-center space-x-2 rounded-full px-4 py-1">
 						<img src={TriIcon} alt="Triangle Icon" className="size-6" />
 						<span className="text-sm text-white">Emplois sélectionnés par catégories</span>
 					</div>
