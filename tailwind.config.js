@@ -29,7 +29,6 @@ export default {
 				ring: "hsl(var(--ring))",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
-				primaryHexacoffre: "hsl(var(--primaryHexacoffre))",
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
 					foreground: "hsl(var(--primary-foreground))",
@@ -65,7 +64,6 @@ export default {
 				accent: {
 					DEFAULT: "hsl(var(--accent))",
 					foreground: "hsl(var(--accent-foreground))",
-					primaryHexacoffre: "hsl(var(--accent-primaryHexacoffre))",
 				},
 				popover: {
 					DEFAULT: "hsl(var(--popover))",

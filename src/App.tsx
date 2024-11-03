@@ -8,12 +8,14 @@ import {Toaster} from "@/components/commons/ui/toaster.tsx"
 import {Dashboard} from "@/components/pages/dashboard/dashboard.tsx"
 import 'typeface-inter';
 import React from "react";
+import HomePage from "@/components/pages/home-page/home-page.tsx"
 
 const routes = [
     {path: ROUTES.LOGIN, element: <LoginPage/>},
     {path: "/*", element: <Dashboard/>},
     {path: "*", element: <NotFoundPage/>},
-    {path: "/", element: <LoginPage/>},
+    {path: "/connexion", element: <LoginPage/>},
+    {path: "/", element: <HomePage/>},
 ];
 
 function App() {

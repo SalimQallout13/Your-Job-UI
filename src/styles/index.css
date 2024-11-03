@@ -15,7 +15,6 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    --primaryHexacoffre: 208, 56%, 39%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -34,7 +33,6 @@
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    --accent-primaryHexacoffre:  229, 84.0%, 11.9%;
 
 
     --destructive: 0 84.2% 60.2%;
@@ -124,3 +122,72 @@
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
+
+/* Gradients */
+.bg-gradient-primary {
+  background: linear-gradient(90deg, #6459C4 0%, #988DFE 100%);
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(270deg, #9C57F5 0%, #50A2EE 100%);
+}
+
+/* Background Colors */
+.bg-black-solid {
+  background-color: rgba(0, 0, 0, 1);
+}
+.bg-black-primary {
+  background-color: rgba(29, 33, 48, 1);
+}
+
+.bg-light-primary {
+background-color: rgba(255, 255, 255, 1);
+}
+
+/* Text Colors */
+.text-black-primary {
+  color: rgba(0, 0, 0, 1);
+}
+
+.text-purple-highlight {
+  color: rgba(152, 141, 254, 1);
+}
+
+.text-gradient-primary {
+  background: linear-gradient(90deg, #6459C4 0%, #988DFE 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Body Text Colors */
+.text-body-dark {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.text-body-light {
+  color: rgba(255, 255, 255, 1);
+}
+
+.text-body-gray {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.button {
+  height: 51px;
+  padding: 16px 24px;
+  gap: 10px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+
+a:hover {
+  color: white!important; /* Empêche le changement de couleur au survol */
+  text-decoration: none; /* Évite de remettre le soulignement au hover */
+}
+
+
+
+
+
