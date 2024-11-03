@@ -20,7 +20,7 @@ const Navbar = () => {
 						YourJob
 					</div>
 					{/* Navigation Links */}
-					<nav className="text-body-gray hidden space-x-6 font-semibold md:ml-10 md:flex lg:ml-96">
+					<nav className="text-body-gray hidden space-x-6 font-semibold md:ml-10 md:block lg:ml-32 xl:ml-96">
 						<a href="#home" className="hover:text-purple-highlight transition">
 							Toutes les offres
 						</a>
