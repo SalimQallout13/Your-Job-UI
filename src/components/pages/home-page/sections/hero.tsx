@@ -19,7 +19,7 @@ const Hero = () => {
 							placeholder="Rechercher"
 							className="text-black-primary flex-1 bg-transparent outline-none"
 						/>
-						<Button variant="gradient" size="lg" className="rounded-full px-6 text-white">
+						<Button variant="gradient2" size="lg" className="rounded-full px-6 text-white">
 							Trouve ton job
 						</Button>
 					</div>
@@ -54,7 +54,7 @@ const Hero = () => {
 								<span>{city}</span>
 							</div>
 						))}
-						<Button variant="gradient" size="sm" className="rounded-full px-6 text-white">
+						<Button variant="gradient2" size="sm" className="rounded-full px-6 text-white">
 							Trouve ton job
 						</Button>
 					</div>
