@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/commons/ui/button.jsx";
 import { Menu } from 'lucide-react';
@@ -11,29 +10,31 @@ const Navbar = () => {
 	};
 
 	return (
-		<header className="bg-[#17181C] shadow-lg">
-			<div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-20 lg:p-10">
-				{/* Logo */}
-				<div className="text-gradient-primary text-2xl font-bold lg:text-3xl">
-					YourJob
+		<header className="bg-black-primary shadow-lg">
+			<div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-10 lg:px-20">
+				{/* Left side */}
+				<div className="flex items-center">
+					{/* Logo */}
+					<div className="text-gradient-primary text-2xl font-bold lg:text-3xl">
+						YourJob
+					</div>
+					{/* Navigation Links */}
+					<nav className="text-body-gray hidden space-x-6 font-semibold md:ml-10 md:flex lg:ml-20">
+						<a href="#home" className="hover:text-purple-highlight transition">
+							Toutes les offres
+						</a>
+						<a href="#blog" className="hover:text-purple-highlight transition">
+							Blog
+						</a>
+						<a href="#recruiter" className="hover:text-purple-highlight transition">
+							Recruteur
+						</a>
+					</nav>
 				</div>
 
-				{/* Navigation Links */}
-				<nav className="text-body-gray ml-40 hidden space-x-6 font-semibold md:flex">
-					<a href="#home" className="hover:text-purple-highlight transition">
-						Toutes les offres
-					</a>
-					<a href="#blog" className="hover:text-purple-highlight transition">
-						Blog
-					</a>
-					<a href="#recruiter" className="hover:text-purple-highlight transition">
-						Recruteur
-					</a>
-				</nav>
-
-				{/* Actions */}
+				{/* Right side */}
 				<div className="hidden items-center space-x-4 md:flex">
-					<a href="#login" className="font-semibold text-white transition hover:!text-gray-300">
+					<a href="#login" className="font-semibold text-white transition hover:!text-gray-100">
 						Connexion
 					</a>
 					<Button variant="gradient" size="lg">

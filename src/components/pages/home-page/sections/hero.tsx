@@ -10,7 +10,7 @@ const Hero = () => {
 		<section className="relative bg-white pb-24">
 			{/* Partie supérieure */}
 			<div className="bg-hero-section pb-72">
-				<div className="container mx-auto flex flex-col items-center space-y-6 pt-2 text-center">
+				<div className="container mx-auto flex flex-col items-center space-y-6 px-4 pt-6 text-center">
 					{/* Barre de recherche */}
 					<div className="flex w-full max-w-lg items-center rounded-full bg-white p-1 shadow-md">
 						<img src={SearchIcon} alt="Search Icon" className="ml-4 mr-2 size-7" />
@@ -25,10 +25,12 @@ const Hero = () => {
 					</div>
 
 					{/* Titre principal */}
-					<h1 className="mt-12 text-7xl font-bold text-white">Recherchez, Trouvez & Postulez</h1>
+					<h1 className="mt-12 text-4xl font-bold text-white md:text-6xl lg:text-7xl">
+						Recherchez, Trouvez & Postulez
+					</h1>
 
 					{/* Description */}
-					<p className="text-body-gray max-w-2xl">
+					<p className="text-body-gray max-w-2xl px-4">
 						Des milliers d'opportunités vous attendent ! Trouvez l'emploi de vos rêves, où que vous
 						soyez, et à tout moment avec YourJob.
 					</p>
@@ -36,7 +38,7 @@ const Hero = () => {
 			</div>
 
 			{/* Image superposée */}
-			<div className="relative z-10 -mt-60 flex flex-col items-center">
+			<div className="relative z-10 -mt-60 flex flex-col items-center px-4">
 				<div className="w-full max-w-5xl">
 					<img
 						src={heroImage}
@@ -46,15 +48,15 @@ const Hero = () => {
 				</div>
 
 				{/* Barre de localisation */}
-				<div className="absolute bottom-0 left-1/2 w-[85%] max-w-xl -translate-x-1/2 translate-y-1/2 rounded-2xl bg-white px-4 py-6 shadow-lg">
-					<div className="flex items-center justify-around text-slate-600">
+				<div className="absolute bottom-0 left-1/2 w-[90%] max-w-xl -translate-x-1/2 translate-y-1/2 rounded-2xl bg-white px-4 py-6 shadow-lg">
+					<div className="flex flex-wrap items-center justify-around text-slate-600">
 						{["Marseille", "Paris", "New-York"].map((city) => (
-							<div key={city} className="flex items-center space-x-2">
+							<div key={city} className="mt-2 flex items-center space-x-2">
 								<MapPin className="h-6 w-5 text-slate-400" />
 								<span>{city}</span>
 							</div>
 						))}
-						<Button variant="gradient2" size="sm" className="rounded-full px-6 text-white">
+						<Button variant="gradient2" size="sm" className="mt-2 rounded-full px-6 text-white">
 							Trouve ton job
 						</Button>
 					</div>
@@ -62,19 +64,19 @@ const Hero = () => {
 			</div>
 
 			{/* Section catégories */}
-			<div className="container mx-auto mt-24 text-center">
+			<div className="container mx-auto mt-24 px-4 text-center">
 				<div className="w-full pt-3">
 					<div className="bg-black-solid m-auto mb-6 flex w-fit items-center space-x-2 rounded-full px-4 py-1">
 						<img src={TriIcon} alt="Triangle Icon" className="size-6" />
 						<span className="text-sm text-white">Emplois sélectionnés par catégories</span>
 					</div>
 
-					<h2 className="text-black-primary h2 mb-12 font-bold">
+					<h2 className="text-black-primary mb-12 text-3xl font-bold md:text-5xl">
 						Trouve ton job par <span className="text-purple-highlight">Catégories</span>
 					</h2>
 
 					{/* Cartes de catégories */}
-					<div className="mx-auto grid max-w-5xl grid-cols-1 gap-1.5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+					<div className="mx-auto grid max-w-5xl grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 						{categories.map((category, index) => (
 							<div
 								key={index}

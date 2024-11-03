@@ -1,5 +1,3 @@
-// Emplois.jsx
-
 import { Button } from "@/components/commons/ui/button.jsx";
 import { Card, CardContent } from "@/components/commons/ui/card.jsx";
 import EmploiSectionImg from "@/assets/img/emploi-section.png";
@@ -16,20 +14,20 @@ const Emplois = () => {
 				{/* Monde entier Section */}
 				<div className="py-16">
 					<div className="flex flex-col items-start justify-between gap-14 lg:flex-row">
-						<div className="lg:w-1/2">
+						<div className="w-full lg:w-1/2">
 							<img
 								src={EmploiSectionImg}
 								alt="Person celebrating success"
 								className="w-full rounded-3xl object-cover"
 							/>
 						</div>
-						<div className="mt-5 space-y-8 lg:w-1/2">
+						<div className="mt-5 w-full space-y-8 lg:w-1/2">
 							<div className="inline-flex items-center space-x-2 rounded-full bg-black px-4 py-2 text-white">
 								<Icons.dream className="size-4" />
 								<span className="text-sm">Croire en ses rêves</span>
 							</div>
 
-							<h1 className="h2 font-semibold leading-none">
+							<h1 className="text-3xl font-semibold leading-none md:text-5xl">
 								Trouvez des emplois dans le{" "}
 								<span className="text-purple-highlight">Monde entier</span>
 							</h1>
@@ -40,10 +38,10 @@ const Emplois = () => {
 							</p>
 
 							<div className="flex flex-wrap gap-4">
-								<Button variant="outline" className="rounded-full px-8 py-6">
+								<Button variant="outline" className="rounded-full px-8 py-4">
 									Connexion
 								</Button>
-								<Button variant="gradient2" className="rounded-full px-8 py-6">
+								<Button variant="gradient2" className="rounded-full px-8 py-4">
 									Créer mon compte
 								</Button>
 							</div>
@@ -58,7 +56,7 @@ const Emplois = () => {
 							<img src={TriIcon} alt="Triangle Icon" className="size-5" />
 							<span className="text-sm text-white">Emplois sélectionnés par catégories</span>
 						</div>
-						<h2 className="text-5xl font-bold">
+						<h2 className="text-center text-3xl font-bold md:text-5xl">
 							<span className="text-purple-highlight">Des entreprises</span> Pour Vous
 						</h2>
 					</div>
@@ -67,13 +65,13 @@ const Emplois = () => {
 						{jobs.map((job, index) => (
 							<Card key={index} className="rounded-2xl border-none bg-gray-100 shadow-sm">
 								<CardContent className="p-6">
-									<div className="ml-1 flex items-center">
+									<div className="flex items-center">
 										<img
 											src={job.logo}
 											alt={`${job.company} logo`}
 											className={`${job.logoSize} rounded-xl object-contain`}
 										/>
-										<div className="ml-6 grow">
+										<div className="ml-4 grow">
 											<h3 className={`text-xl font-semibold ${job.titleColor}`}>{job.title}</h3>
 											<p className="font-medium text-gray-900">{job.company}</p>
 											<p className="text-sm text-gray-500">{job.location}</p>
@@ -90,7 +88,7 @@ const Emplois = () => {
 									</ul>
 
 									<div className="mt-6 flex justify-end">
-										<Button variant="default" className="rounded-full bg-black px-6 py-2 text-sm font-medium">
+										<Button variant="default" className="rounded-full bg-black px-6 py-2 text-sm font-medium hover:bg-gray-800">
 											{job.type}
 										</Button>
 									</div>

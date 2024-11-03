@@ -1,5 +1,3 @@
-// Footer.jsx
-
 import { Button } from "@/components/commons/ui/button.jsx";
 import { Link } from "react-router-dom";
 import { Icons } from "@/components/commons/others/icons.jsx";
@@ -15,7 +13,8 @@ const Footer = () => {
         </div>
 
         {/* Navigation Links */}
-        <nav className="my-6 flex flex-col items-center space-y-4 font-semibold md:flex-row md:space-x-6 md:space-y-0 lg:my-0">
+        <nav
+          className="my-6 flex flex-col items-center space-y-4 font-semibold md:flex-row md:space-x-6 md:space-y-0 lg:my-0">
           <Link to="/offers" className="text-gray-600 transition hover:text-gray-900">
             Toutes les offres
           </Link>
@@ -25,6 +24,14 @@ const Footer = () => {
           <Link to="/recruiter" className="text-gray-600 transition hover:text-gray-900">
             Recruteur
           </Link>
+          <div className="flex items-center space-x-4">
+            <Link to="/login" className="font-semibold text-gray-900 transition hover:text-gray-900">
+              Connexion
+            </Link>
+            <Button variant="gradient" className="rounded-full px-6">
+              Créer mon compte
+            </Button>
+          </div>
         </nav>
 
         {/* Auth and Social */}
@@ -54,14 +61,6 @@ const Footer = () => {
             >
               <Icons.linkedin className="size-6" />
             </a>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link to="/login" className="font-semibold text-gray-900 transition hover:text-gray-900">
-              Connexion
-            </Link>
-            <Button variant="gradient" className="rounded-full px-6">
-              Créer mon compte
-            </Button>
           </div>
         </div>
       </div>

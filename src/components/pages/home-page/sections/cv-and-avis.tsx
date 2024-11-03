@@ -41,14 +41,14 @@ const CvAndAvis = () => {
 		<div className="bg-white">
 			<div className="mx-auto max-w-5xl px-4 py-20">
 				<div className="flex flex-col items-start justify-between gap-14 lg:flex-row">
-					<div className="lg:w-1/2">
+					<div className="w-full lg:w-1/2">
 						<div className="space-y-6">
 							<div className="inline-flex items-center space-x-2 rounded-full bg-black px-4 py-2 text-white">
 								<Icons.dream className="size-4" />
 								<span className="text-sm">Croire en ses rêves</span>
 							</div>
 
-							<h1 className="h2 font-bold leading-[1.05]">
+							<h1 className="text-3xl font-bold leading-[1.05] md:text-5xl">
 								<span className="text-purple-highlight">Téléchargez</span>
 								<br />
 								votre CV,
@@ -67,17 +67,17 @@ const CvAndAvis = () => {
 							</p>
 
 							<div className="flex flex-wrap gap-4">
-								<Button variant="outline" className="rounded-full px-8 py-6 text-base">
+								<Button variant="outline" className="rounded-full px-8 py-4 text-base">
 									Connexion
 								</Button>
-								<Button variant="gradient2" className="rounded-full px-8 py-6 text-base">
+								<Button variant="gradient2" className="rounded-full px-8 py-4 text-base">
 									Dépose ton CV
 								</Button>
 							</div>
 						</div>
 					</div>
 
-					<div className="lg:w-1/2">
+					<div className="w-full lg:w-1/2">
 						<img
 							src={CvAndAvisImage}
 							alt="Interview scene"
@@ -89,14 +89,14 @@ const CvAndAvis = () => {
 
 			{/* Reviews Section */}
 			<div className="py-20">
-				<div className="mx-auto max-w-6xl px-4">
+				<div className="mx-auto max-w-5xl px-4">
 					{/* Header */}
 					<div className="mb-12 text-center">
 						<div className="inline-flex items-center space-x-2 rounded-full bg-black px-6 py-3">
 							<Icons.dream className="size-5 text-white" />
 							<span className="text-sm text-white">Ce qu'ils en disent</span>
 						</div>
-						<h2 className="mt-6 text-5xl font-bold">
+						<h2 className="mt-6 text-3xl font-bold md:text-5xl">
 							Ce que disent nos <span className="text-purple-highlight">utilisateurs</span>
 						</h2>
 					</div>
@@ -145,7 +145,7 @@ const CvAndAvis = () => {
 							</CarouselContent>
 							<CarouselPrevious
 								onClick={() => scrollTo(current === 0 ? reviews.length - 1 : current - 1)}
-								className="-left-6 size-12 bg-black text-white transition-colors hover:bg-gray-800 hover:text-white"
+								className="-right-6 size-12 bg-black text-white transition-colors hover:bg-gray-800 hover:text-white"
 							/>
 							<CarouselNext
 								onClick={() => scrollTo(current === reviews.length - 1 ? 0 : current + 1)}

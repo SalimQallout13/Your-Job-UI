@@ -1,11 +1,9 @@
-// EmailAlerts.jsx
-
 import { Button } from "@/components/commons/ui/button.jsx";
 import { Icons } from "@/components/commons/others/icons.jsx";
 
 const EmailAlerts = () => {
   return (
-    <div className="bg-black-primary py-24">
+    <div className="bg-black-primary px-4 py-24">
       <div className="mx-auto max-w-4xl text-center">
         {/* Badge */}
         <div className="mb-8 flex justify-center">
@@ -16,7 +14,7 @@ const EmailAlerts = () => {
         </div>
 
         {/* Titre */}
-        <h2 className="mb-6 text-5xl font-bold text-white">
+        <h2 className="mb-6 text-3xl font-bold text-white md:text-5xl">
           Recevez vos Alertes <span className="text-purple-highlight">Par Mail</span>
         </h2>
 
@@ -24,18 +22,18 @@ const EmailAlerts = () => {
         <p className="mb-12 text-gray-400">Ne manquez aucune offre d'emploi.</p>
 
         {/* Formulaire d'inscription */}
-        <div className="mx-auto flex max-w-2xl items-center rounded-full bg-white p-1">
-          <div className="ml-4 h-8 w-8 rounded-full bg-gray-100">
+        <div className="mx-auto flex max-w-2xl flex-col items-center rounded-full bg-white p-1 sm:flex-row">
+          <div className="ml-4 size-8 rounded-full bg-gray-100">
             {/* Placeholder pour l'icône de profil */}
           </div>
           <input
             type="email"
             placeholder="Votre email"
-            className="flex-1 bg-transparent px-4 outline-none placeholder:text-gray-400"
+            className="flex-1 bg-transparent px-4 py-2 outline-none placeholder:text-gray-400"
           />
           <Button
             variant="gradient2"
-            className="rounded-full px-8 py-6 text-white transition-all hover:opacity-90"
+            className="mt-4 rounded-full px-8 py-4 text-white transition-all hover:opacity-90 sm:mt-0"
           >
             Rester au courant
           </Button>
