@@ -10,8 +10,9 @@ const Navbar = () => {
 	};
 
 	return (
-		<header className="bg-black-primary shadow-lg">
-			<div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-10 lg:px-20">
+		<header className="bg-[#17181C] shadow-lg">
+				<div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-20 lg:px-[40px] lg:py-[30px]">
+
 				{/* Left side */}
 				<div className="flex items-center">
 					{/* Logo */}
@@ -19,7 +20,7 @@ const Navbar = () => {
 						YourJob
 					</div>
 					{/* Navigation Links */}
-					<nav className="text-body-gray hidden space-x-6 font-semibold md:ml-10 md:flex lg:ml-20">
+					<nav className="text-body-gray hidden space-x-6 font-semibold md:ml-10 md:flex lg:ml-96">
 						<a href="#home" className="hover:text-purple-highlight transition">
 							Toutes les offres
 						</a>
