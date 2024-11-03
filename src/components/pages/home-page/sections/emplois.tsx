@@ -50,7 +50,7 @@ const Emplois = () => {
 									</Button>
 								</div>
 							) : (
-								<div className="flex flex-wrap gap-4 justify-center md:justify-start">
+								<div className="flex flex-wrap justify-center gap-4 md:justify-start">
 									<Button variant="gradient2" className="rounded-full px-8 py-4">
 										Trouver des emplois
 									</Button>

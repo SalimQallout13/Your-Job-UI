@@ -7,7 +7,7 @@ const EmailAlerts = () => {
       <div className="mx-auto max-w-4xl text-center">
         {/* Badge */}
         <div className="mb-8 flex justify-center">
-          <div className="bg-purple inline-flex items-center space-x-2 rounded-full px-6 py-3 text-white">
+          <div className="inline-flex items-center space-x-2 rounded-full bg-purple px-6 py-3 text-white">
             <Icons.newsletter className="size-5" />
             <span className="text-sm">Restez au courant</span>
           </div>
