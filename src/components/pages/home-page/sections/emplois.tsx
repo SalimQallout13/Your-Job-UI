@@ -1,55 +1,15 @@
-import { Button } from "@/components/commons/ui/button.tsx"
-import { Card, CardContent } from "@/components/commons/ui/card.tsx"
-import EmploiSection from "@/assets/img/emploi-section.png"
-import TriIcon from "@/assets/icons/tri-icon.png"
-import CocaCola from "@/assets/img/cocacola.png"
-import Levupp from "@/assets/img/levup.png"
-import PernodRicard from "@/assets/img/pernod-ricard.png"
-import { Icons } from "@/components/commons/others/icons";
+// Emplois.jsx
+
+import { Button } from "@/components/commons/ui/button.jsx";
+import { Card, CardContent } from "@/components/commons/ui/card.jsx";
+import EmploiSectionImg from "@/assets/img/emploi-section.png";
+import TriIcon from "@/assets/icons/tri-icon.png";
+import CocaColaLogo from "@/assets/img/cocacola.png";
+import LevuppLogo from "@/assets/img/levup.png";
+import PernodRicardLogo from "@/assets/img/pernod-ricard.png";
+import { Icons } from "@/components/commons/others/icons.jsx";
 
 const Emplois = () => {
-	const jobs = [
-		{
-			logo: CocaCola,
-			logoSize: "size-14",
-			title: "VP, Sales",
-			company: "Coca-Cola Company",
-			location: "New-York, USA",
-			bulletPoints: [
-				"excepteur incididunt occaecat pariatur in consequat est aliqua nostrud nostrud anim laboris incididunt.",
-				"mmodo fugiat eu irure eu offici..."
-			],
-			type: "Full time",
-			titleColor: "text-indigo-400"
-		},
-		{
-			logo: PernodRicard,
-			logoSize: "size-16",
-			title: "VP, Sales",
-			company: "Coca-Cola Company",
-			location: "New-York, USA",
-			bulletPoints: [
-				"excepteur incididunt occaecat pariatur in consequat est aliqua nostrud nostrud anim laboris incididunt.",
-				"mmodo fugiat eu irure eu offici..."
-			],
-			type: "Full time",
-			titleColor: "text-indigo-400"
-		},
-		{
-			logo: Levupp,
-			logoSize: "size-12",
-			title: "Product Manager",
-			company: "Levupp",
-			location: "Marseille, France",
-			bulletPoints: [
-				"excepteur incididunt occaecat pariatur in consequat est aliqua nostrud nostrud anim laboris incididunt.",
-				"mmodo fugiat eu irure eu offici..."
-			],
-			type: "Full time",
-			titleColor: "text-indigo-400"
-		}
-	];
-
 	return (
 		<div className="bg-emplois-section">
 			<div className="mx-auto max-w-5xl px-4">
@@ -58,9 +18,9 @@ const Emplois = () => {
 					<div className="flex flex-col items-start justify-between gap-14 lg:flex-row">
 						<div className="lg:w-1/2">
 							<img
-								src={EmploiSection}
+								src={EmploiSectionImg}
 								alt="Person celebrating success"
-								className="size-[480px] rounded-3xl object-cover"
+								className="w-full rounded-3xl object-cover"
 							/>
 						</div>
 						<div className="mt-5 space-y-8 lg:w-1/2">
@@ -70,26 +30,20 @@ const Emplois = () => {
 							</div>
 
 							<h1 className="h2 font-semibold leading-none">
-								Trouvez des emplois dans le{' '}
-								<span className="text-indigo-400">Monde entier</span>
+								Trouvez des emplois dans le{" "}
+								<span className="text-purple-highlight">Monde entier</span>
 							</h1>
 
-							<p className="text-gray-600">
+							<p className="text-body-dark">
 								Recherchez et entrez en contact avec des offres d'emploi dans le monde entier.
 								Cela vous donne la possibilité de trouver le métier de vos rêves.
 							</p>
 
 							<div className="flex flex-wrap gap-4">
-								<Button
-									variant="outline"
-									className="rounded-full bg-transparent px-8 py-6"
-								>
+								<Button variant="outline" className="rounded-full px-8 py-6">
 									Connexion
 								</Button>
-								<Button
-									variant="gradient2"
-									className="rounded-full px-8 py-6 hover:bg-indigo-500"
-								>
+								<Button variant="gradient2" className="rounded-full px-8 py-6">
 									Créer mon compte
 								</Button>
 							</div>
@@ -105,15 +59,15 @@ const Emplois = () => {
 							<span className="text-sm text-white">Emplois sélectionnés par catégories</span>
 						</div>
 						<h2 className="text-5xl font-bold">
-							<span className="text-indigo-400">Des entreprises</span> Pour Vous
+							<span className="text-purple-highlight">Des entreprises</span> Pour Vous
 						</h2>
 					</div>
 
 					<div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
 						{jobs.map((job, index) => (
-							<Card key={index} className="rounded-2xl border-none bg-[#F2F2F2] shadow-sm">
+							<Card key={index} className="rounded-2xl border-none bg-gray-100 shadow-sm">
 								<CardContent className="p-6">
-									<div className="ml-4 flex items-center">
+									<div className="ml-1 flex items-center">
 										<img
 											src={job.logo}
 											alt={`${job.company} logo`}
@@ -136,10 +90,7 @@ const Emplois = () => {
 									</ul>
 
 									<div className="mt-6 flex justify-end">
-										<Button
-											variant="default"
-											className="rounded-full bg-black px-6 py-2 text-sm font-medium hover:bg-gray-800"
-										>
+										<Button variant="default" className="rounded-full bg-black px-6 py-2 text-sm font-medium">
 											{job.type}
 										</Button>
 									</div>
@@ -154,3 +105,45 @@ const Emplois = () => {
 };
 
 export default Emplois;
+
+const jobs = [
+	{
+		logo: CocaColaLogo,
+		logoSize: "h-14 w-14",
+		title: "VP, Sales",
+		company: "Coca-Cola Company",
+		location: "New-York, USA",
+		bulletPoints: [
+			"Excepteur incididunt occaecat pariatur in consequat est aliqua nostrud nostrud anim laboris incididunt.",
+			"Mmodo fugiat eu irure eu officia.",
+		],
+		type: "Full time",
+		titleColor: "text-purple-highlight",
+	},
+	{
+		logo: PernodRicardLogo,
+		logoSize: "h-16 w-16",
+		title: "VP, Sales",
+		company: "Pernod Ricard",
+		location: "Paris, France",
+		bulletPoints: [
+			"Excepteur incididunt occaecat pariatur in consequat est aliqua nostrud nostrud anim laboris incididunt.",
+			"Mmodo fugiat eu irure eu officia.",
+		],
+		type: "Full time",
+		titleColor: "text-purple-highlight",
+	},
+	{
+		logo: LevuppLogo,
+		logoSize: "h-12 w-12",
+		title: "Product Manager",
+		company: "Levupp",
+		location: "Marseille, France",
+		bulletPoints: [
+			"Excepteur incididunt occaecat pariatur in consequat est aliqua nostrud nostrud anim laboris incididunt.",
+			"Mmodo fugiat eu irure eu officia.",
+		],
+		type: "Full time",
+		titleColor: "text-purple-highlight",
+	},
+];
