@@ -1,5 +1,5 @@
 export const ROUTES_BACK = {
-	SIGNIN: "/auth/signin",
+	SIGNIN: "/connexion",
 	BULLETIN: "/bulletins",
 } as const;
 
