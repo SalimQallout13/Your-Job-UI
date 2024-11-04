@@ -18,7 +18,7 @@ export function LoginFooter() {
                                     variant: "ghost",
                                 })}
                             >
-                                <Icons.website className="size-5" color={"#042535"}/>
+                                <Icons.linkedin className="size-5" color={"#042535"}/>
                                 <span className="sr-only">Site web</span>
                             </div>
                         </Link>

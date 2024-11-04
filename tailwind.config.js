@@ -20,16 +20,27 @@ export default {
 			},
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Inter', 'sans-serif'],
+				poppins: ['Poppins', 'sans-serif'],
+			},
 			screens: {
 				"xs": "375px",
 			},
 			colors: {
+				// Vos couleurs personnalisées
+				'black': 'rgba(0, 0, 0, 1)',
+				'black-primary': 'rgba(29, 33, 48, 1)',
+				'white': 'rgba(255, 255, 255, 1)',
+				'purple': 'rgba(152, 141, 254, 1)',
+				'black-translucent': 'rgba(0, 0, 0, 0.75)',
+				'white-translucent': 'rgba(255, 255, 255, 0.75)',
+				// Couleurs existantes
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
-				primaryHexacoffre: "hsl(var(--primaryHexacoffre))",
 				primary: {
 					DEFAULT: "hsl(var(--primary))",
 					foreground: "hsl(var(--primary-foreground))",
@@ -65,7 +76,6 @@ export default {
 				accent: {
 					DEFAULT: "hsl(var(--accent))",
 					foreground: "hsl(var(--accent-foreground))",
-					primaryHexacoffre: "hsl(var(--accent-primaryHexacoffre))",
 				},
 				popover: {
 					DEFAULT: "hsl(var(--popover))",
@@ -75,6 +85,11 @@ export default {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
+			},
+			fontSize: {
+				'h1': '70px',
+				'h2': '66px',
+				// Vous pouvez ajouter d'autres tailles personnalisées si nécessaire
 			},
 			borderRadius: {
 				lg: "var(--radius)",

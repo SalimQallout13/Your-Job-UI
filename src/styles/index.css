@@ -2,100 +2,293 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Inter';
+  src: url('/src/assets/fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/src/assets/fonts/Inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/src/assets/fonts/Poppins/Poppins-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* index.css */
+
+/* Définition des variables */
+:root {
+  /* Couleurs */
+  --color-black: rgba(0, 0, 0, 1);
+  --color-black-primary: rgba(29, 33, 48, 1);
+  --color-white: rgba(255, 255, 255, 1);
+  --color-purple: rgba(152, 141, 254, 1);
+  --color-black-translucent: rgba(0, 0, 0, 0.75);
+  --color-white-translucent: rgba(255, 255, 255, 0.75);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(90deg, #6459C4 0%, #988DFE 100%);
+  --gradient-secondary: linear-gradient(270deg, #9C57F5 0%, #50A2EE 100%);
+  --gradient-hero: linear-gradient(180deg, #17181C 0%, #1D2130 100%, #FFFFFF 100%);
+  --gradient-emplois: linear-gradient(180deg, #E8F1FD 0%, #F6F1FF 50%, #FFFFFF 100%);
+  --gradient-logo-footer: linear-gradient(90deg, #8000FF 0%, #B072FF 100%);
+
+  /* Tailles de police */
+  --font-size-h1: 70px;
+  --font-size-h2: 66px;
+
+  /* Autres variables */
+  --scrollbar-width: 8px;
+  --scrollbar-track-color: transparent;
+  --scrollbar-thumb-color: #888;
+  --scrollbar-border-radius: 6px;
+}
+
+/* Gradients */
+.bg-gradient-primary {
+  background: var(--gradient-primary);
+}
+
+.bg-gradient-secondary {
+  background: var(--gradient-secondary);
+}
+
+/* Couleurs de fond */
+.bg-black-solid {
+  background-color: var(--color-black);
+}
+
+.bg-black-primary {
+  background-color: var(--color-black-primary);
+}
+
+.bg-hero-section {
+  background: var(--gradient-hero);
+}
+
+.bg-light-primary {
+  background-color: var(--color-white);
+}
+
+.bg-emplois-section {
+  background: var(--gradient-emplois);
+}
+
+.bg-purple {
+  background-color: var(--color-purple);
+}
+
+/* Couleurs de texte */
+.text-black-primary {
+  color: var(--color-black);
+}
+
+.text-purple-highlight {
+  color: var(--color-purple);
+}
+
+.text-gradient-primary {
+  background: var(--gradient-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.text-logo-footer {
+  background: var(--gradient-logo-footer);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Couleurs de texte pour le corps */
+.text-body-dark {
+  color: var(--color-black-translucent);
+}
+
+.text-body-light {
+  color: var(--color-white);
+}
+
+.text-body-gray {
+  color: var(--color-white-translucent);
+}
+
+/* Styles pour les boutons */
+.button {
+  height: 51px;
+  padding: 16px 24px;
+  gap: 10px;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: inherit !important; /* Empêche le changement de couleur au survol */
+  text-decoration: none;     /* Retire le soulignement au survol */
+}
+
+/* Tailles des titres */
+.h1 {
+  font-size: var(--font-size-h1);
+}
+
+.h2 {
+  font-size: var(--font-size-h2);
+}
+
+/* Styles de base */
 @layer base {
   * {
     @apply border-border;
   }
 
   body {
-    overflow: hidden;
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Variables de thème */
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    --primaryHexacoffre: 208, 56%, 39%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
     --primary: 208, 56%, 39%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-    --accent-primaryHexacoffre:  229, 84.0%, 11.9%;
-
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --info: 198 60% 50%;
     --info-foreground: 200 100% 15%;
-
     --success: 120 73% 75%;
     --success-foreground: 120 73% 15%;
-
     --warning: 30 100% 50%;
     --warning-foreground: 210 40% 98%;
-
     --alert: 0 84.2% 60.2%;
     --alert-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
     --radius: 0.5rem;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 338.99deg 88.73% 49.07%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
 }
 
-:root {
-  --scrollbar-width: 8px; /* Réduisez la largeur de la scrollbar */
-  --scrollbar-track-color: transparent;
-  --scrollbar-thumb-color: #888;
-  --scrollbar-border-radius: 6px;
-}
+
 
 /* Styles de scrollbar pour les navigateurs basés sur WebKit (Chrome, Safari, Edge) */
 *::-webkit-scrollbar {
@@ -124,3 +317,5 @@
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
 }
+
+
