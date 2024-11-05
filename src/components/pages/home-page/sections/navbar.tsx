@@ -1,23 +1,28 @@
-import { useState } from 'react';
-import { Button } from "@/components/commons/ui/button.jsx";
-import { Menu } from 'lucide-react';
-import { useLocalStorage } from 'usehooks-ts';
+import React, { useState } from "react"
+import { Button } from "@/components/commons/ui/button.jsx"
+import { Menu } from "lucide-react"
+import { useLocalStorage } from "usehooks-ts"
 
-const Navbar = () => {
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [userData, setUserData] = useLocalStorage<{ name: string } | null>('userData', null);
+type NavbarProps = {
+	openDialog: () => void
+}
+
+const Navbar: React.FC<NavbarProps> = ({openDialog}) => {
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+	const [userData, setUserData] = useLocalStorage<{ name: string } | null>("userData", null)
 
 	const toggleMobileMenu = () => {
-		setIsMobileMenuOpen(!isMobileMenuOpen);
-	};
+		setIsMobileMenuOpen(!isMobileMenuOpen)
+	}
 
 	const logout = () => {
-		setUserData(null);
-	};
+		setUserData(null)
+	}
 
 	return (
 		<header className="bg-[#17181C] shadow-lg">
-			<div className="container mx-auto flex items-center justify-between px-6 py-4 md:px-20 lg:px-[40px] lg:py-[30px]">
+			<div
+				className="container mx-auto flex items-center justify-between px-6 py-4 md:px-20 lg:px-[40px] lg:py-[30px]">
 				{/* Left side */}
 				<div className="flex items-center">
 					{/* Logo */}
@@ -42,9 +47,9 @@ const Navbar = () => {
 				<div className="hidden items-center space-x-4 md:flex">
 					{!userData ? (
 						<>
-							<a href="#login" className="font-semibold text-white transition hover:text-gray-100">
+							<button onClick={openDialog} className="font-semibold text-white transition hover:text-gray-50">
 								Connexion
-							</a>
+							</button>
 							<Button variant="gradient" size="lg">
 								Créer mon compte
 							</Button>
@@ -93,9 +98,10 @@ const Navbar = () => {
 						</a>
 						{!userData ? (
 							<>
-								<a href="#login" className="font-semibold text-white transition">
+								<button onClick={openDialog}
+												className="font-semibold text-white transition hover:text-gray-50">
 									Connexion
-								</a>
+								</button>
 								<Button variant="gradient" size="lg">
 									Créer mon compte
 								</Button>
@@ -114,7 +120,7 @@ const Navbar = () => {
 				</div>
 			)}
 		</header>
-	);
-};
+	)
+}
 
-export default Navbar;
+export default Navbar

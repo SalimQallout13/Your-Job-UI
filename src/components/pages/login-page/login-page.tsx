@@ -1,58 +1,59 @@
-import { LoginForm } from "@/components/pages/login-page/login-form.tsx"
-import { siteConfig } from "@/lib/configs/site.ts"
-import { useEffect } from "react"
-import frame from "@/assets/img/Frame_39.png"
-import Paragraph from "@/components/commons/ui/paragraph.tsx";
+import { Dialog, DialogContent, DialogHeader } from "@/components/commons/ui/dialog";
+import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import { LoginForm } from "@/components/pages/login-page/login-form";
+import { siteConfig } from "@/lib/configs/site";
+import Paragraph from "@/components/commons/ui/paragraph";
+import frame from "@/assets/img/Frame_39.png";
+import React from "react"
 
-const LoginPage = () => {
+type LoginPageProps = {
+	isOpen: boolean;
+	setIsOpen: (value: boolean) => void;
+};
 
-	useEffect(() => {
-		deactivateScroll()
-	}, [])
-
-	const deactivateScroll = () => {
-		document.body.style.overflow = "hidden"
-		return () => {
-			document.body.style.overflow = "auto"
-		}
-	}
-
+const LoginPage: React.FC<LoginPageProps> = ({ isOpen, setIsOpen }) => {
 	const styleMsg = {
 		fontFamily: "Inter",
 		fontSize: "36px",
 		fontWeight: 700,
 		lineHeight: "43.57px",
 		letterSpacing: "-0.06em"
-	}
+	};
+
+	// Fonction pour fermer le modal
+	const closeDialog = () => setIsOpen(false);
 
 	return (
-		<div>
-			{/* Main content container */}
-			<div className="flex h-screen">
-				<div className="flex w-full flex-col items-center justify-center ps-52 xl:w-1/2">
-					<div className="mb-10 flex w-full flex-col items-start ps-32">
-						<div className="mb-10 text-4xl font-bold">
-							<img
-								src={siteConfig.logo}
-								alt="Logo YourJob"
-							/>
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+			<DialogContent className="min-w-full h-screen">
+				<DialogHeader>
+					<DialogTitle className="hidden" />
+					<DialogDescription className="hidden" />
+				</DialogHeader>
+				<div className="mx-auto">
+					<div className="flex flex-wrap items-center">
+						<div className="w-full md:w-1/2">
+							<div className="mb-10 text-4xl font-bold text-purple-700">
+								<img src={siteConfig.logo} alt="Logo YourJob" />
+							</div>
+							<div className="mb-10" style={styleMsg}>
+								{siteConfig.description}
+							</div>
+							<Paragraph className="mb-6">
+								Entrez vos informations de connexion pour accéder à la plateforme.
+							</Paragraph>
+							<div className="mx-auto w-full">
+								<LoginForm closeDialog={closeDialog} />
+							</div>
 						</div>
-						<div className="mb-10" style={styleMsg}>
-							{siteConfig.description}
+						<div className="hidden w-full md:w-1/2 xl:flex">
+							<img className="ms-56" style={{ marginTop: "-63px" }} src={frame} alt="Frame" />
 						</div>
-						<Paragraph>Entrez vos informations de connexion pour accéder à la plateforme.</Paragraph>
-					</div>
-					<div className="mx-auto w-full max-w-[500px]">
-						<LoginForm />
 					</div>
 				</div>
+			</DialogContent>
+		</Dialog>
+	);
+};
 
-				<div className="hidden w-1/2 flex-col items-end justify-center xl:flex">
-					<img src={frame} alt="Frame" />
-				</div>
-			</div>
-		</div>
-	)
-}
-
-export default LoginPage
+export default LoginPage;

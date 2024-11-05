@@ -2,8 +2,13 @@ import { Button } from "@/components/commons/ui/button.jsx";
 import { Link } from "react-router-dom";
 import { Icons } from "@/components/commons/others/icons.jsx";
 import { useLocalStorage } from 'usehooks-ts';
+import React from "react"
 
-const Footer = () => {
+type FooterProps = {
+  openDialog: () => void
+}
+
+const Footer: React.FC<FooterProps> = ({openDialog}) => {
   const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
 
   return (
@@ -29,9 +34,9 @@ const Footer = () => {
           </Link>
           {!userData && (
             <div className="flex items-center space-x-4">
-              <Link to="/login" className="font-semibold text-gray-900 transition hover:text-gray-900">
+              <button onClick={openDialog} className="font-semibold text-gray-900 transition hover:text-gray-900">
                 Connexion
-              </Link>
+              </button>
               <Button variant="gradient" className="rounded-full px-6">
                 Créer mon compte
               </Button>

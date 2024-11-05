@@ -7,8 +7,13 @@ import LevuppLogo from "@/assets/img/levup.png";
 import PernodRicardLogo from "@/assets/img/pernod-ricard.png";
 import { Icons } from "@/components/commons/others/icons.jsx";
 import { useLocalStorage } from 'usehooks-ts';
+import React from "react"
 
-const Emplois = () => {
+type EmploisProps = {
+	openDialog: () => void
+}
+
+const Emplois:React.FC<EmploisProps> = ({openDialog}) => {
 	const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
 
 	return (
@@ -42,7 +47,7 @@ const Emplois = () => {
 
 							{!userData ? (
 								<div className="flex flex-wrap gap-4">
-									<Button variant="outline" className="rounded-full px-8 py-4">
+									<Button variant="outline" onClick={openDialog} className="rounded-full px-8 py-4">
 										Connexion
 									</Button>
 									<Button variant="gradient2" className="rounded-full px-8 py-4">
