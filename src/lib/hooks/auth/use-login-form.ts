@@ -5,7 +5,7 @@ import {LoginSchema, loginSchema} from '@/lib/schemas-validation-form/loginValid
 import {IConnectionApi} from "@/lib/interfaces/IConnectionApi.ts"
 import {UserSignInResponse} from "@/lib/types/api/responses/UserSignInResponse.ts"
 import {UserSignInRequest} from "@/lib/types/api/requests/UserSignInRequest.ts"
-import {useMainHooks} from "@/lib/hooks/main.tsx";
+import {useNavigationContext} from "@/lib/context/navigation-context.tsx";
 
 export const useLoginForm = (connectionApi: IConnectionApi) => {
     const {
@@ -14,30 +14,29 @@ export const useLoginForm = (connectionApi: IConnectionApi) => {
         startSubmitting,
         stopSubmitting,
         displayErrorMessage,
-		redirectToHome,
-    } = useMainHooks();
+    } = useNavigationContext();
 
     const loginFormSchema = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            identifiant: '',
+            email: '',
             password: '',
         },
     });
 
     const storeUserInLocalStorage = (user: UserSignInResponse) => {
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('userData', JSON.stringify(user));
         localStorage.setItem('justLoggedIn', 'true');
     };
 
-    const handleFormSubmit = async ({identifiant, password}: UserSignInRequest) => {
+    const handleFormSubmit = async ({email, password}: UserSignInRequest) => {
         startSubmitting();
-        const response = await connectionApi.login({identifiant, password});
+        const response = await connectionApi.login({email, password});
         stopSubmitting();
 
         if (response.status === 'success') {
             storeUserInLocalStorage(response.data);
-            redirectToHome();
+            location.reload();
         } else if (response.status === 'error') {
             displayErrorMessage(response.error);
         }

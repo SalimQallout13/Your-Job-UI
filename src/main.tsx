@@ -8,6 +8,7 @@ import {BrowserRouter as Router} from "react-router-dom"
 import {TooltipProvider} from "./components/commons/ui/tooltip.tsx"
 import {ToastProvider} from "@/components/commons/ui/toast.tsx"
 import {DashboardErrorProvider} from "./lib/context/dashboard-error-context.tsx"
+import { NavigationProvider } from "@/lib/context/navigation-context.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <DashboardErrorProvider>
                 <TooltipProvider>
                     <ToastProvider>
+                      <NavigationProvider>
                             <App/>
+                        </NavigationProvider>
                     </ToastProvider>
                 </TooltipProvider>
             </DashboardErrorProvider>

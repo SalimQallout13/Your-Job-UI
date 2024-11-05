@@ -5,7 +5,7 @@ import {BulletinValidation, bulletinValidation} from "@/lib/schemas-validation-f
 import {Bulletin} from "@/lib/class/Bulletin.ts";
 import {showToast} from "@/lib/hooks/use-toast.tsx";
 import {BadgeCheck} from "lucide-react";
-import {useMainHooks} from "@/lib/hooks/main.tsx";
+import {useMainHooks} from "@/lib/hooks/navigation-context.tsx";
 import {getDate} from "@/lib/utils/date.ts";
 
 export const useBulletinForm = (connectionApi: IConnectionApi) => {

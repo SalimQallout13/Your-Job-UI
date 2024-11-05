@@ -62,7 +62,7 @@ const showFinalLogoutToast = (toast: (props: ToastProps) => void): void => {
 };
 
 const handleLogout = (toast: (props: ToastProps) => void, navigate: (path: string) => void): void => {
-    localStorage.removeItem('user');
+    localStorage.removeItem('userData');
     localStorage.removeItem('justLoggedIn');
     setTimeout(() => {
         showInitialLogoutToast(toast);
@@ -73,7 +73,7 @@ const handleLogout = (toast: (props: ToastProps) => void, navigate: (path: strin
     }, 2900);
 
     setTimeout(() => {
-        navigate(ROUTES.LOGIN);
+        navigate(ROUTES.HOME_PATH);
     }, 3000);
 };
 

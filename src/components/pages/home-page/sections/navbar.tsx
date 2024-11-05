@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { Button } from "@/components/commons/ui/button.jsx"
 import { Menu } from "lucide-react"
 import { useLocalStorage } from "usehooks-ts"
+import { useLogout } from "@/lib/hooks/auth/use-logout.tsx";
 
 type NavbarProps = {
 	openDialog: () => void
@@ -9,14 +10,11 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({openDialog}) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-	const [userData, setUserData] = useLocalStorage<{ name: string } | null>("userData", null)
+	const [userData] = useLocalStorage<{ prenom: string } | null>("userData", null)
+	const { handleLogout } = useLogout(); // Utilisation du hook `useLogout`
 
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen)
-	}
-
-	const logout = () => {
-		setUserData(null)
 	}
 
 	return (
@@ -57,9 +55,9 @@ const Navbar: React.FC<NavbarProps> = ({openDialog}) => {
 					) : (
 						<div className="flex items-center space-x-4">
               <span className="font-semibold text-white">
-                Bonjour, {userData.name}
+                Bonjour, {userData.prenom}
               </span>
-							<Button variant="gradient2" size="sm" onClick={logout}>
+							<Button variant="gradient2" size="sm" onClick={handleLogout}>
 								Déconnexion
 							</Button>
 						</div>
@@ -109,9 +107,9 @@ const Navbar: React.FC<NavbarProps> = ({openDialog}) => {
 						) : (
 							<div className="flex flex-col items-center space-y-2">
                 <span className="font-semibold text-white">
-                  Bonjour, {userData.name}
+                  Bonjour, {userData.prenom}
                 </span>
-								<Button variant="gradient2" size="sm" onClick={logout}>
+								<Button variant="gradient2" size="sm" onClick={handleLogout}>
 									Déconnexion
 								</Button>
 							</div>

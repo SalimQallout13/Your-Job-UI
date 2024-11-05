@@ -13,7 +13,7 @@ export default function NotFoundPage() {
 				</div>
 				<Link
 					className="bg-primaryHexacoffre hover:bg-accent-primaryHexacoffre inline-flex h-10 items-center justify-center rounded-md px-6 text-sm font-medium text-gray-50 shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50"
-					to={ROUTES.LOGIN}
+					to={ROUTES.HOME_PATH}
 				>
 					Retourner à la page d'accueil
 				</Link>

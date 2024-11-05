@@ -1,6 +1,5 @@
 export const ROUTES_BACK = {
-	SIGNIN: "/connexion",
-	BULLETIN: "/bulletins",
+	SIGNIN: "/auth/connexion",
 } as const;
 
 export type RoutesBackType = typeof ROUTES_BACK[keyof typeof ROUTES_BACK];

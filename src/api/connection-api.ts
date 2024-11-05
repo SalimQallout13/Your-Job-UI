@@ -23,7 +23,7 @@ export class ConnectionApi implements IConnectionApi {
 
     public async createBulletin(bulletin: Bulletin): Promise<ApiResponse<Bulletin>> {
         try {
-            const response = await axiosInstance.post(ROUTES_BACK.BULLETIN, bulletin);
+            const response = await axiosInstance.post(ROUTES_BACK.SIGNIN, bulletin);
             return {status: 'success', data: response.data};
         } catch (error) {
             if (axios.isAxiosError(error)) {

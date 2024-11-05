@@ -29,7 +29,7 @@ class ApiInstance {
 	}
 }
 
-const apiInstance = new ApiInstance(import.meta.env.VITE_API_URL as string);
+const apiInstance = new ApiInstance("https://your-job.fr:8181/api");
 const axiosInstance = apiInstance.getInstance();
 
 export { axiosInstance };

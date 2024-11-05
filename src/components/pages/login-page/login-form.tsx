@@ -25,12 +25,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ closeDialog }) => {
 										{errorMessage && <Message message={errorMessage} type={"alert"} />}
 										<FormField
 											control={loginFormSchema.control}
-											name="identifiant"
+											name="email"
 											render={({ field }) => (
 												<FormItem>
 													<FormLabel>Adresse mail</FormLabel>
 													<FormControl>
-														<Input autoComplete="identifiant" placeholder="john.doe@gmail.com" {...field}
+														<Input autoComplete="email" placeholder="john.doe@gmail.com" {...field}
 																	 className="bg-white text-black" />
 													</FormControl>
 													<FormMessage />
