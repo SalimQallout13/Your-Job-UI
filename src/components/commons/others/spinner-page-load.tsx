@@ -1,4 +1,3 @@
-
 const SpinnerPageLoad = () => {
   return (
     // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
