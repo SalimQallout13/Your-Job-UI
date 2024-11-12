@@ -205,7 +205,6 @@ a {
 a:hover,
 a:focus,
 a:active {
-  color: inherit !important; /* Empêche le changement de couleur au survol */
   text-decoration: none;     /* Retire le soulignement au survol */
 }
 
