@@ -4,7 +4,6 @@ import Emplois from "@/components/pages/home-page/sections/emplois.tsx"
 import CvAndAvis from "./sections/cv-and-avis"
 import EmailAlerts from "./sections/email-alerts"
 import Footer from "@/components/pages/home-page/sections/footer.tsx"
-import LoginPage from "@/components/pages/login-page/login-page.tsx"
 import { useState } from "react"
 
 const HomePage = () => {
@@ -12,17 +11,16 @@ const HomePage = () => {
 	const [isOpen, setIsOpen] = useState(false)
 
 	// Fonction pour ouvrir le modal
-	const openDialog = () => setIsOpen(true)
+	const openLoginDialog = () => setIsOpen(true)
 
 	return (
 		<div>
-			<LoginPage isOpen={isOpen} setIsOpen={setIsOpen}/>
-			<Navbar openDialog={openDialog}/>
+			<Navbar isOpen={isOpen} setIsOpen={setIsOpen} openLoginDialog={openLoginDialog}/>
 			<Hero/>
-			<Emplois openDialog={openDialog}/>
-			<CvAndAvis openDialog={openDialog}/>
+			<Emplois openLoginDialog={openLoginDialog}/>
+			<CvAndAvis openLoginDialog={openLoginDialog}/>
 			<EmailAlerts/>
-			<Footer openDialog={openDialog}/>
+			<Footer openLoginDialog={openLoginDialog}/>
 		</div>
 	)
 }

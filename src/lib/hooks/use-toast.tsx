@@ -3,7 +3,7 @@ import * as React from "react"
 import type {
   ToastActionElement,
   ToastProps,
-} from "@/components/commons/ui/toast.tsx"
+} from "@/components/ui/toast.tsx"
 import { ReloadIcon } from "@radix-ui/react-icons"
 
 const TOAST_LIMIT = 1

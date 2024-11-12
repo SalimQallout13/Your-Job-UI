@@ -1,13 +1,13 @@
-import {Button} from '@/components/commons/ui/button.tsx';
-import {Input} from '@/components/commons/ui/input.tsx';
-import {Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from '@/components/commons/ui/form.tsx';
-import {Card, CardContent} from '@/components/commons/ui/card.tsx';
+import React from "react"
+import {Button} from '@/components/ui/button.tsx';
+import {Input} from '@/components/ui/input.tsx';
+import {Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from '@/components/ui/form.tsx';
+import {Card, CardContent} from '@/components/ui/card.tsx';
 import {Link} from 'react-router-dom';
 import {useLoginForm} from "@/lib/hooks/auth/use-login-form.ts";
 import {ConnectionApi} from "@/api/connection-api.ts";
-import {Message} from "@/components/commons/ui/alert.tsx"
-import Paragraph from "@/components/commons/ui/paragraph.tsx";
-import React from "react"
+import {Message} from "@/components/ui/alert.tsx"
+import Paragraph from "@/components/ui/paragraph.tsx";
 
 interface LoginFormProps {
 	closeDialog: () => void;
@@ -63,7 +63,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ closeDialog }) => {
 													Annuler
 												</Button>
 												<FormControl>
-													<Button variant="gradient"  onClick={loginFormSchema.handleSubmit(submitLoginForm)}
+													<Button variant="gradient" onClick={loginFormSchema.handleSubmit(submitLoginForm)}
 																	disabled={isSubmitting}>
 														{isSubmitting ? "Connexion en cours..." : "Connexion"}
 													</Button>

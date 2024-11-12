@@ -1,19 +1,19 @@
-import { Button } from "@/components/commons/ui/button.jsx";
-import { Card, CardContent } from "@/components/commons/ui/card.jsx";
+import { Button } from "@/components/ui/button.jsx";
+import { Card, CardContent } from "@/components/ui/card.jsx";
 import EmploiSectionImg from "@/assets/img/emploi-section.png";
 import TriIcon from "@/assets/icons/tri-icon.png";
 import CocaColaLogo from "@/assets/img/cocacola.png";
 import LevuppLogo from "@/assets/img/levup.png";
 import PernodRicardLogo from "@/assets/img/pernod-ricard.png";
-import { Icons } from "@/components/commons/others/icons.jsx";
+import { Icons } from "@/components/others/icons.jsx";
 import { useLocalStorage } from 'usehooks-ts';
 import React from "react"
 
 type EmploisProps = {
-	openDialog: () => void
+	openLoginDialog: () => void
 }
 
-const Emplois:React.FC<EmploisProps> = ({openDialog}) => {
+const Emplois:React.FC<EmploisProps> = ({openLoginDialog}) => {
 	const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
 
 	return (
@@ -47,7 +47,7 @@ const Emplois:React.FC<EmploisProps> = ({openDialog}) => {
 
 							{!userData ? (
 								<div className="flex flex-wrap gap-4">
-									<Button variant="outline" onClick={openDialog} className="rounded-full px-8 py-4">
+									<Button variant="outline" onClick={openLoginDialog} className="rounded-full px-8 py-4">
 										Connexion
 									</Button>
 									<Button variant="gradient2" className="rounded-full px-8 py-4">

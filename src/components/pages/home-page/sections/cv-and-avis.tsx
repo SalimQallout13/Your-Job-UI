@@ -5,18 +5,18 @@ import {
 	CarouselItem,
 	CarouselNext,
 	CarouselPrevious
-} from "@/components/commons/ui/carousel.jsx"
+} from "@/components/ui/carousel.jsx"
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/commons/ui/button.jsx"
+import { Button } from "@/components/ui/button.jsx"
 import CvAndAvisImage from "@/assets/img/cv-and-avis-section.png"
-import { Icons } from "@/components/commons/others/icons.jsx"
+import { Icons } from "@/components/others/icons.jsx"
 import { useLocalStorage } from 'usehooks-ts';
 
 type CvAndAvisProps = {
-	openDialog: () => void
+	openLoginDialog: () => void
 }
 
-const CvAndAvis:React.FC<CvAndAvisProps> = ({openDialog}) => {
+const CvAndAvis:React.FC<CvAndAvisProps> = ({openLoginDialog}) => {
 	const [api, setApi] = useState<CarouselApi | null>(null)
 	const [current, setCurrent] = useState(0)
 	const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
@@ -72,7 +72,7 @@ const CvAndAvis:React.FC<CvAndAvisProps> = ({openDialog}) => {
 
 							{!userData ? (
 								<div className="flex flex-wrap justify-center gap-4 md:!justify-start">
-									<Button variant="outline" onClick={openDialog} className="rounded-full px-8 py-4 text-base">
+									<Button variant="outline" onClick={openLoginDialog} className="rounded-full px-8 py-4 text-base">
 										Connexion
 									</Button>
 									<Button variant="gradient2" className="rounded-full px-8 py-4 text-base">

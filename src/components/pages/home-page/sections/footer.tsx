@@ -1,14 +1,14 @@
-import { Button } from "@/components/commons/ui/button.jsx";
+import { Button } from "@/components/ui/button.jsx";
 import { Link } from "react-router-dom";
-import { Icons } from "@/components/commons/others/icons.jsx";
+import { Icons } from "@/components/others/icons.jsx";
 import { useLocalStorage } from 'usehooks-ts';
 import React from "react"
 
 type FooterProps = {
-  openDialog: () => void
+  openLoginDialog: () => void
 }
 
-const Footer: React.FC<FooterProps> = ({openDialog}) => {
+const Footer: React.FC<FooterProps> = ({openLoginDialog}) => {
   const [userData] = useLocalStorage<{ name: string } | null>('userData', null);
 
   return (
@@ -34,7 +34,7 @@ const Footer: React.FC<FooterProps> = ({openDialog}) => {
           </Link>
           {!userData && (
             <div className="flex items-center space-x-4">
-              <button onClick={openDialog} className="font-semibold text-gray-900 transition hover:text-gray-900">
+              <button onClick={openLoginDialog} className="font-semibold text-gray-900 transition hover:text-gray-900">
                 Connexion
               </button>
               <Button variant="gradient" className="rounded-full px-6">

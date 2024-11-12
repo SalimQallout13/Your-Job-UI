@@ -1,5 +1,5 @@
 // navigation-context.tsx
-import { createContext, useContext, useState, ReactNode } from "react"
+import { createContext, useContext, useState, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/lib/configs/routes"
 
@@ -11,6 +11,8 @@ interface NavigationContextType {
 	stopSubmitting: () => void;
 	redirectToHome: () => void;
 	displayErrorMessage: (error: string) => void;
+	userData: { prenom: string } | null;
+	setUserData: (user: { prenom: string } | null) => void;
 }
 
 // Création du contexte
@@ -31,8 +33,22 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const clearErrorMessageAfterDelay = () => {
-		setTimeout(() => setErrorMessage(null), 5000)
+		setTimeout(() => setErrorMessage(null), 105000)
 	}
+
+	const [userData, setUserData] = useState<{ prenom: string } | null>(() => {
+		const storedUser = localStorage.getItem("userData")
+		return storedUser ? JSON.parse(storedUser) : null
+	})
+
+
+	useEffect(() => {
+		if (userData) {
+			localStorage.setItem("userData", JSON.stringify(userData))
+		} else {
+			localStorage.removeItem("userData")
+		}
+	}, [userData])
 
 	return (
 		<NavigationContext.Provider
@@ -42,7 +58,8 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 				startSubmitting,
 				stopSubmitting,
 				redirectToHome,
-				displayErrorMessage
+				displayErrorMessage,
+				userData, setUserData
 			}}
 		>
 			{children}

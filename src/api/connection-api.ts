@@ -5,7 +5,7 @@ import {UserSignInResponse} from "@/lib/types/api/responses/UserSignInResponse.t
 import {ApiResponse} from "@/lib/types/api/ApiResponse.ts";
 import {UserSignInRequest} from "@/lib/types/api/requests/UserSignInRequest.ts";  // Importation du type de requête
 import {ROUTES_BACK} from "@/lib/configs/routes-back.ts";
-import {Bulletin} from "@/lib/class/Bulletin.ts";  // Importation des routes
+import { UpdateProfileRequest } from "@/lib/types/api/requests/UpdateProfileRequest.ts"  // Importation des routes
 
 export class ConnectionApi implements IConnectionApi {
     public async login(credentials: UserSignInRequest): Promise<ApiResponse<UserSignInResponse>> {
@@ -21,9 +21,9 @@ export class ConnectionApi implements IConnectionApi {
         }
     }
 
-    public async createBulletin(bulletin: Bulletin): Promise<ApiResponse<Bulletin>> {
+    public async updateProfile(form: UpdateProfileRequest): Promise<ApiResponse<any>> {
         try {
-            const response = await axiosInstance.post(ROUTES_BACK.SIGNIN, bulletin);
+            const response = await axiosInstance.patch(ROUTES_BACK.UPDATE_PROFILE, form);
             return {status: 'success', data: response.data};
         } catch (error) {
             if (axios.isAxiosError(error)) {

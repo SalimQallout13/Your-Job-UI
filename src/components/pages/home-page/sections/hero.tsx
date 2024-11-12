@@ -1,9 +1,9 @@
-import { Button } from "@/components/commons/ui/button.jsx";
+import { Button } from "@/components/ui/button.jsx";
 import heroImage from "@/assets/img/hero-image.png";
 import SearchIcon from "@/assets/icons/search-icon.png";
 import TriIcon from "@/assets/icons/tri-icon.png";
 import { MapPin } from "lucide-react";
-import { Icons } from "@/components/commons/others/icons.jsx";
+import { Icons } from "@/components/others/icons.jsx";
 
 const Hero = () => {
 	return (
