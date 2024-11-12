@@ -7,9 +7,11 @@ import "typeface-inter"
 import React from "react"
 import HomePage from "@/components/pages/home-page/home-page.tsx"
 import ProfilePage from "@/components/pages/profile/profile-page.tsx"
+import SignUpPage from "./components/pages/signup-page/sign-up-page"
 
 const routes = [
 	{ path: "/profile", element: <ProfilePage /> },
+	{ path: "/signup", element: <SignUpPage /> },
 	{ path: "/", element: <HomePage /> },
 	{ path: "*", element: <NotFoundPage /> }
 ]
