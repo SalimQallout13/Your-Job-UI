@@ -5,6 +5,7 @@ import { useLogout } from "@/lib/hooks/auth/use-logout.tsx"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import LoginPage from "@/components/pages/login-page/login-page.tsx"
 import { Link } from "react-router-dom"
+import { ROUTES } from "@/lib/configs/routes.ts"
 
 type NavbarProps = {
 	isOpen: boolean;
@@ -55,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
 									Connexion
 								</button>
 								<Button variant="gradient" size="lg">
-									Créer mon compte
+									<Link to={ROUTES.SIGNUP_PATH} className="text-white">Créer mon compte</Link>
 								</Button>
 							</>
 						) : (

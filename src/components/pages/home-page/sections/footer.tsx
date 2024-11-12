@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Icons } from "@/components/others/icons.jsx";
 import { useLocalStorage } from 'usehooks-ts';
 import React from "react"
+import { ROUTES } from "@/lib/configs/routes.ts"
 
 type FooterProps = {
   openLoginDialog: () => void
@@ -38,7 +39,7 @@ const Footer: React.FC<FooterProps> = ({openLoginDialog}) => {
                 Connexion
               </button>
               <Button variant="gradient" className="rounded-full px-6">
-                Créer mon compte
+                <Link to={ROUTES.SIGNUP_PATH} className="text-white">Créer mon compte</Link>
               </Button>
             </div>
           )}

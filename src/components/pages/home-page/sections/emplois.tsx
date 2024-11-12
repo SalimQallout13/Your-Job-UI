@@ -8,6 +8,8 @@ import PernodRicardLogo from "@/assets/img/pernod-ricard.png";
 import { Icons } from "@/components/others/icons.jsx";
 import { useLocalStorage } from 'usehooks-ts';
 import React from "react"
+import { Link } from "react-router-dom"
+import { ROUTES } from "@/lib/configs/routes.ts"
 
 type EmploisProps = {
 	openLoginDialog: () => void
@@ -51,7 +53,7 @@ const Emplois:React.FC<EmploisProps> = ({openLoginDialog}) => {
 										Connexion
 									</Button>
 									<Button variant="gradient2" className="rounded-full px-8 py-4">
-										Créer mon compte
+										<Link to={ROUTES.SIGNUP_PATH} className="text-white">Créer mon compte</Link>
 									</Button>
 								</div>
 							) : (
