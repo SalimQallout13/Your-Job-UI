@@ -5,6 +5,10 @@ import {
   type LucideIcon,
 } from "lucide-react"
 
+import SignupCandidatIcon from "@/assets/icons/signup-candidat-icon.png"
+import SignupEmployeurIcon from "@/assets/icons/signup-employeur-icon.png"
+import SignupSelectCardIcon from "@/assets/icons/signup-select-card-icon.png"
+
 export type Icon = LucideIcon
 
 import DesignIcon from "@/assets/icons/design-icon.png";
@@ -69,6 +73,7 @@ export const Icons = {
   serviceClient: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
     <img src={ServiceClientIcon} alt="Service client icon" className={className} {...props} />
   ),
+
   tiktok: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
     <img src={TikTokIcon} alt="TikTok icon" className={className} {...props} />
   ),
@@ -80,6 +85,15 @@ export const Icons = {
   ),
   market: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
     <img src={MarketIcon} alt="Market icon" className={className} {...props} />
+  ),
+  signupCandidat: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
+    <img src={SignupCandidatIcon} alt="Signup Candidat icon" className={className} {...props} />
+  ),
+  signupEmployeur: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
+    <img src={SignupEmployeurIcon} alt="Signup Employeur icon" className={className} {...props} />
+  ),
+  signupSelectCard: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
+    <img src={SignupSelectCardIcon} alt="Signup Select Card icon" className={className} {...props} />
   ),
   warning: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
