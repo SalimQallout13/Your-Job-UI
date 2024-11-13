@@ -57,7 +57,7 @@ export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 };
 
 // Hook personnalisé pour consommer le contexte d'inscription
-export const useSignup = () => {
+export const useSignupContext = () => {
 	const context = useContext(SignupContext);
 	if (context === undefined) {
 		throw new Error('useSignup must be used within a SignupProvider');
