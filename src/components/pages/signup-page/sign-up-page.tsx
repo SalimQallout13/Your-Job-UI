@@ -1,14 +1,37 @@
+import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { SignupProvider, SignupStep, UserType, useSignup } from "@/lib/context/signup-context";
+import { SignupProvider, SignupStep, UserType, useSignupContext } from "@/lib/context/signup-context";
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils/utils";
 import heroImage from "@/assets/img/hero-image.png";
+import signupForm2 from "@/assets/img/signup-form-2.png";
+import { Icons } from "@/components/others/icons.jsx";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { signupDetailsSchema, SignupSchema } from "@/lib/schemas-validation-form/signupValidation.ts";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type SignupFormSectionProps = {
 	userType: UserType;
 	setUserType: (type: UserType) => void;
-	setCurrentStep: (step: SignupStep) => void;
+};
+
+type SignupDetailsSectionProps = {
+	updateFormData: (data: Record<string, unknown>) => void;
+};
+
+type SignupNavigationButtonsProps = {
+	onBack: () => void;
+	onNext: () => void;
+	nextDisabled?: boolean;
+	isSubmit?: boolean;
+};
+
+type SignupHeaderProps = {
+	title: string;
+	description: string;
 };
 
 type SignupCardProps = {
@@ -16,29 +39,36 @@ type SignupCardProps = {
 	onClick: () => void;
 	title: string;
 	description: string;
-};
-
-type SignupActionsProps = {
-	setCurrentStep: (step: SignupStep) => void;
-	userType: UserType;
+	icon: React.ReactNode;
 };
 
 const SignupContent = () => {
-	const { userType, setUserType, setCurrentStep } = useSignup();
+	const { userType, currentStep, setUserType, updateFormData } = useSignupContext();
 
 	return (
 		<div className="flex min-h-screen flex-col overflow-hidden xl:flex-row">
-			<SignupImageSection />
-			<SignupFormSection userType={userType} setUserType={setUserType} setCurrentStep={setCurrentStep} />
+			<SignupImageSection currentStep={currentStep} />
+			<div className="w-full bg-white p-8 xl:w-1/2 xl:p-16">
+				<div className="mx-auto max-w-xl">
+					<Logo />
+					<div className="space-y-8">
+						{currentStep === 1 ? (
+							<SignupFormSection userType={userType} setUserType={setUserType} />
+						) : (
+							<SignupDetailsSection updateFormData={updateFormData} />
+						)}
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
 
-const SignupImageSection = () => (
+const SignupImageSection = ({ currentStep }: { currentStep: SignupStep }) => (
 	<div className="relative h-[50vh] w-full xl:h-screen xl:w-1/2">
 		<img
-			src={heroImage}
-			alt="Professional woman"
+			src={currentStep === 1 ? heroImage : signupForm2}
+			alt="Professional"
 			className="absolute inset-0 size-full rounded-3xl object-cover p-3"
 		/>
 		{/* Gradient overlay */}
@@ -53,30 +83,187 @@ const SignupImageSection = () => (
 	</div>
 );
 
-const SignupFormSection = ({ userType, setUserType, setCurrentStep }: SignupFormSectionProps) => (
-	<div className="w-full bg-white p-8 xl:w-1/2 xl:p-16">
-		<div className="mx-auto max-w-xl">
-			<Logo />
-			<div className="space-y-8">
-				<SignupHeader />
+const SignupFormSection = ({ userType, setUserType }: SignupFormSectionProps) => {
+	const { setCurrentStep } = useSignupContext();
+
+	return (
+		<>
+			<SignupHeader
+				title="Comment souhaitez-vous utiliser YourJob ?"
+				description="Choisissez votre voie et commencez votre aventure dans le monde du travail, que vous soyez en quête de talents ou de votre prochaine opportunité."
+			/>
+			<div className="space-y-7">
 				<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 					<SignupCard
 						isSelected={userType === 'candidate'}
 						onClick={() => setUserType('candidate')}
 						title="Trouver un emploi"
 						description="Prêt à découvrir de nouvelles opportunités ?"
+						icon={<Icons.signupCandidat className="size-8" />}
 					/>
 					<SignupCard
 						isSelected={userType === 'employer'}
 						onClick={() => setUserType('employer')}
 						title="Recruter des profils"
 						description="Trouvez les talents qui feront la différence."
+						icon={<Icons.signupEmployeur className="size-8" />}
 					/>
 				</div>
-				<SignupActions setCurrentStep={setCurrentStep} userType={userType} />
+				<SignupNavigationButtons
+					onBack={() => window.history.back()}
+					onNext={() => setCurrentStep(2)}
+					nextDisabled={!userType}
+				/>
 				<LoginLink />
 			</div>
-		</div>
+		</>
+	);
+};
+
+const SignupDetailsSection = ({ updateFormData }: SignupDetailsSectionProps) => {
+	const { setCurrentStep } = useSignupContext();
+
+	const signupFormSchema = useForm<SignupSchema>({
+		resolver: zodResolver(signupDetailsSchema),
+		defaultValues: {
+			firstName: '',
+			lastName: '',
+			phoneNumber: '',
+			email: '',
+			password: '',
+			confirmPassword: '',
+		},
+	});
+
+	const { handleSubmit } = signupFormSchema;
+
+	const onSubmit = (data: SignupSchema) => {
+		updateFormData(data);
+		setCurrentStep(3);
+	};
+
+	return (
+		<>
+			<SignupHeader
+				title="Créez vos identifiants pour commencer !"
+				description="Entrez vos informations de connexion pour accéder à votre tableau de bord et démarrer votre parcours."
+			/>
+			<div className="space-y-7">
+				<Form {...signupFormSchema}>
+					<form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+						<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+							<FormField
+								name="firstName"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Prénom</FormLabel>
+										<FormControl>
+											<Input placeholder="Thomas" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								name="lastName"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Nom</FormLabel>
+										<FormControl>
+											<Input placeholder="Puget" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+							<FormField
+								name="phoneNumber"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Numéro de téléphone</FormLabel>
+										<FormControl>
+											<Input placeholder="06 66 41 62 67" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								name="email"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Adresse mail</FormLabel>
+										<FormControl>
+											<Input placeholder="tpuget@levupp.com" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+							<FormField
+								name="password"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Mot de passe</FormLabel>
+										<FormControl>
+											<Input type="password" placeholder="************" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+							<FormField
+								name="confirmPassword"
+								render={({ field }) => (
+									<FormItem>
+										<FormLabel>Confirmation du mot de passe</FormLabel>
+										<FormControl>
+											<Input type="password" placeholder="************" {...field} />
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+						</div>
+						<SignupNavigationButtons
+							onBack={() => setCurrentStep(1)}
+							onNext={() => {}}
+							isSubmit={true}
+						/>
+					</form>
+				</Form>
+			</div>
+		</>
+	);
+};
+
+const SignupNavigationButtons = ({
+																	 onBack,
+																	 onNext,
+																	 nextDisabled = false,
+																	 isSubmit = false,
+																 }: SignupNavigationButtonsProps) => (
+	<div className="flex justify-center gap-4 pt-6 xl:justify-start">
+		<Button
+			variant="outline"
+			className="rounded-full px-8 py-3"
+			onClick={onBack}
+		>
+			Retour
+		</Button>
+		<Button
+			variant="gradient2"
+			className="rounded-full bg-purple px-8 py-3 text-white"
+			disabled={nextDisabled}
+			onClick={!isSubmit ? onNext : undefined}
+			type={isSubmit ? 'submit' : 'button'}
+		>
+			Suivant
+		</Button>
 	</div>
 );
 
@@ -86,62 +273,36 @@ const Logo = () => (
 	</div>
 );
 
-const SignupHeader = () => (
+const SignupHeader = ({ title, description }: SignupHeaderProps) => (
 	<div className="pt-4 text-center xl:text-left">
-		<h2 className="mb-6 text-3xl font-bold text-black-primary lg:max-w-[450px]">
-			Comment souhaitez-vous utiliser YourJob ?
-		</h2>
-		<p className="text-lg text-gray-600">
-			Choisissez votre voie et commencez votre aventure dans le monde du travail, que vous soyez en quête de talents ou de votre prochaine opportunité.
-		</p>
+		<h2 className="mb-6 text-3xl font-semibold text-black-primary">{title}</h2>
+		<p className="text-lg text-gray-600">{description}</p>
 	</div>
 );
 
-const SignupCard = ({ isSelected, onClick, title, description }: SignupCardProps) => (
+const SignupCard = ({ isSelected, onClick, title, description, icon }: SignupCardProps) => (
 	<Card
 		className={cn(
-			"relative cursor-pointer rounded-xl p-5 transition-all hover:shadow-lg",
+			"relative cursor-pointer rounded-xl p-5 bg-gray-50 transition-all hover:shadow-lg",
 			isSelected ? 'border-2 border-purple' : 'border border-gray-200'
 		)}
 		onClick={onClick}
 	>
 		{isSelected && (
-			<div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-full bg-purple p-2">
-				<svg className="size-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-				</svg>
+			<div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2 rounded-full bg-purple p-1">
+				<Icons.signupSelectCard className="size-6" />
 			</div>
 		)}
 		<CardContent className="text-center">
 			<div className="mb-4 mt-12 flex justify-center">
 				<div className="flex size-12 items-center justify-center rounded-xl bg-purple/10">
-					<svg className="size-6 text-purple" /* Ajoutez votre chemin SVG ici */ />
+					{icon}
 				</div>
 			</div>
 			<h3 className="mb-2 text-lg font-semibold">{title}</h3>
 			<p className="text-sm text-gray-500">{description}</p>
 		</CardContent>
 	</Card>
-);
-
-const SignupActions = ({ setCurrentStep, userType }: SignupActionsProps) => (
-	<div className="flex justify-center gap-4 pt-6 xl:justify-start">
-		<Button
-			variant="outline"
-			className="rounded-full px-8 py-3"
-			onClick={() => window.history.back()}
-		>
-			Retour
-		</Button>
-		<Button
-			variant="gradient2"
-			className="rounded-full bg-purple px-8 py-3 text-white"
-			disabled={!userType}
-			onClick={() => setCurrentStep(2)}
-		>
-			Suivant
-		</Button>
-	</div>
 );
 
 const LoginLink = () => (
