@@ -38,9 +38,11 @@ const Footer: React.FC<FooterProps> = ({openLoginDialog}) => {
               <button onClick={openLoginDialog} className="font-semibold text-gray-900 transition hover:text-gray-900">
                 Connexion
               </button>
-              <Button variant="gradient" className="rounded-full px-6">
-                <Link to={ROUTES.SIGNUP_PATH} className="text-white">Créer mon compte</Link>
-              </Button>
+              <Link to={ROUTES.SIGNUP_PATH}>
+                <Button variant="gradient" className="rounded-full px-6">
+                  Créer mon compte
+                </Button>
+              </Link>
             </div>
           )}
         </nav>

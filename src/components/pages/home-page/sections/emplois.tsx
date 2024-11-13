@@ -52,9 +52,11 @@ const Emplois:React.FC<EmploisProps> = ({openLoginDialog}) => {
 									<Button variant="outline" onClick={openLoginDialog} className="rounded-full px-8 py-4">
 										Connexion
 									</Button>
-									<Button variant="gradient2" className="rounded-full px-8 py-4">
-										<Link to={ROUTES.SIGNUP_PATH} className="text-white">Créer mon compte</Link>
-									</Button>
+									<Link to={ROUTES.SIGNUP_PATH}>
+										<Button variant="gradient2" className="rounded-full px-8 py-4">
+											Créer mon compte
+										</Button>
+									</Link>
 								</div>
 							) : (
 								<div className="flex flex-wrap justify-center gap-4 md:justify-start">
