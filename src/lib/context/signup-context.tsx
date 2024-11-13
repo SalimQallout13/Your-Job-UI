@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 // Définition des types pour le type d'utilisateur et l'étape du processus d'inscription
 export type UserType = 'candidate' | 'employer' | null;
-export type SignupStep = 1 | 2 | 3;
+export type SignupStep = 1 | 2 | 3 | 4;
 
 // Interface pour le contexte d'inscription, définissant les types de valeurs et méthodes
 interface SignupContextType {
