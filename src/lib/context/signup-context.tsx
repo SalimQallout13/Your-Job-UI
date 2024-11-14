@@ -1,38 +1,37 @@
+// lib/context/signup-context.tsx
 import React, { createContext, useContext, useState } from 'react';
+import { SignupSchema } from "@/lib/schemas-validation-form/signupValidation";
+import { ProfileSchema } from "@/lib/schemas-validation-form/profileValidation";
 
-// Définition des types pour le type d'utilisateur et l'étape du processus d'inscription
 export type UserType = 'candidate' | 'employer' | null;
-export type SignupStep = 1 | 2 | 3 | 4;
+export type SignupStep = 1 | 2 | 3;
 
-// Interface pour le contexte d'inscription, définissant les types de valeurs et méthodes
+interface FormData {
+	userDetails?: SignupSchema;
+	profile?: ProfileSchema;
+}
+
 interface SignupContextType {
 	userType: UserType;
 	currentStep: SignupStep;
-	formData: Record<string, any>;
+	formData: FormData;
 	setUserType: (type: UserType) => void;
 	setCurrentStep: (step: SignupStep) => void;
-	updateFormData: (data: Record<string, any>) => void;
+	updateFormData: (data: Partial<FormData>) => void;
 	resetForm: () => void;
 }
 
-// Création du contexte avec un type optionnel, initialisé à `undefined`
 const SignupContext = createContext<SignupContextType | undefined>(undefined);
 
-// Fournisseur du contexte pour encapsuler le processus d'inscription
 export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	// État pour stocker le type d'utilisateur (candidat ou employeur)
 	const [userType, setUserType] = useState<UserType>(null);
-	// État pour suivre l'étape actuelle du processus d'inscription
 	const [currentStep, setCurrentStep] = useState<SignupStep>(1);
-	// État pour stocker les données du formulaire d'inscription
-	const [formData, setFormData] = useState<Record<string, any>>({});
+	const [formData, setFormData] = useState<FormData>({});
 
-	// Fonction pour mettre à jour les données du formulaire en fusionnant les nouvelles valeurs
-	const updateFormData = (data: Record<string, any>) => {
+	const updateFormData = (data: Partial<FormData>) => {
 		setFormData(prev => ({ ...prev, ...data }));
 	};
 
-	// Fonction pour réinitialiser le formulaire aux valeurs initiales
 	const resetForm = () => {
 		setUserType(null);
 		setCurrentStep(1);
@@ -56,7 +55,6 @@ export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 	);
 };
 
-// Hook personnalisé pour consommer le contexte d'inscription
 export const useSignupContext = () => {
 	const context = useContext(SignupContext);
 	if (context === undefined) {
