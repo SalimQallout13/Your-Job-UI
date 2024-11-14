@@ -41,3 +41,14 @@ export const signupDetailsSchema = z.object({
 
 export type SignupSchema = z.infer<typeof signupDetailsSchema>;
 
+export const profileSchema = z.object({
+	photo: z.any().optional(),
+	currentPosition: z.string().min(2, "Le poste actuel est requis"),
+	ville: z.string().min(2, "La ville est requise"),
+	codePostal: z.string().min(5, "Le code postal est requis"),
+	adresse: z.string().min(2, "L'adresse est requise"),
+	cv: z.any().optional(),
+	motivationLetter: z.any().optional(),
+});
+
+export type ProfileSchema = z.infer<typeof profileSchema>;
