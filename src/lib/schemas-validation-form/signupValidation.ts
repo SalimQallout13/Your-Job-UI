@@ -41,14 +41,25 @@ export const signupDetailsSchema = z.object({
 
 export type SignupSchema = z.infer<typeof signupDetailsSchema>;
 
+
 export const profileSchema = z.object({
-	photo: z.any().optional(),
-	currentPosition: z.string().min(2, "Le poste actuel est requis"),
-	ville: z.string().min(2, "La ville est requise"),
-	codePostal: z.string().min(5, "Le code postal est requis"),
-	adresse: z.string().min(2, "L'adresse est requise"),
-	cv: z.any().optional(),
-	motivationLetter: z.any().optional(),
+	currentPosition: z.string().optional(),
+	ville: z.string(),
+	codePostal: z.string(),
+	adresse: z.string(),
+	photo: z.instanceof(File).optional(),
+	cv: z.instanceof(File),
+	motivationLetter: z.instanceof(File).optional(),
 });
 
 export type ProfileSchema = z.infer<typeof profileSchema>;
+
+
+
+export const employerProfileSchema = z.object({
+	companyName: z.string().min(3, "Le nom de l'entreprise est requis."),
+	companyWebsite: z.string().url("Veuillez entrer une URL valide."),
+	// Ajoutez d'autres champs si nécessaire
+});
+
+export type EmployerProfileSchema = z.infer<typeof employerProfileSchema>;

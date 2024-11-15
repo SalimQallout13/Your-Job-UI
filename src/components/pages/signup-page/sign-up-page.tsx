@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { SignupProvider, SignupStep, UserType, useSignupContext } from "@/lib/context/signup-context";
+import { SignupFormData, SignupProvider, SignupStep, UserType, useSignupContext } from "@/lib/context/signup-context"
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils/utils";
 import { Icons } from "@/components/others/icons";
@@ -13,7 +13,9 @@ import {
 	ProfileSchema,
 	profileSchema,
 	signupDetailsSchema,
-	SignupSchema
+	SignupSchema,
+	employerProfileSchema,
+	EmployerProfileSchema
 } from "@/lib/schemas-validation-form/signupValidation";
 import heroImage from "@/assets/img/hero-image.png";
 import signupForm2 from "@/assets/img/signup-form-2.png";
@@ -28,7 +30,7 @@ type SignupFormSectionProps = {
 };
 
 type SignupDetailsSectionProps = {
-	updateFormData: (data: Record<string, unknown>) => void;
+	updateFormData: (data: Partial<SignupFormData>) => void;
 };
 
 type SignupNavigationButtonsProps = {
@@ -64,7 +66,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 																										 accept,
 																										 maxSize,
 																										 onFileSelect,
-																											widthFull,
+																										 widthFull,
 																										 children,
 																									 }) => {
 	const [preview, setPreview] = useState<string | null>(null);
@@ -100,8 +102,8 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 			)}>
 				<input {...getInputProps()} />
 				{preview ? (
-					<div className="w-14 h-14 rounded-full overflow-hidden">
-						<img src={preview} alt="Preview" className="w-full h-full object-cover" />
+					<div className="size-14 overflow-hidden rounded-full">
+						<img src={preview} alt="Preview" className="size-full object-cover" />
 					</div>
 				) : (
 					children
@@ -110,12 +112,13 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 			{preview && (
 				<Button
 					variant="outline"
-					className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-2"
+					className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700"
 					onClick={() => setPreview(null)}
 				>
 					<Trash2 className="size-4" /> Supprimer
 				</Button>
 			)}
+
 		</div>
 
 	);
@@ -156,7 +159,7 @@ const SignupContent = () => {
 };
 
 const SignupImageSection = ({ currentStep, userType }: { currentStep: SignupStep, userType: UserType }) => (
-	<div className="relative hidden h-full w-full xl:block xl:w-1/2">
+	<div className="relative hidden size-full xl:block xl:w-1/2">
 		<img
 			src={currentStep === 1 ? heroImage : currentStep === 2 ? signupForm2 : (userType === 'candidate' ? signupForm3Candidate : signupForm3Employer)}
 			alt="Professional"
@@ -228,7 +231,7 @@ const SignupDetailsSection = ({ updateFormData }: SignupDetailsSectionProps) => 
 	const { handleSubmit } = signupFormSchema;
 
 	const onSubmit = (data: SignupSchema) => {
-		updateFormData(data);
+		updateFormData({ userDetails: data });
 		setCurrentStep(3);
 	};
 
@@ -330,7 +333,7 @@ const SignupDetailsSection = ({ updateFormData }: SignupDetailsSectionProps) => 
 	);
 };
 
-const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (data: Record<string, unknown>) => void }) => {
+const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
 	const { setCurrentStep } = useSignupContext();
 	const form = useForm<ProfileSchema>({
 		resolver: zodResolver(profileSchema),
@@ -338,6 +341,7 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 
 	const onSubmit = (data: ProfileSchema) => {
 		updateFormData({ profile: data });
+		// Vous pouvez ajouter une redirection ou une action supplémentaire ici
 	};
 
 	return (
@@ -362,7 +366,7 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 						</FileUploader>
 					</div>
 
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
 							name="currentPosition"
 							render={({ field }) => (
@@ -389,7 +393,7 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 						/>
 					</div>
 
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
 							name="codePostal"
 							render={({ field }) => (
@@ -416,7 +420,7 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 						/>
 					</div>
 
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<div className="space-y-4">
 							<FormLabel>CV</FormLabel>
 							<FileUploader
@@ -469,19 +473,15 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 	);
 };
 
+const SignupProfileEmployerSection = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
+	const { setCurrentStep } = useSignupContext();
+	const form = useForm<EmployerProfileSchema>({
+		resolver: zodResolver(employerProfileSchema),
+	});
 
-const SignupProfileEmployerSection = ({ updateFormData }: {
-	updateFormData: (data: Record<string, unknown>) => void
-}) => {
-	const { setCurrentStep } = useSignupContext()
-	const form = useForm({
-		// Vous pouvez définir un schéma spécifique pour l'employeur ici
-		// resolver: zodResolver(employerProfileSchema),
-	})
-
-	const onSubmit = (data: any) => {
+	const onSubmit = (data: EmployerProfileSchema) => {
 		updateFormData({ profile: data });
-		// Vous pouvez ajouter la logique pour l'étape suivante ou une redirection ici
+		// Vous pouvez ajouter une redirection ou une action supplémentaire ici
 	};
 
 	return (

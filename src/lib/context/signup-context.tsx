@@ -1,23 +1,45 @@
-// lib/context/signup-context.tsx
 import React, { createContext, useContext, useState } from 'react';
-import { SignupSchema } from "@/lib/schemas-validation-form/signupValidation";
-import { ProfileSchema } from "@/lib/schemas-validation-form/profileValidation";
 
 export type UserType = 'candidate' | 'employer' | null;
 export type SignupStep = 1 | 2 | 3;
 
-interface FormData {
+interface SignupSchema {
+	firstName: string;
+	lastName: string;
+	phoneNumber: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+}
+
+interface ProfileSchema {
+	currentPosition?: string;
+	ville: string;
+	codePostal: string;
+	adresse: string;
+	photo?: File;
+	cv: File;
+	motivationLetter?: File;
+}
+
+interface EmployerProfileSchema {
+	companyName: string;
+	companyWebsite: string;
+	// Ajoutez d'autres champs si nécessaire
+}
+
+export interface SignupFormData {
 	userDetails?: SignupSchema;
-	profile?: ProfileSchema;
+	profile?: ProfileSchema | EmployerProfileSchema;
 }
 
 interface SignupContextType {
 	userType: UserType;
 	currentStep: SignupStep;
-	formData: FormData;
+	formData: SignupFormData;
 	setUserType: (type: UserType) => void;
 	setCurrentStep: (step: SignupStep) => void;
-	updateFormData: (data: Partial<FormData>) => void;
+	updateFormData: (data: Partial<SignupFormData>) => void;
 	resetForm: () => void;
 }
 
@@ -26,9 +48,9 @@ const SignupContext = createContext<SignupContextType | undefined>(undefined);
 export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [userType, setUserType] = useState<UserType>(null);
 	const [currentStep, setCurrentStep] = useState<SignupStep>(1);
-	const [formData, setFormData] = useState<FormData>({});
+	const [formData, setFormData] = useState<SignupFormData>({});
 
-	const updateFormData = (data: Partial<FormData>) => {
+	const updateFormData = (data: Partial<SignupFormData>) => {
 		setFormData(prev => ({ ...prev, ...data }));
 	};
 
