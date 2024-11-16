@@ -43,13 +43,62 @@ export type SignupSchema = z.infer<typeof signupDetailsSchema>;
 
 
 export const profileSchema = z.object({
-	currentPosition: z.string().optional(),
-	ville: z.string(),
-	codePostal: z.string(),
-	adresse: z.string(),
-	photo: z.instanceof(File).optional(),
-	cv: z.instanceof(File),
-	motivationLetter: z.instanceof(File).optional(),
+	currentPosition: z.string().optional(), // Champ facultatif
+
+	ville: z.string()
+		.min(1, "La ville est requise")
+		.regex(/^[a-zA-ZÀ-ÿ\s-]+$/, "La ville ne doit contenir que des lettres, espaces et tirets")
+		.min(2, "La ville doit contenir au moins 2 caractères")
+		.max(50, "La ville ne peut pas dépasser 50 caractères"),
+
+	codePostal: z.string()
+		.regex(/^(?:0[1-9]|[1-9][0-9])\d{3}$/, "Le code postal doit être au format français (ex: 75001)")
+		.length(5, "Le code postal doit contenir exactement 5 chiffres"),
+
+	adresse: z.string()
+		.min(1, "L'adresse est requise")
+		.min(5, "L'adresse doit contenir au moins 5 caractères")
+		.max(100, "L'adresse ne peut pas dépasser 100 caractères")
+		.regex(/^[a-zA-Z0-9À-ÿ\s,'-]+$/, "L'adresse contient des caractères non valides"),
+
+	photo: z.instanceof(File)
+		.refine((file) => file !== null, {
+			message: "La photo de profil est requise"
+		})
+		.refine(
+			(file) => file && file.type.startsWith('image/'),
+			"Le fichier doit être une image"
+		)
+		.refine(
+			(file) => file && file.size <= 5 * 1024 * 1024,
+			"La taille de l'image ne doit pas dépasser 5 Mo"
+		),
+
+	cv: z.instanceof(File)
+		.refine((file) => file !== null, {
+			message: "Le CV est requis"
+		})
+		.refine(
+			(file) => file && file.type === 'application/pdf',
+			"Le fichier doit être au format PDF"
+		)
+		.refine(
+			(file) => file && file.size <= 10 * 1024 * 1024,
+			"La taille du CV ne doit pas dépasser 10 Mo"
+		),
+
+	motivationLetter: z.instanceof(File)
+		.refine((file) => file !== null, {
+			message: "La lettre de motivation est requise"
+		})
+		.refine(
+			(file) => file && file.type === 'application/pdf',
+			"Le fichier doit être au format PDF"
+		)
+		.refine(
+			(file) => file && file.size <= 10 * 1024 * 1024,
+			"La taille de la lettre de motivation ne doit pas dépasser 10 Mo"
+		),
 });
 
 export type ProfileSchema = z.infer<typeof profileSchema>;
@@ -59,7 +108,6 @@ export type ProfileSchema = z.infer<typeof profileSchema>;
 export const employerProfileSchema = z.object({
 	companyName: z.string().min(3, "Le nom de l'entreprise est requis."),
 	companyWebsite: z.string().url("Veuillez entrer une URL valide."),
-	// Ajoutez d'autres champs si nécessaire
 });
 
 export type EmployerProfileSchema = z.infer<typeof employerProfileSchema>;
