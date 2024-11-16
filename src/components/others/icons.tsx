@@ -8,6 +8,7 @@ import {
 import SignupCandidatIcon from "@/assets/icons/signup-candidat-icon.png"
 import SignupEmployeurIcon from "@/assets/icons/signup-employeur-icon.png"
 import SignupSelectCardIcon from "@/assets/icons/signup-select-card-icon.png"
+import PdfIcon from "@/assets/icons/pdf-icon.png"
 
 export type Icon = LucideIcon
 
@@ -94,6 +95,9 @@ export const Icons = {
   ),
   signupSelectCard: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
     <img src={SignupSelectCardIcon} alt="Signup Select Card icon" className={className} {...props} />
+  ),
+  pdf: ({ className, ...props }: HTMLAttributes<HTMLImageElement>) => (
+    <img src={PdfIcon} alt="Pdf icon" className={className} {...props} />
   ),
   warning: (props: LucideProps) => (
     <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
