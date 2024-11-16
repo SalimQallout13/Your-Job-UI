@@ -58,7 +58,7 @@ type SignupCardProps = {
 interface FileUploaderProps {
 	accept: string;
 	maxSize: number;
-	onFileSelect: (file: File) => void;
+	onFileSelect: (file: File | null) => void;
 	children: React.ReactNode;
 	widthFull?: boolean;
 }
@@ -87,6 +87,11 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 		[maxSize, onFileSelect]
 	);
 
+	const handleRemove = () => {
+		setPreview(null);
+		onFileSelect(null); // Ajouter cette ligne pour mettre à jour le champ du formulaire
+	};
+
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 		accept: accept ? { [accept]: [] } : undefined,
@@ -96,11 +101,14 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 
 	return (
 		<div className="flex items-center gap-4">
-			<div {...getRootProps()} className={cn(
-				"cursor-pointer transition-colors rounded-full",
-				isDragActive && "bg-purple/5",
-				widthFull && "w-full"
-			)}>
+			<div
+				{...getRootProps()}
+				className={cn(
+					"cursor-pointer transition-colors rounded-full",
+					isDragActive && "bg-purple/5",
+					widthFull && "w-full"
+				)}
+			>
 				<input {...getInputProps()} />
 				{preview ? (
 					<div className="size-14 overflow-hidden rounded-full">
@@ -112,18 +120,16 @@ const FileUploader: React.FC<FileUploaderProps> = ({
 			</div>
 			{preview && (
 				<Button
+					type="button"
 					variant="outline"
 					className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700"
-					onClick={() => setPreview(null)}
+					onClick={handleRemove}  // Utiliser la nouvelle fonction handleRemove
 				>
 					<Trash2 className="size-4" /> Supprimer
 				</Button>
 			)}
-
 		</div>
-
 	);
-
 };
 
 const SignupContent = () => {
@@ -365,11 +371,7 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 										<FileUploader
 											accept="image/*"
 											maxSize={5 * 1024 * 1024}
-											onFileSelect={(file) => {
-												if (file) {
-													field.onChange(file)
-												}
-											}}
+											onFileSelect={field.onChange}  // Passer directement field.onChange
 										>
 											<Button type="button" variant="gradient" className="rounded-full">
 												Choisir une photo
@@ -448,9 +450,7 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 											accept="application/pdf"
 											maxSize={10 * 1024 * 1024}
 											onFileSelect={(file) => {
-												if (file) {
 													field.onChange(file)
-												}
 											}}
 										/>
 									</FormControl>
@@ -470,9 +470,7 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 											accept="application/pdf"
 											maxSize={10 * 1024 * 1024}
 											onFileSelect={(file) => {
-												if (file) {
 													field.onChange(file)
-												}
 											}}
 										/>
 									</FormControl>
