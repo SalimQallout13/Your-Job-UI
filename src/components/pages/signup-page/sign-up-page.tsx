@@ -22,7 +22,8 @@ import signupForm2 from "@/assets/img/signup-form-2.png";
 import signupForm3Candidate from "@/assets/img/signup-form-3-candidat.png";
 import signupForm3Employer from "@/assets/img/signup-form-3-employeur.png";
 import { useDropzone } from 'react-dropzone';
-import { Trash2, Upload } from "lucide-react";
+import { Trash2 } from "lucide-react";
+import DocumentUploader from "@/components/others/document-uploader.tsx"
 
 type SignupFormSectionProps = {
 	userType: UserType;
@@ -354,16 +355,31 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 					{/* Champs spécifiques au candidat */}
 					<div className="space-y-4">
-						<FormLabel>Photo de profil</FormLabel>
-						<FileUploader
-							accept="image/*"
-							maxSize={5 * 1024 * 1024}
-							onFileSelect={(file) => form.setValue("photo", file)}
-						>
-							<Button variant="gradient" className="rounded-full">
-								Choisir une photo
-							</Button>
-						</FileUploader>
+						<FormField
+							control={form.control}
+							name="photo"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Photo de profil</FormLabel>
+									<FormControl>
+										<FileUploader
+											accept="image/*"
+											maxSize={5 * 1024 * 1024}
+											onFileSelect={(file) => {
+												if (file) {
+													field.onChange(file)
+												}
+											}}
+										>
+											<Button type="button" variant="gradient" className="rounded-full">
+												Choisir une photo
+											</Button>
+										</FileUploader>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -421,45 +437,49 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 					</div>
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-						<div className="space-y-4">
-							<FormLabel>CV</FormLabel>
-							<FileUploader
-								accept=".pdf,.doc,.docx"
-								maxSize={10 * 1024 * 1024}
-								onFileSelect={(file) => form.setValue("cv", file)}
-								widthFull={true}
-							>
-								<div
-									className="flex items-center justify-center gap-4 rounded-xl border border-dashed border-gray-200 p-6">
-									<Upload className="size-6 text-gray-400" />
-									<div className="text-center">
-										<p>Glissez-déposez ou</p>
-										<span className="text-purple">choisissez un fichier</span>
-										<p>à télécharger</p>
-									</div>
-								</div>
-							</FileUploader>
-						</div>
+						<FormField
+							control={form.control}
+							name="cv"
+							render={({ field }) => (
+								<FormItem className="space-y-4">
+									<FormLabel>CV</FormLabel>
+									<FormControl>
+										<DocumentUploader
+											accept="application/pdf"
+											maxSize={10 * 1024 * 1024}
+											onFileSelect={(file) => {
+												if (file) {
+													field.onChange(file)
+												}
+											}}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
-						<div className="space-y-4">
-							<FormLabel>Lettre de motivation (facultatif)</FormLabel>
-							<FileUploader
-								accept=".pdf,.doc,.docx"
-								maxSize={10 * 1024 * 1024}
-								onFileSelect={(file) => form.setValue("motivationLetter", file)}
-								widthFull={true}
-							>
-								<div
-									className="flex items-center justify-center gap-4 rounded-xl border border-dashed border-gray-200 p-6">
-									<Upload className="size-6 text-gray-400" />
-									<div className="text-center">
-										<p>Glissez-déposez ou</p>
-										<span className="text-purple">choisissez un fichier</span>
-										<p>à télécharger</p>
-									</div>
-								</div>
-							</FileUploader>
-						</div>
+						<FormField
+							control={form.control}
+							name="motivationLetter"
+							render={({ field }) => (
+								<FormItem className="space-y-4">
+									<FormLabel>Lettre de motivation</FormLabel>
+									<FormControl>
+										<DocumentUploader
+											accept="application/pdf"
+											maxSize={10 * 1024 * 1024}
+											onFileSelect={(file) => {
+												if (file) {
+													field.onChange(file)
+												}
+											}}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 					</div>
 
 					<SignupNavigationButtons
@@ -473,16 +493,18 @@ const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (da
 	);
 };
 
-const SignupProfileEmployerSection = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
-	const { setCurrentStep } = useSignupContext();
+const SignupProfileEmployerSection = ({ updateFormData }: {
+	updateFormData: (data: Partial<SignupFormData>) => void
+}) => {
+	const { setCurrentStep } = useSignupContext()
 	const form = useForm<EmployerProfileSchema>({
-		resolver: zodResolver(employerProfileSchema),
-	});
+		resolver: zodResolver(employerProfileSchema)
+	})
 
 	const onSubmit = (data: EmployerProfileSchema) => {
-		updateFormData({ profile: data });
+		updateFormData({ profile: data })
 		// Vous pouvez ajouter une redirection ou une action supplémentaire ici
-	};
+	}
 
 	return (
 		<>
@@ -611,3 +633,4 @@ const SignupPage = () => (
 );
 
 export default SignupPage;
+
