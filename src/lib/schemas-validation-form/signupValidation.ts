@@ -61,43 +61,61 @@ export const profileSchema = z.object({
 		.max(100, "L'adresse ne peut pas dépasser 100 caractères")
 		.regex(/^[a-zA-Z0-9À-ÿ\s,'-]+$/, "L'adresse contient des caractères non valides"),
 
-	photo: z.instanceof(File)
-		.refine((file) => file !== null, {
+	photo: z.custom<File | null>()
+		.refine((file) => file !== null && file !== undefined, {
 			message: "La photo de profil est requise"
 		})
 		.refine(
-			(file) => file && file.type.startsWith('image/'),
-			"Le fichier doit être une image"
+			(file) => {
+				if (!file) return false;
+				return file instanceof File && file.type.startsWith('image/');
+			},
+			{ message: "Le fichier doit être une image" }
 		)
 		.refine(
-			(file) => file && file.size <= 5 * 1024 * 1024,
-			"La taille de l'image ne doit pas dépasser 5 Mo"
+			(file) => {
+				if (!file) return false;
+				return file.size <= 5 * 1024 * 1024;
+			},
+			{ message: "La taille de l'image ne doit pas dépasser 5 Mo" }
 		),
 
-	cv: z.instanceof(File)
-		.refine((file) => file !== null, {
+	cv: z.custom<File | null>()
+		.refine((file) => file !== null && file !== undefined, {
 			message: "Le CV est requis"
 		})
 		.refine(
-			(file) => file && file.type === 'application/pdf',
-			"Le fichier doit être au format PDF"
+			(file) => {
+				if (!file) return false;
+				return file instanceof File && file.type === 'application/pdf';
+			},
+			{ message: "Le fichier doit être au format PDF" }
 		)
 		.refine(
-			(file) => file && file.size <= 10 * 1024 * 1024,
-			"La taille du CV ne doit pas dépasser 10 Mo"
+			(file) => {
+				if (!file) return false;
+				return file.size <= 10 * 1024 * 1024;
+			},
+			{ message: "La taille du CV ne doit pas dépasser 10 Mo" }
 		),
 
-	motivationLetter: z.instanceof(File)
-		.refine((file) => file !== null, {
+	motivationLetter: z.custom<File | null>()
+		.refine((file) => file !== null && file !== undefined, {
 			message: "La lettre de motivation est requise"
 		})
 		.refine(
-			(file) => file && file.type === 'application/pdf',
-			"Le fichier doit être au format PDF"
+			(file) => {
+				if (!file) return false;
+				return file instanceof File && file.type === 'application/pdf';
+			},
+			{ message: "Le fichier doit être au format PDF" }
 		)
 		.refine(
-			(file) => file && file.size <= 10 * 1024 * 1024,
-			"La taille de la lettre de motivation ne doit pas dépasser 10 Mo"
+			(file) => {
+				if (!file) return false;
+				return file.size <= 10 * 1024 * 1024;
+			},
+			{ message: "La taille de la lettre de motivation ne doit pas dépasser 10 Mo" }
 		),
 });
 
