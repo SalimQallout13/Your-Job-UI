@@ -101,6 +101,33 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
+							name="codePostal"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Code postal</FormLabel>
+									<FormControl>
+										<Input placeholder="13001" className="h-12" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name="adresse"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Adresse</FormLabel>
+									<FormControl>
+										<Input placeholder="12 rue de Jouy" className="h-12" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+
+					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+						<FormField
 							control={form.control}
 							name="sector"
 							render={({ field }) => (

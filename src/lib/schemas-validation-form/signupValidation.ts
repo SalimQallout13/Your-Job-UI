@@ -146,6 +146,23 @@ export const signupThirdStepEmployeur = z.object({
 		.min(1, "L'adresse est requise")
 		.min(5, "L'adresse doit contenir au moins 5 caractères"),
 
+	ville: z.string()
+		.min(1, "La ville est requise")  // En français
+		.regex(/^[a-zA-ZÀ-ÿ\s-]+$/, "La ville ne doit contenir que des lettres, espaces et tirets")
+		.min(2, "La ville doit contenir au moins 2 caractères")
+		.max(50, "La ville ne peut pas dépasser 50 caractères"),
+
+	codePostal: z.string()
+		.min(1, "Le code postal est requis")  // En français
+		.regex(/^(?:0[1-9]|[1-9][0-9])\d{3}$/, "Le code postal doit être au format français (ex: 75001)")
+		.length(5, "Le code postal doit contenir exactement 5 chiffres"),
+
+	adresse: z.string()
+		.min(1, "L'adresse est requise")  // En français
+		.min(5, "L'adresse doit contenir au moins 5 caractères")
+		.max(100, "L'adresse ne peut pas dépasser 100 caractères")
+		.regex(/^[a-zA-Z0-9À-ÿ\s,'-]+$/, "L'adresse contient des caractères non valides"),
+
 	sector: z.string()
 		.min(1, "Le secteur d'activité est requis"),
 
