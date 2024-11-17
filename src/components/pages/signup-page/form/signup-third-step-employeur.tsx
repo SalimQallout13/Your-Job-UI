@@ -67,8 +67,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 		if (!formData.secondStepData) {
 			toast({
 				title: "Erreur",
-				description: "Données du formulaire incomplètes",
-				variant: "destructive",
+				description: "Données du formulaire incomplètes"
 			});
 			return;
 		}
