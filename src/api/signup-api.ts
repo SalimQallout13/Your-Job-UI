@@ -1,4 +1,5 @@
 import axios from "axios"
+import { axiosInstance } from "@/api/axios-instance.ts"
 
 interface CheckEmailResponse {
 	isEmailTaken: boolean;
@@ -48,48 +49,39 @@ export const checkPhone = async (phone: string): Promise<CheckPhoneResponse> => 
 	}
 };
 
-interface Sector {
+export interface Sector {
 	id: string;
-	name: string;
+	nom: string;
 }
 
-interface GetSectorsResponse {
+export interface GetSectorsResponse {
 	sectors: Sector[];
 	message?: string;
 }
 
 export const getSectors = async (): Promise<GetSectorsResponse> => {
 	try {
-		// Simuler un appel API
-		return await new Promise<GetSectorsResponse>((resolve) => {
-			setTimeout(() => {
-				resolve({
-					sectors: [
-						{ id: "aeronautique", name: "Aéronautique" },
-						{ id: "batiment", name: "Bâtiment" },
-						{ id: "informatique", name: "Informatique" },
-						{ id: "automobile", name: "Automobile" },
-						{ id: "sante", name: "Santé" },
-						{ id: "education", name: "Education" },
-						{ id: "finance", name: "Finance" },
-						{ id: "commerce", name: "Commerce" },
-						{ id: "industrie", name: "Industrie" },
-						{ id: "transport", name: "Transport" },
-						{ id: "tourisme", name: "Tourisme" },
-						{ id: "culture", name: "Culture" },
-						{ id: "sport", name: "Sport" },
-						{ id: "telephone", name: "Telephone" },
-						{ id: "restaurant", name: "Restaurant" },
-						{ id: "logement", name: "Logement" },
-						{ id: "communication", name: "Communication" },
-					]
-				});
-			}, 1000);
-		});
+		const response = await axiosInstance.get('/domaines');
+
+		if (Array.isArray(response.data)) {
+			return {
+				sectors: response.data.map(sector => ({
+					id: sector._id,
+					nom: sector.nom
+				}))
+			};
+		}
+
+		throw new Error("Format de réponse invalide");
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
-			throw new Error(error.response?.data?.errors[0]?.message || "Une erreur est survenue");
+			// Gestion spécifique des erreurs HTTP
+			const errorMessage = error.response?.data?.message
+				|| "Une erreur est survenue lors de la récupération des secteurs d'activité";
+
+			throw new Error(errorMessage);
 		}
+
 		throw new Error("Erreur réseau ou serveur");
 	}
 };

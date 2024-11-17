@@ -10,13 +10,8 @@ import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState, useEffect } from "react"
-import { getSectors } from "@/api/signup-api.ts"
+import { getSectors, Sector } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"
-
-interface Sector {
-	id: string;
-	name: string;
-}
 
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
@@ -49,8 +44,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			} catch (error) {
 				toast({
 					title: "Erreur",
-					description: error instanceof Error ? error.message : "Impossible de charger les secteurs d'activité",
-					variant: "destructive",
+					description: error instanceof Error ? error.message : "Impossible de charger les secteurs d'activité"
 				});
 			} finally {
 				setIsLoadingSectors(false);
@@ -169,23 +163,24 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 									<FormLabel>Secteur d'activité</FormLabel>
 									<Select
 										disabled={isLoadingSectors}
-										onValueChange={(value) => {
-											field.onChange(value);
-										}}
+										onValueChange={field.onChange}
 										value={field.value}
 									>
-										<SelectTrigger className="h-12">
+										<SelectTrigger className="h-12 text-gray-900">
 											<SelectValue placeholder="Sélectionnez un secteur d'activité" />
 										</SelectTrigger>
 										<SelectContent>
 											{sectors.map((sector) => (
-												<SelectItem key={sector.id} value={sector.id}>
-													{sector.name}
+												<SelectItem
+													key={sector.id}
+													value={sector.id}
+													className="text-gray-900"
+												>
+													{sector.nom}
 												</SelectItem>
 											))}
 										</SelectContent>
 									</Select>
-
 									<FormMessage />
 								</FormItem>
 							)}
