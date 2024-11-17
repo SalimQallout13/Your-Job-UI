@@ -133,6 +133,33 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
+							name="ville"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Code postal</FormLabel>
+									<FormControl>
+										<Input placeholder="13001" className="h-12" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<FormField
+							name="codePostal"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Adresse</FormLabel>
+									<FormControl>
+										<Input placeholder="12 rue de Jouy" className="h-12" {...field} />
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+
+					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+						<FormField
 							control={form.control}
 							name="sector"
 							render={({ field }) => (
@@ -140,21 +167,14 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 									<FormLabel>Secteur d'activité</FormLabel>
 									<Select
 										disabled={isLoadingSectors}
-										onValueChange={field.onChange}
+										onValueChange={(value) => {
+											field.onChange(value);
+										}}
 										value={field.value}
 									>
-										<FormControl>
-											<SelectTrigger className="h-12">
-												<SelectValue placeholder="Sélectionnez un secteur d'activité">
-													{isLoadingSectors && (
-														<div className="flex items-center gap-2">
-															<div className="size-4 animate-spin rounded-full border-2 border-purple border-t-transparent" />
-															<span>Chargement...</span>
-														</div>
-													)}
-												</SelectValue>
-											</SelectTrigger>
-										</FormControl>
+										<SelectTrigger className="h-12">
+											<SelectValue placeholder="Sélectionnez un secteur d'activité" />
+										</SelectTrigger>
 										<SelectContent>
 											{sectors.map((sector) => (
 												<SelectItem key={sector.id} value={sector.id}>
@@ -163,6 +183,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 											))}
 										</SelectContent>
 									</Select>
+
 									<FormMessage />
 								</FormItem>
 							)}
@@ -217,3 +238,18 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 		</>
 	);
 };
+
+const Example = () => (
+	<Select>
+		<SelectTrigger>
+			<SelectValue placeholder="Sélectionner un secteur" />
+		</SelectTrigger>
+		<SelectContent>
+			<SelectItem value="it">Informatique</SelectItem>
+			<SelectItem value="construction">Construction</SelectItem>
+			<SelectItem value="finance">Finance</SelectItem>
+		</SelectContent>
+	</Select>
+);
+
+export default Example;
