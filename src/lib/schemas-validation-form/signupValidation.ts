@@ -14,6 +14,7 @@ export const signupSecondStepSchema = z.object({
 	phoneNumber: z
 		.string()
 		.min(10, "Le numéro de téléphone doit contenir au moins 10 chiffres.")
+		.max(10, "Le numéro de téléphone ne doit pas dépasser 10 chiffres.")
 		.regex(/^[0-9]+$/, "Le numéro de téléphone doit être composé uniquement de chiffres."),
 
 	email: z
