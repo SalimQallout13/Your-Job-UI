@@ -28,6 +28,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
 		updateFormData({ profile: data });
+		setCurrentStep("successStep");
 	};
 
 	return (
@@ -154,7 +155,6 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 					<SignupNavigationButtons
 						onBack={() => setCurrentStep('secondStep')}
-						onNext={() => setCurrentStep('successStep')}
 						isSubmit={true}
 						nextLabel="Créer mon compte entreprise"
 					/>

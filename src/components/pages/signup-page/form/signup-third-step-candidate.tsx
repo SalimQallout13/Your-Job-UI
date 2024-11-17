@@ -27,7 +27,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 
 	const onSubmit = (data: SignupThirdStepCandidateSchema) => {
 		updateFormData({ profile: data });
-		// Vous pouvez ajouter une redirection ou une action supplémentaire ici
+		setCurrentStep("successStep");
 	};
 
 	return (
@@ -161,7 +161,6 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 
 					<SignupNavigationButtons
 						onBack={() => setCurrentStep('secondStep')}
-						onNext={() => setCurrentStep('successStep')}
 						isSubmit={true}
 						nextLabel="Créer mon compte candidat"
 					/>
