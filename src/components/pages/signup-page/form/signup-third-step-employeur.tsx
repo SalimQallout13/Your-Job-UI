@@ -148,7 +148,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 												<SelectValue placeholder="Sélectionnez un secteur d'activité">
 													{isLoadingSectors && (
 														<div className="flex items-center gap-2">
-															<div className="h-4 w-4 animate-spin rounded-full border-2 border-purple border-t-transparent" />
+															<div className="size-4 animate-spin rounded-full border-2 border-purple border-t-transparent" />
 															<span>Chargement...</span>
 														</div>
 													)}
