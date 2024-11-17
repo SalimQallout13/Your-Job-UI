@@ -31,7 +31,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			adresse: "",
 			codePostal: "",
 			sector: "",
-			employeesCount: "",
+			employeesCount: 0,
 			logo: null,
 		},
 	});
@@ -176,9 +176,9 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 							name="ville"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Code postal</FormLabel>
+									<FormLabel>Ville</FormLabel>
 									<FormControl>
-										<Input placeholder="13001" className="h-12" {...field} />
+										<Input placeholder="Marseille" className="h-12" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -188,9 +188,9 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 							name="codePostal"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Adresse</FormLabel>
+									<FormLabel>Code postal</FormLabel>
 									<FormControl>
-										<Input placeholder="12 rue de Jouy" className="h-12" {...field} />
+										<Input placeholder="13001" className="h-12" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
