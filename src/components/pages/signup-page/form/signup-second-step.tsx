@@ -59,7 +59,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 				return;
 			}
 
-			updateFormData({ userDetails: data });
+			updateFormData({ secondStepData: data });
 			setCurrentStep('thirdStep');
 		} catch (error) {
 			toast({

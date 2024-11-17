@@ -21,7 +21,7 @@ interface Sector {
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
-	const { setCurrentStep, formData } = useSignupPageContext();
+	const { setCurrentStep } = useSignupPageContext();
 	const [sectors, setSectors] = useState<Sector[]>([]);
 	const [isLoadingSectors, setIsLoadingSectors] = useState(false);
 
@@ -61,9 +61,8 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	}, []);
 
 	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
-		updateFormData({ profile: data });
+		updateFormData({ thirdStepData: data });
 		setCurrentStep("successStep");
-		console.log(formData);
 	};
 
 	return (
