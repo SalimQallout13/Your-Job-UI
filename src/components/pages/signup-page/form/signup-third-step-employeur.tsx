@@ -41,10 +41,18 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			try {
 				const response = await getSectors();
 				setSectors(response.sectors);
+
+				if (response.message) {
+					toast({
+						title: "Information",
+						description: response.message,
+					});
+				}
 			} catch (error) {
+				console.error("Erreur lors du fetch des secteurs:", error);
 				toast({
 					title: "Erreur",
-					description: error instanceof Error ? error.message : "Impossible de charger les secteurs d'activité"
+					description: "Impossible de charger les secteurs d'activité",
 				});
 			} finally {
 				setIsLoadingSectors(false);

@@ -63,6 +63,7 @@ export const getSectors = async (): Promise<GetSectorsResponse> => {
 	try {
 		const response = await axiosInstance.get('/domaines');
 
+		// Vérification et transformation des données
 		if (Array.isArray(response.data)) {
 			return {
 				sectors: response.data.map(sector => ({
@@ -72,16 +73,26 @@ export const getSectors = async (): Promise<GetSectorsResponse> => {
 			};
 		}
 
-		throw new Error("Format de réponse invalide");
-	} catch (error) {
-		if (axios.isAxiosError(error)) {
-			// Gestion spécifique des erreurs HTTP
-			const errorMessage = error.response?.data?.message
-				|| "Une erreur est survenue lors de la récupération des secteurs d'activité";
+		console.error("Format de réponse invalide:", response.data);
+		return {
+			sectors: [],
+			message: "Format de réponse invalide"
+		};
 
-			throw new Error(errorMessage);
+	} catch (error) {
+		console.error("Erreur lors de la récupération des secteurs:", error);
+
+		// Au lieu de throw, on retourne un objet avec un tableau vide et un message d'erreur
+		if (axios.isAxiosError(error)) {
+			return {
+				sectors: [],
+				message: error.response?.data?.message || "Une erreur est survenue lors de la récupération des secteurs d'activité"
+			};
 		}
 
-		throw new Error("Erreur réseau ou serveur");
+		return {
+			sectors: [],
+			message: "Erreur réseau ou serveur"
+		};
 	}
 };
