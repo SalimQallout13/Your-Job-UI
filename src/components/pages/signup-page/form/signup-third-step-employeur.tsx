@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState, useEffect } from "react"
 import { getSectors, Sector, signup } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"
+import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
@@ -20,6 +21,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	const [sectors, setSectors] = useState<Sector[]>([]);
 	const [isLoadingSectors, setIsLoadingSectors] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { setUserData } = useNavigationContext();
 
 	const form = useForm<SignupThirdStepEmployeurSchema>({
 		resolver: zodResolver(signupThirdStepEmployeur),
@@ -91,6 +93,18 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			});
 
 			setCurrentStep("successStep");
+			// Transformation en un objet unique contenant tous les champs
+			const flatUserData = {
+				...updatedFormData.firstStepData,
+				...updatedFormData.secondStepData,
+				...updatedFormData.thirdStepData,
+			};
+
+			// Sauvegarde dans le local storage
+			localStorage.setItem("userData", JSON.stringify(flatUserData));
+			if (updatedFormData.secondStepData?.firstName !== undefined) {
+				setUserData({firstName: updatedFormData.secondStepData?.firstName});
+			}
 		} catch (error) {
 			toast({
 				title: "Erreur",

@@ -12,10 +12,12 @@ import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/
 import { toast } from "@/lib/hooks/use-toast.tsx"
 import { signup } from "@/api/signup-api.ts"
 import { useState } from "react"
+import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 
 export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
 	const { setCurrentStep, formData } = useSignupPageContext();
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const { setUserData } = useNavigationContext();
 
 	const form = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
@@ -59,6 +61,19 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 			});
 
 			setCurrentStep("successStep");
+			// Transformation en un objet unique contenant tous les champs
+			const flatUserData = {
+				...updatedFormData.firstStepData,
+				...updatedFormData.secondStepData,
+				...updatedFormData.thirdStepData,
+			};
+
+			// Sauvegarde dans le local storage
+			localStorage.setItem("userData", JSON.stringify(flatUserData));
+			if (updatedFormData.secondStepData?.firstName !== undefined) {
+				setUserData({firstName: updatedFormData.secondStepData?.firstName});
+			}
+
 		} catch (error) {
 			toast({
 				title: "Erreur",
