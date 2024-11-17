@@ -12,7 +12,7 @@ export const SignupImageSection = ({ currentStep, userType }: { currentStep: Sig
 			<img
 				src={currentStep === 'firstStep' ? firstStepImage : currentStep === "secondStep" ? secondStepImage : currentStep === "successStep" ? signupSuccessStepImage : (userType === 'candidate' ? signupThirdStepCandidate : signupThirdStepEmployer)}
 				alt="Professional"
-				className="h-full w-full rounded-3xl object-cover p-3"
+				className="size-full rounded-3xl object-cover p-3"
 			/>
 			<div className="absolute inset-0 m-3 rounded-xl bg-gradient-to-t from-purple/60 via-transparent to-transparent" />
 			<div className="absolute bottom-20 left-10 z-10 text-white xl:left-20">
