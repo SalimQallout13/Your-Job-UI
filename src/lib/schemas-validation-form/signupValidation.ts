@@ -39,7 +39,7 @@ export const signupSecondStepSchema = z.object({
 		path: ["confirmPassword"],
 	});
 
-export type SignupFirstStepSchema = z.infer<typeof signupSecondStepSchema>;
+export type SignupSecondStepSchema = z.infer<typeof signupSecondStepSchema>;
 
 
 export const signupThirdStepCandidateSchema = z.object({

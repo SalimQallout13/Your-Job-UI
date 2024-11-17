@@ -1,11 +1,14 @@
 import { SignupFormData, useSignupPageContext } from "@/lib/context/signup-context.tsx"
 import { useForm } from "react-hook-form"
-import { signupSecondStepSchema, SignupFirstStepSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { signupSecondStepSchema, SignupSecondStepSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
+import { checkEmail, checkPhone } from "@/api/signup-api.ts"
+import { toast } from "@/lib/hooks/use-toast.tsx"
+import { useState } from "react"
 
 type SignupSecondStepProps = {
 	updateFormData: (data: Partial<SignupFormData>) => void;
@@ -13,8 +16,10 @@ type SignupSecondStepProps = {
 
 export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 	const { setCurrentStep } = useSignupPageContext();
+	const [, setIsLoading] = useState(false);
 
-	const signupFormSchema = useForm<SignupFirstStepSchema>({
+
+	const signupFormSchema = useForm<SignupSecondStepSchema>({
 		resolver: zodResolver(signupSecondStepSchema),
 		defaultValues: {
 			firstName: '',
@@ -26,11 +31,45 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 		},
 	});
 
-	const { handleSubmit } = signupFormSchema;
+	const { handleSubmit, setError } = signupFormSchema;
 
-	const onSubmit = (data: SignupFirstStepSchema) => {
-		updateFormData({ userDetails: data });
-		setCurrentStep('thirdStep');
+	const onNext = async (data: SignupSecondStepSchema) => {
+		try {
+			setIsLoading(true);
+
+			// Vérifier l'email
+			const emailCheck = await checkEmail(data.email);
+			if (emailCheck.isEmailTaken) {
+				setError('email', {
+					type: 'manual',
+					message: emailCheck.message || 'Cette adresse email est déjà utilisée'
+				});
+				setIsLoading(false);
+				return;
+			}
+
+			// Vérifier le téléphone
+			const phoneCheck = await checkPhone(data.phoneNumber);
+			if (phoneCheck.isPhoneTaken) {
+				setError('phoneNumber', {
+					type: 'manual',
+					message: phoneCheck.message || 'Ce numéro de téléphone est déjà utilisé'
+				});
+				setIsLoading(false);
+				return;
+			}
+
+			updateFormData({ userDetails: data });
+			setCurrentStep('thirdStep');
+		} catch (error) {
+			toast({
+				title: "Erreur",
+				description: error instanceof Error ? error.message : "Une erreur est survenue",
+				variant: "destructive",
+			});
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -41,7 +80,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 			/>
 			<div className="space-y-7">
 				<Form {...signupFormSchema}>
-					<form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+					<form onSubmit={handleSubmit(onNext)} className="space-y-7">
 						<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 							<FormField
 								name="firstName"
@@ -123,6 +162,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 						<SignupNavigationButtons
 							onBack={() => setCurrentStep('firstStep')}
 							onNext={() => setCurrentStep('thirdStep')}
+							isSubmit={true}
 						/>
 					</form>
 				</Form>

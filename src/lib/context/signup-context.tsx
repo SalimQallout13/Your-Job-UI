@@ -1,11 +1,11 @@
 import React, { createContext, useContext, useState } from 'react';
-import { SignupThirdStepEmployeurSchema, SignupThirdStepCandidateSchema, SignupFirstStepSchema } from "../schemas-validation-form/signupValidation"
+import { SignupThirdStepEmployeurSchema, SignupThirdStepCandidateSchema, SignupSecondStepSchema } from "../schemas-validation-form/signupValidation"
 
 export type UserType = 'candidate' | 'employer' | null;
 export type SignupStep = 'firstStep' | 'secondStep' | 'thirdStep' | 'successStep';
 
 export interface SignupFormData {
-	userDetails?: SignupFirstStepSchema;
+	userDetails?: SignupSecondStepSchema;
 	profile?: SignupThirdStepCandidateSchema | SignupThirdStepEmployeurSchema;
 }
 
@@ -22,7 +22,7 @@ interface SignupPageContextType {
 const SignupPageContext = createContext<SignupPageContextType | undefined>(undefined);
 
 export const SignupPageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [userType, setUserType] = useState<UserType>("employer");
+	const [userType, setUserType] = useState<UserType>("candidate");
 	const [currentStep, setCurrentStep] = useState<SignupStep>("firstStep");
 	const [formData, setFormData] = useState<SignupFormData>({});
 
