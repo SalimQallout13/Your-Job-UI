@@ -63,13 +63,11 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	}, []);
 
 	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
-		// Mise à jour en conservant les données précédentes
 		updateFormData({
-			...formData, // Garde les données des étapes précédentes
-			thirdStepData: data // Ajoute les données de l'étape actuelle
+			...formData,
+			thirdStepData: data
 		});
 
-		// Log pour vérifier les données complètes
 		console.log("Données complètes du formulaire:", {
 			...formData,
 			thirdStepData: data

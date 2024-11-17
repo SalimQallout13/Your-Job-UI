@@ -36,7 +36,6 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 		try {
 			setIsLoading(true);
 
-			// Vérifier l'email
 			const emailCheck = await checkEmail(data.email);
 			if (emailCheck.isEmailTaken) {
 				setError('email', {
@@ -47,7 +46,6 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 				return;
 			}
 
-			// Vérifier le téléphone
 			const phoneCheck = await checkPhone(data.phoneNumber);
 			if (phoneCheck.isPhoneTaken) {
 				setError('phoneNumber', {
