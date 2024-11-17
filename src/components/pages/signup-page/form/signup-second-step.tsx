@@ -1,21 +1,21 @@
-import { SignupFormData, useSignupContext } from "@/lib/context/signup-context.tsx"
+import { SignupFormData, useSignupPageContext } from "@/lib/context/signup-context.tsx"
 import { useForm } from "react-hook-form"
-import { signupDetailsSchema, SignupSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { signupSecondStepSchema, SignupFirstStepSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 
-type SignupDetailsSectionProps = {
+type SignupSecondStepProps = {
 	updateFormData: (data: Partial<SignupFormData>) => void;
 };
 
-export const SignupSecondStep = ({ updateFormData }: SignupDetailsSectionProps) => {
-	const { setCurrentStep } = useSignupContext();
+export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
+	const { setCurrentStep } = useSignupPageContext();
 
-	const signupFormSchema = useForm<SignupSchema>({
-		resolver: zodResolver(signupDetailsSchema),
+	const signupFormSchema = useForm<SignupFirstStepSchema>({
+		resolver: zodResolver(signupSecondStepSchema),
 		defaultValues: {
 			firstName: '',
 			lastName: '',
@@ -28,9 +28,9 @@ export const SignupSecondStep = ({ updateFormData }: SignupDetailsSectionProps) 
 
 	const { handleSubmit } = signupFormSchema;
 
-	const onSubmit = (data: SignupSchema) => {
+	const onSubmit = (data: SignupFirstStepSchema) => {
 		updateFormData({ userDetails: data });
-		setCurrentStep(3);
+		setCurrentStep('thirdStep');
 	};
 
 	return (
@@ -121,8 +121,8 @@ export const SignupSecondStep = ({ updateFormData }: SignupDetailsSectionProps) 
 							/>
 						</div>
 						<SignupNavigationButtons
-							onBack={() => setCurrentStep(1)}
-							onNext={() => setCurrentStep(3)}
+							onBack={() => setCurrentStep('firstStep')}
+							onNext={() => setCurrentStep('thirdStep')}
 						/>
 					</form>
 				</Form>

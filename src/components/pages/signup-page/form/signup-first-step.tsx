@@ -1,17 +1,17 @@
-import { UserType, useSignupContext } from "@/lib/context/signup-context.tsx"
+import { UserType, useSignupPageContext } from "@/lib/context/signup-context.tsx"
 import { Icons } from "@/components/others/icons.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 import { SignupCard } from "@/components/pages/signup-page/commons/signup-card.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { LoginLink } from "@/components/pages/signup-page/commons/login-link.tsx"
 
-type SignupFormSectionProps = {
+type SignupFirstStepProps = {
 	userType: UserType;
 	setUserType: (type: UserType) => void;
 };
 
-export const SignupFirstStep = ({ userType, setUserType }: SignupFormSectionProps) => {
-	const { setCurrentStep } = useSignupContext();
+export const SignupFirstStep = ({ userType, setUserType }: SignupFirstStepProps) => {
+	const { setCurrentStep } = useSignupPageContext();
 
 	return (
 		<>
@@ -38,7 +38,7 @@ export const SignupFirstStep = ({ userType, setUserType }: SignupFormSectionProp
 				</div>
 				<SignupNavigationButtons
 					onBack={() => window.history.back()}
-					onNext={() => setCurrentStep(2)}
+					onNext={() => setCurrentStep('secondStep')}
 					nextDisabled={!userType}
 				/>
 				<LoginLink />

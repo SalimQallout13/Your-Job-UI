@@ -1,6 +1,6 @@
-import { SignupFormData, useSignupContext } from "@/lib/context/signup-context.tsx"
+import { SignupFormData, useSignupPageContext } from "@/lib/context/signup-context.tsx"
 import { useForm } from "react-hook-form"
-import { employerProfileSchema, EmployerProfileSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { signupThirdStepEmployeur, SignupThirdStepEmployeurSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Input } from "@/components/ui/input.tsx"
@@ -12,9 +12,9 @@ import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
-	const { setCurrentStep } = useSignupContext();
-	const form = useForm<EmployerProfileSchema>({
-		resolver: zodResolver(employerProfileSchema),
+	const { setCurrentStep } = useSignupPageContext();
+	const form = useForm<SignupThirdStepEmployeurSchema>({
+		resolver: zodResolver(signupThirdStepEmployeur),
 		defaultValues: {
 			companyName: "", // Par défaut une chaîne vide
 			contactName: "",
@@ -26,7 +26,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 		},
 	});
 
-	const onSubmit = (data: EmployerProfileSchema) => {
+	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
 		updateFormData({ profile: data });
 	};
 
@@ -153,8 +153,8 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 					</div>
 
 					<SignupNavigationButtons
-						onBack={() => setCurrentStep(2)}
-						onNext={() => setCurrentStep(4)}
+						onBack={() => setCurrentStep('secondStep')}
+						onNext={() => setCurrentStep('successStep')}
 						isSubmit={true}
 						nextLabel="Créer mon compte entreprise"
 					/>

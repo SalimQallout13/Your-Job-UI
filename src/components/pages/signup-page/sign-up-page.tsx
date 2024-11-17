@@ -1,4 +1,4 @@
-import { SignupProvider, useSignupContext } from "@/lib/context/signup-context"
+import { SignupPageProvider, useSignupPageContext } from "@/lib/context/signup-context"
 import { cn } from "@/lib/utils/utils";
 import { SignupThirdSTepCandidate } from "@/components/pages/signup-page/form/signup-third-step-candidate.tsx"
 import { SignupThirdStepEmployeur } from "@/components/pages/signup-page/form/signup-third-step-employeur.tsx"
@@ -9,7 +9,7 @@ import { SignupSuccessStep } from "@/components/pages/signup-page/form/signup-su
 import { SignupFirstStep } from "@/components/pages/signup-page/form/signup-first-step.tsx"
 
 const SignupPageContent = () => {
-	const { userType, currentStep, setUserType, updateFormData } = useSignupContext();
+	const { userType, currentStep, setUserType, updateFormData } = useSignupPageContext();
 
 	const renderThirdStep = () => {
 		if (userType === 'candidate') {
@@ -26,23 +26,23 @@ const SignupPageContent = () => {
 			<div className="flex w-full flex-col overflow-auto bg-white p-8 xl:w-1/2 xl:px-16 xl:pb-16 xl:pt-12">
 				<div className={cn(
 					"mx-auto max-w-xl",
-					currentStep === 4 && "flex h-full flex-col items-center justify-center"
+					currentStep === "successStep" && "flex h-full flex-col items-center justify-center"
 				)}>
-					<div className={currentStep === 4 ? "hidden" : ""}>
+					<div className={currentStep === 'successStep' ? "hidden" : ""}>
 						<Logo />
 					</div>
 					<div className={cn(
 						"space-y-8",
-						currentStep === 4 && "flex flex-col gap-6"
+						currentStep === "successStep" && "flex flex-col gap-6"
 					)}>
-						{currentStep === 1 && (
+						{currentStep === 'firstStep' && (
 							<SignupFirstStep userType={userType} setUserType={setUserType} />
 						)}
-						{currentStep === 2 && (
+						{currentStep === 'secondStep' && (
 							<SignupSecondStep updateFormData={updateFormData} />
 						)}
-						{currentStep === 3 && renderThirdStep()}
-						{currentStep === 4 && (
+						{currentStep === 'thirdStep' && renderThirdStep()}
+						{currentStep === 'successStep' && (
 							<SignupSuccessStep />
 						)}
 					</div>
@@ -53,9 +53,9 @@ const SignupPageContent = () => {
 };
 
 const SignupPage = () => (
-	<SignupProvider>
+	<SignupPageProvider>
 		<SignupPageContent />
-	</SignupProvider>
+	</SignupPageProvider>
 );
 
 export default SignupPage;

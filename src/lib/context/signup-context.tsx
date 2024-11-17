@@ -1,38 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
-import { profileSchema } from '../schemas-validation-form/signupValidation';
-import { z } from "zod"
+import { SignupThirdStepEmployeurSchema, SignupThirdStepCandidateSchema, SignupFirstStepSchema } from "../schemas-validation-form/signupValidation"
 
 export type UserType = 'candidate' | 'employer' | null;
-export type SignupStep = 1 | 2 | 3 | 4;
-
-interface SignupSchema {
-	firstName: string;
-	lastName: string;
-	phoneNumber: string;
-	email: string;
-	password: string;
-	confirmPassword: string;
-}
-
-interface EmployerProfileSchema {
-	companyName: string;
-	contactName: string;
-	contactPosition: string;
-	companyAddress: string;
-	sector: string;
-	employeesCount?: string; // Rendre optionnel
-	logo?: File | null; // Rendre optionnel
-}
-
-// Supprimer l'interface ProfileSchema et utiliser le type inféré par Zod
-type ProfileSchema = z.infer<typeof profileSchema>;
+export type SignupStep = 'firstStep' | 'secondStep' | 'thirdStep' | 'successStep';
 
 export interface SignupFormData {
-	userDetails?: SignupSchema;
-	profile?: ProfileSchema | EmployerProfileSchema;
+	userDetails?: SignupFirstStepSchema;
+	profile?: SignupThirdStepCandidateSchema | SignupThirdStepEmployeurSchema;
 }
 
-interface SignupContextType {
+interface SignupPageContextType {
 	userType: UserType;
 	currentStep: SignupStep;
 	formData: SignupFormData;
@@ -42,11 +19,11 @@ interface SignupContextType {
 	resetForm: () => void;
 }
 
-const SignupContext = createContext<SignupContextType | undefined>(undefined);
+const SignupPageContext = createContext<SignupPageContextType | undefined>(undefined);
 
-export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const SignupPageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [userType, setUserType] = useState<UserType>("employer");
-	const [currentStep, setCurrentStep] = useState<SignupStep>(1);
+	const [currentStep, setCurrentStep] = useState<SignupStep>("firstStep");
 	const [formData, setFormData] = useState<SignupFormData>({});
 
 	const updateFormData = (data: Partial<SignupFormData>) => {
@@ -55,12 +32,12 @@ export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
 	const resetForm = () => {
 		setUserType(null);
-		setCurrentStep(1);
+		setCurrentStep("firstStep");
 		setFormData({});
 	};
 
 	return (
-		<SignupContext.Provider
+		<SignupPageContext.Provider
 			value={{
 				userType,
 				currentStep,
@@ -72,14 +49,14 @@ export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 			}}
 		>
 			{children}
-		</SignupContext.Provider>
+		</SignupPageContext.Provider>
 	);
 };
 
-export const useSignupContext = () => {
-	const context = useContext(SignupContext);
+export const useSignupPageContext = () => {
+	const context = useContext(SignupPageContext);
 	if (context === undefined) {
-		throw new Error('useSignup must be used within a SignupProvider');
+		throw new Error('useSignup must be used within a SignupPageProvider');
 	}
 	return context;
 };

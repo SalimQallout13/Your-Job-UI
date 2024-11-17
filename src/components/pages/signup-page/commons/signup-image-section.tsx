@@ -1,14 +1,14 @@
 import { SignupStep, UserType } from "@/lib/context/signup-context.tsx"
-import heroImage from "@/assets/img/hero-image.png"
-import signupForm2 from "@/assets/img/signup-form-2.png"
-import signupSuccessImage from "@/assets/img/signup-succes.png"
-import signupForm3Candidate from "@/assets/img/signup-form-3-candidat.png"
-import signupForm3Employer from "@/assets/img/signup-form-3-employeur.png"
+import firstStepImage from "@/assets/img/hero-image.png"
+import secondStepImage from "@/assets/img/signup-form-2.png"
+import signupSuccessStepImage from "@/assets/img/signup-succes.png"
+import signupThirdStepCandidate from "@/assets/img/signup-form-3-candidat.png"
+import signupThirdStepEmployer from "@/assets/img/signup-form-3-employeur.png"
 
 export const SignupImageSection = ({ currentStep, userType }: { currentStep: SignupStep, userType: UserType }) => (
 	<div className="relative hidden size-full xl:block xl:w-1/2">
 		<img
-			src={currentStep === 1 ? heroImage : currentStep === 2 ? signupForm2 :currentStep === 4 ? signupSuccessImage : (userType === 'candidate' ? signupForm3Candidate : signupForm3Employer)}
+			src={currentStep === 'firstStep' ? firstStepImage : currentStep === "secondStep" ? secondStepImage : currentStep === "successStep" ? signupSuccessStepImage : (userType === 'candidate' ? signupThirdStepCandidate : signupThirdStepEmployer)}
 			alt="Professional"
 			className="absolute inset-0 size-full rounded-3xl object-cover p-3"
 		/>

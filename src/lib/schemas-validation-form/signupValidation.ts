@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const signupDetailsSchema = z.object({
+export const signupSecondStepSchema = z.object({
 	firstName: z
 		.string()
 		.min(1, "Le prénom est requis.")
@@ -39,10 +39,10 @@ export const signupDetailsSchema = z.object({
 		path: ["confirmPassword"],
 	});
 
-export type SignupSchema = z.infer<typeof signupDetailsSchema>;
+export type SignupFirstStepSchema = z.infer<typeof signupSecondStepSchema>;
 
 
-export const profileSchema = z.object({
+export const signupThirdStepCandidateSchema = z.object({
 	currentPosition: z.string().optional(), // Champ facultatif
 
 	ville: z.string()
@@ -123,11 +123,11 @@ export const profileSchema = z.object({
 		),
 });
 
-export type ProfileSchema = z.infer<typeof profileSchema>;
+export type SignupThirdStepCandidateSchema = z.infer<typeof signupThirdStepCandidateSchema>;
 
 
 
-export const employerProfileSchema = z.object({
+export const signupThirdStepEmployeur = z.object({
 	companyName: z.string()
 		.min(1, "Le nom de l'entreprise est requis")
 		.min(2, "Le nom doit contenir au moins 2 caractères")
@@ -166,4 +166,4 @@ export const employerProfileSchema = z.object({
 		.optional()
 });
 
-export type EmployerProfileSchema = z.infer<typeof employerProfileSchema>;
+export type SignupThirdStepEmployeurSchema = z.infer<typeof signupThirdStepEmployeur>;

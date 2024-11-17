@@ -1,6 +1,6 @@
-import { SignupFormData, useSignupContext } from "@/lib/context/signup-context.tsx"
+import { SignupFormData, useSignupPageContext } from "@/lib/context/signup-context.tsx"
 import { useForm } from "react-hook-form"
-import { profileSchema, ProfileSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { signupThirdStepCandidateSchema, SignupThirdStepCandidateSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Button } from "@/components/ui/button.tsx"
@@ -11,9 +11,9 @@ import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 
 export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
-	const { setCurrentStep } = useSignupContext();
-	const form = useForm<ProfileSchema>({
-		resolver: zodResolver(profileSchema),
+	const { setCurrentStep } = useSignupPageContext();
+	const form = useForm<SignupThirdStepCandidateSchema>({
+		resolver: zodResolver(signupThirdStepCandidateSchema),
 		defaultValues: {
 			currentPosition: "",
 			ville: "",
@@ -25,7 +25,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 		},
 	});
 
-	const onSubmit = (data: ProfileSchema) => {
+	const onSubmit = (data: SignupThirdStepCandidateSchema) => {
 		updateFormData({ profile: data });
 		// Vous pouvez ajouter une redirection ou une action supplémentaire ici
 	};
@@ -160,8 +160,8 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 					</div>
 
 					<SignupNavigationButtons
-						onBack={() => setCurrentStep(2)}
-						onNext={() => setCurrentStep(4)}
+						onBack={() => setCurrentStep('secondStep')}
+						onNext={() => setCurrentStep('successStep')}
 						isSubmit={true}
 						nextLabel="Créer mon compte candidat"
 					/>
