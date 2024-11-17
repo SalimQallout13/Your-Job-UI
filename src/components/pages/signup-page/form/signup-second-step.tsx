@@ -161,7 +161,6 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 						</div>
 						<SignupNavigationButtons
 							onBack={() => setCurrentStep('firstStep')}
-							onNext={() => setCurrentStep('thirdStep')}
 							isSubmit={true}
 						/>
 					</form>
