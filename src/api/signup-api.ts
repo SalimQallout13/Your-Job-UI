@@ -98,16 +98,6 @@ export const getSectors = async (): Promise<GetSectorsResponse> => {
 	}
 };
 
-// Types
-interface SignupResponse {
-	_id: string;
-	email: string;
-	nom: string;
-	prenom: string;
-	role: number;
-	// Ajouter d'autres champs selon la réponse de votre API
-}
-
 interface ValidationError {
 	msg: string;
 	param?: string;
@@ -118,7 +108,7 @@ const isValidationError = (error: any): error is { errors: ValidationError[] } =
 	return Array.isArray(error.errors) && error.errors.every((err: any) => 'msg' in err);
 };
 
-export const signup = async (formData: SignupFormData): Promise<SignupResponse> => {
+export const signup = async (formData: SignupFormData): Promise<unknown> => {
 	// Vérification des données requises
 	if (!formData.secondStepData || !formData.thirdStepData || !formData.firstStepData?.userType) {
 		throw new Error("Données du formulaire incomplètes");
@@ -161,7 +151,7 @@ export const signup = async (formData: SignupFormData): Promise<SignupResponse> 
 			dateModification: new Date()
 		};
 
-		const response = await axiosInstance.post<SignupResponse>('/auth/inscription', userData);
+		const response = await axiosInstance.post<unknown>('/auth/inscription', userData);
 		return response.data;
 
 	} catch (error) {
