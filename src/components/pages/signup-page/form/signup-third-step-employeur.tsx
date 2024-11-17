@@ -31,7 +31,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			adresse: "",
 			codePostal: "",
 			sector: "",
-			employeesCount: 0,
+			employeesCount: "0",
 			logo: null,
 		},
 	});

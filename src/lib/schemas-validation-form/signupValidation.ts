@@ -163,7 +163,9 @@ export const signupThirdStepEmployeur = z.object({
 		.min(1, "Le secteur d'activité est requis"),
 
 	// il ne peut pas y avoir de chiffre négatif
-	employeesCount: z.number().min(0),
+	employeesCount: z.string()
+		.min(1, "Le nombre d'collaborateurs est requis")
+		.regex(/^[0-9]+$/, "Le nombre d'collaborateurs doit être un nombre entier"),
 	logo: z.custom<File | null>()
 		.refine((file) => file === null || file instanceof File, {
 			message: "Format de fichier invalide"

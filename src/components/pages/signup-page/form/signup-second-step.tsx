@@ -15,8 +15,9 @@ type SignupSecondStepProps = {
 };
 
 export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
-	const { setCurrentStep, formData } = useSignupPageContext();  // Ajout de formData
-	const [, setIsLoading] = useState(false);
+	const { setCurrentStep, formData } = useSignupPageContext();
+	const [isLoadingEmail, setIsLoadingEmail] = useState(false);
+	const [isLoadingPhone, setIsLoadingPhone] = useState(false);
 
 	const signupFormSchema = useForm<SignupSecondStepSchema>({
 		resolver: zodResolver(signupSecondStepSchema),
@@ -34,32 +35,33 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 
 	const onNext = async (data: SignupSecondStepSchema) => {
 		try {
-			setIsLoading(true);
-
+			setIsLoadingEmail(true);
 			const emailCheck = await checkEmail(data.email);
+			setIsLoadingEmail(false);
+
 			if (emailCheck.isEmailTaken) {
 				setError('email', {
 					type: 'manual',
-					message: emailCheck.message || 'Cette adresse email est déjà utilisée'
+					message: emailCheck.message || 'Cette adresse email est déjà utilisée',
 				});
-				setIsLoading(false);
 				return;
 			}
 
+			setIsLoadingPhone(true);
 			const phoneCheck = await checkPhone(data.phoneNumber);
+			setIsLoadingPhone(false);
+
 			if (phoneCheck.isPhoneTaken) {
 				setError('phoneNumber', {
 					type: 'manual',
-					message: phoneCheck.message || 'Ce numéro de téléphone est déjà utilisé'
+					message: phoneCheck.message || 'Ce numéro de téléphone est déjà utilisé',
 				});
-				setIsLoading(false);
 				return;
 			}
 
-			// Mise à jour des données en conservant les données précédentes
 			updateFormData({
-				...formData,  // Garde les données existantes
-				secondStepData: data  // Ajoute les nouvelles données
+				...formData,
+				secondStepData: data,
 			});
 
 			setCurrentStep('thirdStep');
@@ -70,7 +72,8 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 				variant: "destructive",
 			});
 		} finally {
-			setIsLoading(false);
+			setIsLoadingEmail(false);
+			setIsLoadingPhone(false);
 		}
 	};
 
@@ -116,7 +119,12 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 									<FormItem>
 										<FormLabel>Numéro de téléphone</FormLabel>
 										<FormControl>
-											<Input placeholder="06 66 41 62 67" {...field} />
+											<div className="relative">
+												<Input placeholder="06 66 41 62 67" {...field} />
+												{isLoadingPhone && (
+													<span className="absolute right-2 top-2 animate-spin rounded-full border-2 border-purple border-t-transparent h-5 w-5"></span>
+												)}
+											</div>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -128,7 +136,12 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 									<FormItem>
 										<FormLabel>Adresse mail</FormLabel>
 										<FormControl>
-											<Input placeholder="tpuget@levupp.com" {...field} />
+											<div className="relative">
+												<Input placeholder="tpuget@levupp.com" {...field} />
+												{isLoadingEmail && (
+													<span className="absolute right-2 top-2 animate-spin rounded-full border-2 border-purple border-t-transparent h-5 w-5"></span>
+												)}
+											</div>
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -142,7 +155,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 									<FormItem>
 										<FormLabel>Mot de passe</FormLabel>
 										<FormControl>
-											<Input autoComplete={"new-password"} type="password" placeholder="************" {...field} />
+											<Input autoComplete="new-password" type="password" placeholder="************" {...field} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>
@@ -154,7 +167,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 									<FormItem>
 										<FormLabel>Confirmation du mot de passe</FormLabel>
 										<FormControl>
-											<Input autoComplete={"new-password"} type="password" placeholder="************" {...field} />
+											<Input autoComplete="new-password" type="password" placeholder="************" {...field} />
 										</FormControl>
 										<FormMessage />
 									</FormItem>

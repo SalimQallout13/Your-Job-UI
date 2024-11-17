@@ -15,18 +15,13 @@ interface CheckPhoneResponse {
 
 export const checkEmail = async (email: string): Promise<CheckEmailResponse> => {
 	try {
-		// Simuler un appel API pour l'email
-		return await new Promise<CheckEmailResponse>((resolve) => {
-			setTimeout(() => {
-				resolve({
-					isEmailTaken: email === "admin@gmail.com",
-					message: "Cette adresse email est déjà utilisée"
-				});
-			}, 1000);
+		const response = await axiosInstance.get('/users/existsByEmail', {
+			params: { email },
 		});
+		return { isEmailTaken: response.data.exists };
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
-			throw new Error(error.response?.data?.errors[0]?.message || "Une erreur est survenue");
+			throw new Error(error.response?.data?.errors?.[0]?.msg || "Erreur lors de la vérification de l'email");
 		}
 		throw new Error("Erreur réseau ou serveur");
 	}
@@ -34,18 +29,13 @@ export const checkEmail = async (email: string): Promise<CheckEmailResponse> => 
 
 export const checkPhone = async (phone: string): Promise<CheckPhoneResponse> => {
 	try {
-		// Simuler un appel API pour le téléphone
-		return await new Promise<CheckPhoneResponse>((resolve) => {
-			setTimeout(() => {
-				resolve({
-					isPhoneTaken: phone === "0612028485",
-					message: "Ce numéro de téléphone est déjà utilisé"
-				});
-			}, 1000);
+		const response = await axiosInstance.get('/users/existsByPhone', {
+			params: { phone },
 		});
+		return { isPhoneTaken: response.data.exists };
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
-			throw new Error(error.response?.data?.errors[0]?.message || "Une erreur est survenue");
+			throw new Error(error.response?.data?.errors?.[0]?.msg || "Erreur lors de la vérification du numéro de téléphone");
 		}
 		throw new Error("Erreur réseau ou serveur");
 	}
