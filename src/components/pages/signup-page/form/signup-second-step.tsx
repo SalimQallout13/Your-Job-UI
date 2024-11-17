@@ -4,14 +4,14 @@ import { signupDetailsSchema, SignupSchema } from "@/lib/schemas-validation-form
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Input } from "@/components/ui/input.tsx"
-import { SignupNavigationButtons } from "@/components/pages/signup-page/signup-navigation-buttons.tsx"
-import { SignupHeader } from "@/components/pages/signup-page/signup-header.tsx"
+import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
+import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 
 type SignupDetailsSectionProps = {
 	updateFormData: (data: Partial<SignupFormData>) => void;
 };
 
-export const SignupDetailsSection = ({ updateFormData }: SignupDetailsSectionProps) => {
+export const SignupSecondStep = ({ updateFormData }: SignupDetailsSectionProps) => {
 	const { setCurrentStep } = useSignupContext();
 
 	const signupFormSchema = useForm<SignupSchema>({

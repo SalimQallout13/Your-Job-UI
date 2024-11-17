@@ -1,21 +1,21 @@
 import { SignupProvider, useSignupContext } from "@/lib/context/signup-context"
 import { cn } from "@/lib/utils/utils";
-import { SignupProfileCandidateSection } from "@/components/pages/signup-page/signup-profil-candidate-section.tsx"
-import { SignupProfileEmployerSection } from "@/components/pages/signup-page/sign-profil-employeur-section.tsx"
-import { SignupImageSection } from "@/components/pages/signup-page/signup-image-section.tsx"
-import { Logo } from "@/components/pages/signup-page/logo.tsx"
-import { SignupDetailsSection } from "@/components/pages/signup-page/signup-detail-section.tsx"
-import { SignupSuccess } from "@/components/pages/signup-page/signup-success.tsx"
-import { SignupFormSection } from "@/components/pages/signup-page/signup-form-section.tsx"
+import { SignupThirdSTepCandidate } from "@/components/pages/signup-page/form/signup-third-step-candidate.tsx"
+import { SignupThirdStepEmployeur } from "@/components/pages/signup-page/form/signup-third-step-employeur.tsx"
+import { SignupImageSection } from "@/components/pages/signup-page/commons/signup-image-section.tsx"
+import { Logo } from "@/components/pages/signup-page/commons/logo.tsx"
+import { SignupSecondStep } from "@/components/pages/signup-page/form/signup-second-step.tsx"
+import { SignupSuccessStep } from "@/components/pages/signup-page/form/signup-success-step.tsx"
+import { SignupFirstStep } from "@/components/pages/signup-page/form/signup-first-step.tsx"
 
-const SignupContent = () => {
+const SignupPageContent = () => {
 	const { userType, currentStep, setUserType, updateFormData } = useSignupContext();
 
 	const renderThirdStep = () => {
 		if (userType === 'candidate') {
-			return <SignupProfileCandidateSection updateFormData={updateFormData} />;
+			return <SignupThirdSTepCandidate updateFormData={updateFormData} />;
 		} else if (userType === 'employer') {
-			return <SignupProfileEmployerSection updateFormData={updateFormData} />;
+			return <SignupThirdStepEmployeur updateFormData={updateFormData} />;
 		}
 		return null;
 	};
@@ -36,14 +36,14 @@ const SignupContent = () => {
 						currentStep === 4 && "flex flex-col gap-6"
 					)}>
 						{currentStep === 1 && (
-							<SignupFormSection userType={userType} setUserType={setUserType} />
+							<SignupFirstStep userType={userType} setUserType={setUserType} />
 						)}
 						{currentStep === 2 && (
-							<SignupDetailsSection updateFormData={updateFormData} />
+							<SignupSecondStep updateFormData={updateFormData} />
 						)}
 						{currentStep === 3 && renderThirdStep()}
 						{currentStep === 4 && (
-							<SignupSuccess />
+							<SignupSuccessStep />
 						)}
 					</div>
 				</div>
@@ -54,7 +54,7 @@ const SignupContent = () => {
 
 const SignupPage = () => (
 	<SignupProvider>
-		<SignupContent />
+		<SignupPageContent />
 	</SignupProvider>
 );
 

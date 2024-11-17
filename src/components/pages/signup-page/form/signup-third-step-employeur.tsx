@@ -5,11 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { Button } from "@/components/ui/button.tsx"
-import { SignupHeader } from "@/components/pages/signup-page/signup-header.tsx"
+import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 import { FileUploader } from "@/components/ui/file-uploader.tsx"
-import { SignupNavigationButtons } from "@/components/pages/signup-page/signup-navigation-buttons.tsx"
+import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 
-export const SignupProfileEmployerSection = ({ updateFormData }: {
+export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
 	const { setCurrentStep } = useSignupContext();

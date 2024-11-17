@@ -6,11 +6,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import DocumentUploader from "@/components/others/document-uploader.tsx"
-import { SignupHeader } from "@/components/pages/signup-page/signup-header.tsx"
+import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 import { FileUploader } from "@/components/ui/file-uploader.tsx"
-import { SignupNavigationButtons } from "@/components/pages/signup-page/signup-navigation-buttons.tsx"
+import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 
-export const SignupProfileCandidateSection = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
+export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
 	const { setCurrentStep } = useSignupContext();
 	const form = useForm<ProfileSchema>({
 		resolver: zodResolver(profileSchema),

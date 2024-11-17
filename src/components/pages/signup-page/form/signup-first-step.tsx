@@ -1,16 +1,16 @@
 import { UserType, useSignupContext } from "@/lib/context/signup-context.tsx"
 import { Icons } from "@/components/others/icons.tsx"
-import { SignupHeader } from "@/components/pages/signup-page/signup-header.tsx"
-import { SignupCard } from "@/components/pages/signup-page/signup-card.tsx"
-import { SignupNavigationButtons } from "@/components/pages/signup-page/signup-navigation-buttons.tsx"
-import { LoginLink } from "@/components/pages/signup-page/login-link.tsx"
+import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
+import { SignupCard } from "@/components/pages/signup-page/commons/signup-card.tsx"
+import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
+import { LoginLink } from "@/components/pages/signup-page/commons/login-link.tsx"
 
 type SignupFormSectionProps = {
 	userType: UserType;
 	setUserType: (type: UserType) => void;
 };
 
-export const SignupFormSection = ({ userType, setUserType }: SignupFormSectionProps) => {
+export const SignupFirstStep = ({ userType, setUserType }: SignupFormSectionProps) => {
 	const { setCurrentStep } = useSignupContext();
 
 	return (

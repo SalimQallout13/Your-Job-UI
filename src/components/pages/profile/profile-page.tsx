@@ -13,7 +13,7 @@ const ProfilePage: React.FC = () => {
 	return (
 		<>
 			<Navbar isOpen={isOpen} setIsOpen={setIsOpen} openLoginDialog={openLoginDialog} />
-			<nav className="bg-[#F2F2F2] p-4 flex space-x-8">
+			<nav className="flex space-x-8 bg-[#F2F2F2] p-4">
 				<NavLink
 					to="/dashboard"
 					className={({ isActive }) =>
