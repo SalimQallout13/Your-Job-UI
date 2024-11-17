@@ -140,8 +140,11 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 			}
 			: formData.firstStepData.userType === 'employer' && !isCandidateData(formData.thirdStepData) && {
 				companyName: formData.thirdStepData.companyName,
-				sector: formData.thirdStepData.sector,
+				secteurActivite: formData.thirdStepData.sector,
 				logo: formData.thirdStepData.logo?.name ?? null,
+				employeCount: formData.thirdStepData.employeesCount ?? null,
+				contactPoste: formData.thirdStepData.contactPosition,
+				contactName: formData.thirdStepData.contactName,
 			};
 
 		const userData = {

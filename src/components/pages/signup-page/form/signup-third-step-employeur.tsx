@@ -25,7 +25,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 		resolver: zodResolver(signupThirdStepEmployeur),
 		defaultValues: {
 			companyName: "",
-			contactName: "",
+			contactName: formData.secondStepData?.firstName + ' ' + formData.secondStepData?.lastName,
 			contactPosition: "",
 			ville: "",
 			adresse: "",
