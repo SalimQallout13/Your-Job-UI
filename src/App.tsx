@@ -9,6 +9,7 @@ import HomePage from "@/components/pages/home-page/home-page.tsx"
 import ProfilePage from "@/components/pages/profile/profile-page.tsx"
 import SignUpPage from "./components/pages/signup-page/sign-up-page"
 import { SignupProvider } from "@/lib/context/signup-context.tsx"
+import "@/lib/schemas-validation-form/zodConfig";
 
 const routes = [
 	{ path: "/profile", element: <ProfilePage /> },

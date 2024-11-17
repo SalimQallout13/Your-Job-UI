@@ -144,7 +144,7 @@ const DocumentUploader: React.FC<DocumentUploaderProps> = ({
 				{...getRootProps()}
 				className={cn(
 					"cursor-pointer transition-colors",
-					"rounded-xl border border-dashed",
+					"rounded-xl border border-dashed focus:border-purple",
 					isDragActive ? "border-purple bg-purple/5" : "border-gray-200",
 					"w-full"
 				)}

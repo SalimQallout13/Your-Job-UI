@@ -63,6 +63,7 @@ export const profileSchema = z.object({
 		.regex(/^[a-zA-Z0-9À-ÿ\s,'-]+$/, "L'adresse contient des caractères non valides"),
 
 	photo: z.custom<File | null>()
+		.nullable()
 		.refine((file) => file !== null && file !== undefined, {
 			message: "La photo de profil est requise"
 		})
@@ -82,6 +83,7 @@ export const profileSchema = z.object({
 		),
 
 	cv: z.custom<File | null>()
+		.nullable()
 		.refine((file) => file !== null && file !== undefined, {
 			message: "Le CV est requis"
 		})
@@ -101,6 +103,7 @@ export const profileSchema = z.object({
 		),
 
 	motivationLetter: z.custom<File | null>()
+		.nullable()
 		.refine((file) => file !== null && file !== undefined, {
 			message: "La lettre de motivation est requise"
 		})
@@ -125,8 +128,42 @@ export type ProfileSchema = z.infer<typeof profileSchema>;
 
 
 export const employerProfileSchema = z.object({
-	companyName: z.string().min(3, "Le nom de l'entreprise est requis."),
-	companyWebsite: z.string().url("Veuillez entrer une URL valide."),
+	companyName: z.string()
+		.min(1, "Le nom de l'entreprise est requis")
+		.min(2, "Le nom doit contenir au moins 2 caractères")
+		.max(100, "Le nom ne peut pas dépasser 100 caractères"),
+
+	contactName: z.string()
+		.min(1, "Le nom du contact est requis")
+		.min(2, "Le nom doit contenir au moins 2 caractères")
+		.max(100, "Le nom ne peut pas dépasser 100 caractères"),
+
+	contactPosition: z.string()
+		.min(1, "Le poste du contact est requis")
+		.min(2, "Le poste doit contenir au moins 2 caractères"),
+
+	companyAddress: z.string()
+		.min(1, "L'adresse est requise")
+		.min(5, "L'adresse doit contenir au moins 5 caractères"),
+
+	sector: z.string()
+		.min(1, "Le secteur d'activité est requis"),
+
+	employeesCount: z.string().optional(),
+
+	logo: z.custom<File | null>()
+		.refine((file) => file === null || file instanceof File, {
+			message: "Format de fichier invalide"
+		})
+		.refine(
+			(file) => !file || file.type.startsWith('image/'),
+			"Le fichier doit être une image"
+		)
+		.refine(
+			(file) => !file || file.size <= 5 * 1024 * 1024,
+			"La taille de l'image ne doit pas dépasser 5 Mo"
+		)
+		.optional()
 });
 
 export type EmployerProfileSchema = z.infer<typeof employerProfileSchema>;

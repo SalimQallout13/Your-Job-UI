@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
+import { profileSchema } from '../schemas-validation-form/signupValidation';
+import { z } from "zod"
 
 export type UserType = 'candidate' | 'employer' | null;
-export type SignupStep = 1 | 2 | 3;
+export type SignupStep = 1 | 2 | 3 | 4;
 
 interface SignupSchema {
 	firstName: string;
@@ -12,21 +14,18 @@ interface SignupSchema {
 	confirmPassword: string;
 }
 
-interface ProfileSchema {
-	currentPosition?: string;
-	ville: string;
-	codePostal: string;
-	adresse: string;
-	photo?: File;
-	cv: File;
-	motivationLetter?: File;
-}
-
 interface EmployerProfileSchema {
 	companyName: string;
-	companyWebsite: string;
-	// Ajoutez d'autres champs si nécessaire
+	contactName: string;
+	contactPosition: string;
+	companyAddress: string;
+	sector: string;
+	employeesCount?: string; // Rendre optionnel
+	logo?: File | null; // Rendre optionnel
 }
+
+// Supprimer l'interface ProfileSchema et utiliser le type inféré par Zod
+type ProfileSchema = z.infer<typeof profileSchema>;
 
 export interface SignupFormData {
 	userDetails?: SignupSchema;
@@ -46,7 +45,7 @@ interface SignupContextType {
 const SignupContext = createContext<SignupContextType | undefined>(undefined);
 
 export const SignupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [userType, setUserType] = useState<UserType>(null);
+	const [userType, setUserType] = useState<UserType>("employer");
 	const [currentStep, setCurrentStep] = useState<SignupStep>(1);
 	const [formData, setFormData] = useState<SignupFormData>({});
 
