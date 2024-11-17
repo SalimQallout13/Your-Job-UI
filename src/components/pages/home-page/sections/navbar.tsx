@@ -109,9 +109,11 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
 													className="font-semibold text-white transition hover:text-gray-50">
 										Connexion
 									</button>
-									<Button variant="gradient" size="lg">
-										Créer mon compte
-									</Button>
+									<Link to={ROUTES.SIGNUP_PATH}>
+										<Button variant="gradient" size="lg">
+											Créer mon compte
+										</Button>
+									</Link>
 								</>
 							) : (
 								<div className="flex flex-col items-center space-y-2">
