@@ -8,15 +8,27 @@ import { Button } from "@/components/ui/button.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState, useEffect } from "react"
+import { getSectors } from "@/api/signup-api.ts"
+import { toast } from "@/lib/hooks/use-toast.tsx"
+
+interface Sector {
+	id: string;
+	name: string;
+}
 
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
 	const { setCurrentStep } = useSignupPageContext();
+	const [sectors, setSectors] = useState<Sector[]>([]);
+	const [isLoadingSectors, setIsLoadingSectors] = useState(false);
+
 	const form = useForm<SignupThirdStepEmployeurSchema>({
 		resolver: zodResolver(signupThirdStepEmployeur),
 		defaultValues: {
-			companyName: "", // Par défaut une chaîne vide
+			companyName: "",
 			contactName: "",
 			contactPosition: "",
 			companyAddress: "",
@@ -25,6 +37,26 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			logo: null,
 		},
 	});
+
+	useEffect(() => {
+		const fetchSectors = async () => {
+			setIsLoadingSectors(true);
+			try {
+				const response = await getSectors();
+				setSectors(response.sectors);
+			} catch (error) {
+				toast({
+					title: "Erreur",
+					description: error instanceof Error ? error.message : "Impossible de charger les secteurs d'activité",
+					variant: "destructive",
+				});
+			} finally {
+				setIsLoadingSectors(false);
+			}
+		};
+
+		fetchSectors().catch();
+	}, []);
 
 	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
 		updateFormData({ profile: data });
@@ -101,41 +133,36 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
-							name="codePostal"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Code postal</FormLabel>
-									<FormControl>
-										<Input placeholder="13001" className="h-12" {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-						<FormField
-							name="adresse"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Adresse</FormLabel>
-									<FormControl>
-										<Input placeholder="12 rue de Jouy" className="h-12" {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</div>
-
-					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-						<FormField
 							control={form.control}
 							name="sector"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Secteur d'activité</FormLabel>
-									<FormControl>
-										<Input placeholder="Aéronautique, bâtiment..." className="h-12" {...field} />
-									</FormControl>
+									<Select
+										disabled={isLoadingSectors}
+										onValueChange={field.onChange}
+										value={field.value}
+									>
+										<FormControl>
+											<SelectTrigger className="h-12">
+												<SelectValue placeholder="Sélectionnez un secteur d'activité">
+													{isLoadingSectors && (
+														<div className="flex items-center gap-2">
+															<div className="h-4 w-4 animate-spin rounded-full border-2 border-purple border-t-transparent" />
+															<span>Chargement...</span>
+														</div>
+													)}
+												</SelectValue>
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent>
+											{sectors.map((sector) => (
+												<SelectItem key={sector.id} value={sector.id}>
+													{sector.name}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
 									<FormMessage />
 								</FormItem>
 							)}

@@ -22,8 +22,8 @@ interface SignupPageContextType {
 const SignupPageContext = createContext<SignupPageContextType | undefined>(undefined);
 
 export const SignupPageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [userType, setUserType] = useState<UserType>("candidate");
-	const [currentStep, setCurrentStep] = useState<SignupStep>("firstStep");
+	const [userType, setUserType] = useState<UserType>("employer");
+	const [currentStep, setCurrentStep] = useState<SignupStep>("thirdStep");
 	const [formData, setFormData] = useState<SignupFormData>({});
 
 	const updateFormData = (data: Partial<SignupFormData>) => {
