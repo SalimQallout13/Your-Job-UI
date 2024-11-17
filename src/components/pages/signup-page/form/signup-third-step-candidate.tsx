@@ -20,7 +20,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 	const form = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
 		defaultValues: {
-			currentPosition: "",
+			currentPoste: "",
 			ville: "",
 			codePostal: "",
 			adresse: "",
@@ -104,7 +104,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
-							name="currentPosition"
+							name="currentPoste"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Poste actuel (facultatif)</FormLabel>

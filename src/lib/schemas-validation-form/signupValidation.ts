@@ -43,7 +43,7 @@ export type SignupSecondStepSchema = z.infer<typeof signupSecondStepSchema>;
 
 
 export const signupThirdStepCandidateSchema = z.object({
-	currentPosition: z.string().optional(), // Champ facultatif
+	currentPoste: z.string().optional(), // Champ facultatif
 
 	ville: z.string()
 		.min(1, "La ville est requise")  // En français
