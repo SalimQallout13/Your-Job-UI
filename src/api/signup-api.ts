@@ -146,6 +146,7 @@ export const signup = async (formData: SignupFormData): Promise<SignupResponse> 
 				cv: formData.thirdStepData.cv?.name ?? null,
 				lettreMotivation: formData.thirdStepData.motivationLetter?.name ?? null,
 				photo: formData.thirdStepData.photo?.name ?? null,
+				currentPosition: formData.thirdStepData.currentPosition,
 			}
 			: formData.firstStepData.userType === 'employer' && !isCandidateData(formData.thirdStepData) && {
 				companyName: formData.thirdStepData.companyName,
