@@ -63,7 +63,6 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 			toast({
 				title: "Erreur",
 				description: error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription",
-				variant: "destructive",
 			});
 		} finally {
 			setIsSubmitting(false);
