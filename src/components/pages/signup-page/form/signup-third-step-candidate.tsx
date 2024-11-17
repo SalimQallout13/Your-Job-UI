@@ -9,9 +9,14 @@ import DocumentUploader from "@/components/others/document-uploader.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
+import { toast } from "@/lib/hooks/use-toast.tsx"
+import { signup } from "@/api/signup-api.ts"
+import { useState } from "react"
 
 export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
-	const { setCurrentStep, formData } = useSignupPageContext();  // Ajout de formData
+	const { setCurrentStep, formData } = useSignupPageContext();
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
 	const form = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
 		defaultValues: {
@@ -25,18 +30,44 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 		},
 	});
 
-	const onSubmit = (data: SignupThirdStepCandidateSchema) => {
-		updateFormData({
-			...formData,
-			thirdStepData: data
-		});
+	const onSubmit = async (data: SignupThirdStepCandidateSchema) => {
+		if (!formData.secondStepData) {
+			toast({
+				title: "Erreur",
+				description: "Données du formulaire incomplètes",
+				variant: "destructive",
+			});
+			return;
+		}
 
-		console.log("Données complètes du formulaire:", {
-			...formData,
-			thirdStepData: data
-		});
+		try {
+			setIsSubmitting(true);
 
-		setCurrentStep("successStep");
+			// Mise à jour du context avec les nouvelles données
+			const updatedFormData = {
+				...formData,
+				thirdStepData: data
+			};
+			updateFormData(updatedFormData);
+
+			// Appel à l'API d'inscription
+			await signup(updatedFormData);
+
+			toast({
+				title: "Succès",
+				description: "Votre compte a été créé avec succès",
+			});
+
+			setCurrentStep("successStep");
+		} catch (error) {
+			toast({
+				title: "Erreur",
+				description: error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription",
+				variant: "destructive",
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
@@ -171,6 +202,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 					<SignupNavigationButtons
 						onBack={() => setCurrentStep('secondStep')}
 						isSubmit={true}
+						isLoading={isSubmitting}
 						nextLabel="Créer mon compte candidat"
 					/>
 				</form>

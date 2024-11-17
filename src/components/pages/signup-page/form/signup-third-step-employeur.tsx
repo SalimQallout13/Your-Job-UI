@@ -10,15 +10,16 @@ import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState, useEffect } from "react"
-import { getSectors, Sector } from "@/api/signup-api.ts"
+import { getSectors, Sector, signup } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"
 
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
-	const { setCurrentStep, formData } = useSignupPageContext(); // Ajout de formData
+	const { setCurrentStep, formData } = useSignupPageContext();
 	const [sectors, setSectors] = useState<Sector[]>([]);
 	const [isLoadingSectors, setIsLoadingSectors] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const form = useForm<SignupThirdStepEmployeurSchema>({
 		resolver: zodResolver(signupThirdStepEmployeur),
@@ -62,21 +63,48 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 		fetchSectors().catch(console.error);
 	}, []);
 
-	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
-		updateFormData({
-			...formData,
-			thirdStepData: data
-		});
+	const onSubmit = async (data: SignupThirdStepEmployeurSchema) => {
+		if (!formData.secondStepData) {
+			toast({
+				title: "Erreur",
+				description: "Données du formulaire incomplètes",
+				variant: "destructive",
+			});
+			return;
+		}
 
-		console.log("Données complètes du formulaire:", {
-			...formData,
-			thirdStepData: data
-		});
+		try {
+			setIsSubmitting(true);
 
-		setCurrentStep("successStep");
+			// Mise à jour du context avec les nouvelles données
+			const updatedFormData = {
+				...formData,
+				thirdStepData: data
+			};
+			updateFormData(updatedFormData);
+
+			// Appel à l'API d'inscription
+			await signup(updatedFormData);
+
+			toast({
+				title: "Succès",
+				description: "Votre compte entreprise a été créé avec succès",
+			});
+
+			setCurrentStep("successStep");
+		} catch (error) {
+			toast({
+				title: "Erreur",
+				description: error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription",
+				variant: "destructive",
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 
 	return (
+
 		<>
 			<SignupHeader
 				title="Créez un compte entreprise et trouvez vos futurs talents."
@@ -245,7 +273,8 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 					<SignupNavigationButtons
 						onBack={() => setCurrentStep('secondStep')}
 						isSubmit={true}
-						nextLabel="Créer mon compte entreprise"
+						isLoading={isSubmitting}
+						nextLabel={isSubmitting ? "Création en cours..." : "Créer mon compte entreprise"}
 					/>
 				</form>
 			</Form>
