@@ -133,7 +133,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 								<FormItem>
 									<FormLabel>Nom du contact (recruteur)</FormLabel>
 									<FormControl>
-										<Input placeholder="Allan McArthur" className="h-12" {...field} />
+										<Input disabled={true} placeholder="Allan McArthur" className="h-12" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
