@@ -21,7 +21,7 @@ const SignupPageContent = () => {
 	};
 
 	return (
-		<div className="flex h-screen overflow-hidden xl:flex-row">
+		<div className="flex min-h-screen overflow-hidden xl:flex-row">
 			<SignupImageSection currentStep={currentStep} userType={userType} />
 			<div className="flex w-full flex-col overflow-auto bg-white p-8 xl:w-1/2 xl:px-16 xl:pb-16 xl:pt-12">
 				<div className={cn(
