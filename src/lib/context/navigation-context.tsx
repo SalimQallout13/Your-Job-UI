@@ -11,8 +11,8 @@ interface NavigationContextType {
 	stopSubmitting: () => void;
 	redirectToHome: () => void;
 	displayErrorMessage: (error: string) => void;
-	userData: { firstName: string } | null;
-	setUserData: (user: { firstName: string } | null) => void;
+	userData: { prenom: string } | null;
+	setUserData: (user: { prenom: string } | null) => void;
 }
 
 // Création du contexte
@@ -36,7 +36,7 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 		setTimeout(() => setErrorMessage(null), 105000)
 	}
 
-	const [userData, setUserData] = useState<{ firstName: string } | null>(() => {
+	const [userData, setUserData] = useState<{ prenom: string } | null>(() => {
 		const storedUser = localStorage.getItem("userData")
 		return storedUser ? JSON.parse(storedUser) : null
 	})

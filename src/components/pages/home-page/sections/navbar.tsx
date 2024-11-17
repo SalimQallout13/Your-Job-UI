@@ -64,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
 						) : (
 							<div className="flex items-center space-x-4">
               <span className="font-semibold text-white">
-                Bonjour, {userData.firstName}
+                Bonjour, {userData.prenom}
               </span>
 								<Button variant="gradient2" size="sm" onClick={handleLogout}>
 									Déconnexion
@@ -118,7 +118,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
 							) : (
 								<div className="flex flex-col items-center space-y-2">
                 <span className="font-semibold text-white">
-                  Bonjour, {userData.firstName}
+                  Bonjour, {userData.prenom}
                 </span>
 									<Button variant="gradient2" size="sm" onClick={handleLogout}>
 										Déconnexion

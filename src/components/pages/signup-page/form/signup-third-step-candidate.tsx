@@ -71,7 +71,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 			// Sauvegarde dans le local storage
 			localStorage.setItem("userData", JSON.stringify(flatUserData));
 			if (updatedFormData.secondStepData?.firstName !== undefined) {
-				setUserData({firstName: updatedFormData.secondStepData?.firstName});
+				setUserData({prenom: updatedFormData.secondStepData?.firstName});
 			}
 
 		} catch (error) {
