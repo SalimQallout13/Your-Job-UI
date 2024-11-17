@@ -64,6 +64,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
 		updateFormData({ thirdStepData: data });
+		console.log(data);
 		setCurrentStep("successStep");
 	};
 
