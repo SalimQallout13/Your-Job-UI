@@ -176,25 +176,18 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 											<SelectValue placeholder="Sélectionnez un secteur d'activité" />
 										</SelectTrigger>
 										<SelectContent>
-											{isLoadingSectors ? (
-												<div className="flex items-center justify-center p-4">
-													<div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-purple border-t-transparent"></div>
-													<span>Chargement...</span>
-												</div>
-											) : (
-												sectors.map((sector) => (
-													<SelectItem key={sector.id} value={sector.id}>
-														{sector.name}
-													</SelectItem>
-												))
-											)}
+											{sectors.map((sector) => (
+												<SelectItem key={sector.id} value={sector.id}>
+													{sector.name}
+												</SelectItem>
+											))}
 										</SelectContent>
 									</Select>
+
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
-
 
 						<FormField
 							control={form.control}
