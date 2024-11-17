@@ -21,7 +21,7 @@ interface Sector {
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
-	const { setCurrentStep } = useSignupPageContext();
+	const { setCurrentStep, formData } = useSignupPageContext();
 	const [sectors, setSectors] = useState<Sector[]>([]);
 	const [isLoadingSectors, setIsLoadingSectors] = useState(false);
 
@@ -31,7 +31,9 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			companyName: "",
 			contactName: "",
 			contactPosition: "",
-			companyAddress: "",
+			ville: "",
+			adresse: "",
+			codePostal: "",
 			sector: "",
 			employeesCount: "",
 			logo: null,
@@ -61,6 +63,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
 		updateFormData({ profile: data });
 		setCurrentStep("successStep");
+		console.log(formData);
 	};
 
 	return (
@@ -118,7 +121,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 						<FormField
 							control={form.control}
-							name="companyAddress"
+							name="adresse"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Adresse de l'entreprise</FormLabel>

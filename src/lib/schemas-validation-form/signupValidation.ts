@@ -142,10 +142,6 @@ export const signupThirdStepEmployeur = z.object({
 		.min(1, "Le poste du contact est requis")
 		.min(2, "Le poste doit contenir au moins 2 caractères"),
 
-	companyAddress: z.string()
-		.min(1, "L'adresse est requise")
-		.min(5, "L'adresse doit contenir au moins 5 caractères"),
-
 	ville: z.string()
 		.min(1, "La ville est requise")  // En français
 		.regex(/^[a-zA-ZÀ-ÿ\s-]+$/, "La ville ne doit contenir que des lettres, espaces et tirets")

@@ -7,9 +7,9 @@ import { Logo } from "@/components/pages/signup-page/commons/logo.tsx"
 export const SignupSuccessStep = () => {
 	return (
 		<>
-			<Icons.signUpSuccessValid className="size-16"/>
+			<Icons.signUpSuccessValid className="mx-auto size-16 xl:mx-0"/>
 			<Logo />
-			<div className="pt-4">
+			<div className="pt-4 text-center xl:text-left">
 				<h2 className="mb-6 text-3xl font-semibold text-black-primary">
 					Créez un compte entreprise et trouvez vos futurs talents.
 				</h2>
@@ -17,7 +17,7 @@ export const SignupSuccessStep = () => {
 					Complétez ces informations pour publier des offres et gérer vos candidatures.
 				</p>
 			</div>
-			<Button variant="gradient" size="lg" asChild className="h-12 w-fit">
+			<Button variant="gradient" size="lg" asChild className="h-12 w-fit mx-auto xl:mx-0">
 				<Link to={ROUTES.HOME_PATH} className="flex items-center gap-3">
 					Aller au tableau de bord
 				</Link>
