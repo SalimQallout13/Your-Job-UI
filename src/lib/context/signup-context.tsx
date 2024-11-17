@@ -5,7 +5,9 @@ export type UserType = 'candidate' | 'employer' | null;
 export type SignupStep = 'firstStep' | 'secondStep' | 'thirdStep' | 'successStep';
 
 export interface SignupFormData {
-	userType?: UserType;
+	firstStepData?: {
+		userType: UserType;
+	};
 	secondStepData?: SignupSecondStepSchema;
 	thirdStepData?: SignupThirdStepCandidateSchema | SignupThirdStepEmployeurSchema;
 }

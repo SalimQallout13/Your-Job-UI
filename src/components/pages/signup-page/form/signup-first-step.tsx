@@ -11,7 +11,14 @@ type SignupFirstStepProps = {
 };
 
 export const SignupFirstStep = ({ userType, setUserType }: SignupFirstStepProps) => {
-	const { setCurrentStep } = useSignupPageContext();
+	const { setCurrentStep, updateFormData } = useSignupPageContext();
+
+	const handleNext = () => {
+		updateFormData({
+			firstStepData: { userType }
+		});
+		setCurrentStep('secondStep');
+	};
 
 	return (
 		<>
@@ -38,7 +45,7 @@ export const SignupFirstStep = ({ userType, setUserType }: SignupFirstStepProps)
 				</div>
 				<SignupNavigationButtons
 					onBack={() => window.history.back()}
-					onNext={() => setCurrentStep('secondStep')}
+					onNext={handleNext}
 					nextDisabled={!userType}
 				/>
 				<LoginLink />

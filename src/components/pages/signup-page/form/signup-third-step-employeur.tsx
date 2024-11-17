@@ -16,7 +16,7 @@ import { toast } from "@/lib/hooks/use-toast.tsx"
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
-	const { setCurrentStep } = useSignupPageContext();
+	const { setCurrentStep, formData } = useSignupPageContext(); // Ajout de formData
 	const [sectors, setSectors] = useState<Sector[]>([]);
 	const [isLoadingSectors, setIsLoadingSectors] = useState(false);
 
@@ -59,12 +59,22 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			}
 		};
 
-		fetchSectors().catch();
+		fetchSectors().catch(console.error);
 	}, []);
 
 	const onSubmit = (data: SignupThirdStepEmployeurSchema) => {
-		updateFormData({ thirdStepData: data });
-		console.log(data);
+		// Mise à jour en conservant les données précédentes
+		updateFormData({
+			...formData, // Garde les données des étapes précédentes
+			thirdStepData: data // Ajoute les données de l'étape actuelle
+		});
+
+		// Log pour vérifier les données complètes
+		console.log("Données complètes du formulaire:", {
+			...formData,
+			thirdStepData: data
+		});
+
 		setCurrentStep("successStep");
 	};
 

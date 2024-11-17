@@ -11,7 +11,7 @@ import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 
 export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
-	const { setCurrentStep } = useSignupPageContext();
+	const { setCurrentStep, formData } = useSignupPageContext();  // Ajout de formData
 	const form = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
 		defaultValues: {
@@ -26,8 +26,18 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 	});
 
 	const onSubmit = (data: SignupThirdStepCandidateSchema) => {
-		updateFormData({ thirdStepData: data });
-		console.log(data);
+		// Mise à jour en conservant les données précédentes
+		updateFormData({
+			...formData, // Garde les données des étapes précédentes
+			thirdStepData: data // Ajoute les données de l'étape actuelle
+		});
+
+		// Log pour vérifier les données complètes
+		console.log("Données complètes du formulaire:", {
+			...formData,
+			thirdStepData: data
+		});
+
 		setCurrentStep("successStep");
 	};
 

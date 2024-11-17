@@ -15,9 +15,8 @@ type SignupSecondStepProps = {
 };
 
 export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
-	const { setCurrentStep } = useSignupPageContext();
+	const { setCurrentStep, formData } = useSignupPageContext();  // Ajout de formData
 	const [, setIsLoading] = useState(false);
-
 
 	const signupFormSchema = useForm<SignupSecondStepSchema>({
 		resolver: zodResolver(signupSecondStepSchema),
@@ -59,7 +58,12 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 				return;
 			}
 
-			updateFormData({ secondStepData: data });
+			// Mise à jour des données en conservant les données précédentes
+			updateFormData({
+				...formData,  // Garde les données existantes
+				secondStepData: data  // Ajoute les nouvelles données
+			});
+
 			setCurrentStep('thirdStep');
 		} catch (error) {
 			toast({
