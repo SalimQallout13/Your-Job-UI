@@ -33,7 +33,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			adresse: "",
 			codePostal: "",
 			secteurActivite: "",
-			employeesCount: "0",
+			employeCount: "0",
 			logo: null,
 		},
 	});
@@ -246,7 +246,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 						<FormField
 							control={form.control}
-							name="employeesCount"
+							name="employeCount"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Nombre de collaborateurs (facultatif)</FormLabel>

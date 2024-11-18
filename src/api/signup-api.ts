@@ -132,7 +132,7 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 				companyName: formData.thirdStepData.companyName,
 				secteurActivite: formData.thirdStepData.secteurActivite,
 				logo: formData.thirdStepData.logo?.name ?? null,
-				employeCount: formData.thirdStepData.employeesCount.toString() ?? null,
+				employeCount: formData.thirdStepData.employeCount.toString() ?? null,
 				contactPoste: formData.thirdStepData.contactPoste,
 			};
 
