@@ -2,6 +2,7 @@ import axios from "axios"
 import { axiosInstance } from "@/api/axios-instance.ts"
 import { SignupFormData } from "@/lib/context/signup-context.tsx"
 import { SignupThirdStepCandidateSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
 
 interface CheckEmailResponse {
 	isEmailTaken: boolean;
@@ -15,7 +16,7 @@ interface CheckPhoneResponse {
 
 export const checkEmail = async (email: string): Promise<CheckEmailResponse> => {
 	try {
-		const response = await axiosInstance.get('/users/existsByEmail', {
+		const response = await axiosInstance.get(ROUTES_BACK.VERIFY_EMAIL, {
 			params: { email },
 		});
 		return { isEmailTaken: response.data.exists };
@@ -29,7 +30,7 @@ export const checkEmail = async (email: string): Promise<CheckEmailResponse> => 
 
 export const checkPhone = async (phone: string): Promise<CheckPhoneResponse> => {
 	try {
-		const response = await axiosInstance.get('/users/existsByPhone', {
+		const response = await axiosInstance.get(ROUTES_BACK.VERIFY_PHONE, {
 			params: { phone },
 		});
 		return { isPhoneTaken: response.data.exists };
@@ -53,7 +54,7 @@ export interface GetSecteursActiviteResponse {
 
 export const getSecteursActivite = async (): Promise<GetSecteursActiviteResponse> => {
 	try {
-		const response = await axiosInstance.get('/domaines');
+		const response = await axiosInstance.get(ROUTES_BACK.GET_ALL_SECTEURS_ACTIVITE);
 
 		// Vérification et transformation des données
 		if (Array.isArray(response.data)) {
@@ -143,7 +144,7 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 			dateModification: new Date()
 		};
 
-		const response = await axiosInstance.post<unknown>('/auth/inscription', userData);
+		const response = await axiosInstance.post<unknown>(ROUTES_BACK.SIGNUP, userData);
 		return response.data;
 
 	} catch (error) {
