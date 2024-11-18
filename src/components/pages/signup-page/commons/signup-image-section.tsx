@@ -1,4 +1,4 @@
-import { SignupStep, UserType } from "@/lib/context/signup-context.tsx"
+import { SignupStep, UserRole } from "@/lib/context/signup-context.tsx"
 import firstStepImage from "@/assets/img/hero-image.png"
 import secondStepImage from "@/assets/img/signup-form-2.png"
 import signupSuccessStepImage from "@/assets/img/signup-succes.png"
@@ -6,11 +6,11 @@ import signupThirdStepCandidate from "@/assets/img/signup-form-3-candidat.png"
 import signupThirdStepEmployer from "@/assets/img/signup-form-3-employeur.png"
 
 // SignupImageSection.tsx
-export const SignupImageSection = ({ currentStep, userType }: { currentStep: SignupStep, userType: UserType }) => (
+export const SignupImageSection = ({ currentStep, userRole }: { currentStep: SignupStep, userRole: UserRole }) => (
 	<div className="relative hidden xl:block xl:w-1/2">
 		<div className="fixed h-screen w-1/2"> {/* Ajout de fixed et w-1/2 */}
 			<img
-				src={currentStep === 'firstStep' ? firstStepImage : currentStep === "secondStep" ? secondStepImage : currentStep === "successStep" ? signupSuccessStepImage : (userType === 'candidate' ? signupThirdStepCandidate : signupThirdStepEmployer)}
+				src={currentStep === 'firstStep' ? firstStepImage : currentStep === "secondStep" ? secondStepImage : currentStep === "successStep" ? signupSuccessStepImage : (userRole === 'candidate' ? signupThirdStepCandidate : signupThirdStepEmployer)}
 				alt="Professional"
 				className="size-full rounded-3xl object-cover p-3"
 			/>

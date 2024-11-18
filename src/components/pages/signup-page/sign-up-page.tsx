@@ -9,12 +9,12 @@ import { SignupSuccessStep } from "@/components/pages/signup-page/form/signup-su
 import { SignupFirstStep } from "@/components/pages/signup-page/form/signup-first-step.tsx"
 
 const SignupPageContent = () => {
-	const { userType, currentStep, setUserType, updateFormData } = useSignupPageContext();
+	const { userRole, currentStep, setUserRole, updateFormData } = useSignupPageContext();
 
 	const renderThirdStep = () => {
-		if (userType === 'candidate') {
+		if (userRole === 'candidate') {
 			return <SignupThirdSTepCandidate updateFormData={updateFormData} />;
-		} else if (userType === 'employer') {
+		} else if (userRole === 'employer') {
 			return <SignupThirdStepEmployeur updateFormData={updateFormData} />;
 		}
 		return null;
@@ -22,7 +22,7 @@ const SignupPageContent = () => {
 
 	return (
 		<div className="flex min-h-screen overflow-hidden xl:flex-row">
-			<SignupImageSection currentStep={currentStep} userType={userType} />
+			<SignupImageSection currentStep={currentStep} userRole={userRole} />
 			<div className="flex w-full flex-col overflow-auto bg-white p-8 xl:w-1/2 xl:px-16 xl:pb-16 xl:pt-12">
 				<div className={cn(
 					"mx-auto max-w-xl",
@@ -36,7 +36,7 @@ const SignupPageContent = () => {
 						currentStep === "successStep" && "flex flex-col gap-6"
 					)}>
 						{currentStep === 'firstStep' && (
-							<SignupFirstStep userType={userType} setUserType={setUserType} />
+							<SignupFirstStep userRole={userRole} setUserRole={setUserRole} />
 						)}
 						{currentStep === 'secondStep' && (
 							<SignupSecondStep updateFormData={updateFormData} />

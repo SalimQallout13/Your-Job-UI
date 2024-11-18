@@ -1,22 +1,22 @@
 import React, { createContext, useContext, useState } from 'react';
 import { SignupThirdStepEmployeurSchema, SignupThirdStepCandidateSchema, SignupSecondStepSchema } from "../schemas-validation-form/signupValidation"
 
-export type UserType = 'candidate' | 'employer' | null;
+export type UserRole = 'candidate' | 'employer' | null;
 export type SignupStep = 'firstStep' | 'secondStep' | 'thirdStep' | 'successStep';
 
 export interface SignupFormData {
 	firstStepData?: {
-		userType: UserType;
+		userRole: UserRole;
 	};
 	secondStepData?: SignupSecondStepSchema;
 	thirdStepData?: SignupThirdStepCandidateSchema | SignupThirdStepEmployeurSchema;
 }
 
 interface SignupPageContextType {
-	userType: UserType;
+	userRole: UserRole;
 	currentStep: SignupStep;
 	formData: SignupFormData;
-	setUserType: (type: UserType) => void;
+	setUserRole: (type: UserRole) => void;
 	setCurrentStep: (step: SignupStep) => void;
 	updateFormData: (data: Partial<SignupFormData>) => void;
 	resetForm: () => void;
@@ -25,7 +25,7 @@ interface SignupPageContextType {
 const SignupPageContext = createContext<SignupPageContextType | undefined>(undefined);
 
 export const SignupPageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [userType, setUserType] = useState<UserType>("candidate");
+	const [userRole, setUserRole] = useState<UserRole>("candidate");
 	const [currentStep, setCurrentStep] = useState<SignupStep>("firstStep");
 	const [formData, setFormData] = useState<SignupFormData>({});
 
@@ -34,7 +34,7 @@ export const SignupPageProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 	};
 
 	const resetForm = () => {
-		setUserType(null);
+		setUserRole(null);
 		setCurrentStep("firstStep");
 		setFormData({});
 	};
@@ -42,10 +42,10 @@ export const SignupPageProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 	return (
 		<SignupPageContext.Provider
 			value={{
-				userType,
+				userRole,
 				currentStep,
 				formData,
-				setUserType,
+				setUserRole,
 				setCurrentStep,
 				updateFormData,
 				resetForm,

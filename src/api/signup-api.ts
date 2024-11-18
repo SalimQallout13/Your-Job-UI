@@ -100,7 +100,7 @@ const isValidationError = (error: any): error is { errors: ValidationError[] } =
 
 export const signup = async (formData: SignupFormData): Promise<unknown> => {
 	// Vérification des données requises
-	if (!formData.secondStepData || !formData.thirdStepData || !formData.firstStepData?.userType) {
+	if (!formData.secondStepData || !formData.thirdStepData || !formData.firstStepData?.userRole) {
 		throw new Error("Données du formulaire incomplètes");
 	}
 
@@ -115,20 +115,20 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 			nom: formData.secondStepData.nom,
 			prenom: formData.secondStepData.prenom,
 			telephone: formData.secondStepData.telephone,
-			role: formData.firstStepData.userType === 'candidate' ? 1 : 2,
+			role: formData.firstStepData.userRole === 'candidate' ? 1 : 2,
 			ville: formData.thirdStepData.ville,
 			codePostal: formData.thirdStepData.codePostal,
 			adresse: formData.thirdStepData.adresse,
 		};
 
-		const specificData = formData.firstStepData.userType === 'candidate' && isCandidateData(formData.thirdStepData)
+		const specificData = formData.firstStepData.userRole === 'candidate' && isCandidateData(formData.thirdStepData)
 			? {
 				cv: formData.thirdStepData.cv?.name ?? null,
 				lettreMotivation: formData.thirdStepData.lettreMotivation?.name ?? null,
 				photo: formData.thirdStepData.photo?.name ?? null,
 				currentPoste: formData.thirdStepData.currentPoste,
 			}
-			: formData.firstStepData.userType === 'employer' && !isCandidateData(formData.thirdStepData) && {
+			: formData.firstStepData.userRole === 'employer' && !isCandidateData(formData.thirdStepData) && {
 				companyName: formData.thirdStepData.companyName,
 				secteurActivite: formData.thirdStepData.secteurActivite,
 				logo: formData.thirdStepData.logo?.name ?? null,
