@@ -6,13 +6,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
-import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState, useEffect } from "react"
 import { getSecteursActivite, SecteurActivite, signup } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
+import { ImageUploader } from "@/components/others/image-uploader.tsx"
 
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
@@ -267,15 +267,16 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 								<FormItem>
 									<FormLabel>Logo de l'entreprise (facultatif)</FormLabel>
 									<FormControl>
-										<FileUploader
+										<ImageUploader
 											accept="image/*"
-											maxSize={5 * 1024 * 1024}
-											onFileSelect={field.onChange}
-										>
-											<Button type="button" variant="gradient" className="rounded-full">
-												Choisir une photo
-											</Button>
-										</FileUploader>
+											maxSizeInBytes={5 * 1024 * 1024}
+											onImageChange={field.onChange}
+											uploadButton={
+												<Button type="button" variant="gradient" className="rounded-full">
+													Choisir une photo
+												</Button>
+											}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>

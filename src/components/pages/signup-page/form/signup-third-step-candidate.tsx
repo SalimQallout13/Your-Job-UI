@@ -5,14 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
-import DocumentUploader from "@/components/others/document-uploader.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
-import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { toast } from "@/lib/hooks/use-toast.tsx"
 import { signup } from "@/api/signup-api.ts"
 import { useState } from "react"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
+import Dropzone from "@/components/others/dropzone.tsx"
+import { ImageUploader } from "@/components/others/image-uploader.tsx"
 
 export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
 	const { setCurrentStep, formData } = useSignupPageContext();
@@ -101,15 +101,16 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 								<FormItem>
 									<FormLabel>Photo de profil</FormLabel>
 									<FormControl>
-										<FileUploader
+										<ImageUploader
 											accept="image/*"
-											maxSize={5 * 1024 * 1024}
-											onFileSelect={field.onChange}  // Passer directement field.onChange
-										>
-											<Button type="button" variant="gradient" className="rounded-full">
-												Choisir une photo
-											</Button>
-										</FileUploader>
+											maxSizeInBytes={5 * 1024 * 1024}
+											onImageChange={field.onChange}  // Passer directement field.onChange
+											uploadButton={
+												<Button type="button" variant="gradient" className="rounded-full">
+													Choisir une photo
+												</Button>
+											}
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -179,10 +180,10 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 								<FormItem className="space-y-4">
 									<FormLabel>CV</FormLabel>
 									<FormControl>
-										<DocumentUploader
+										<Dropzone
 											accept="application/pdf"
 											maxSize={10 * 1024 * 1024}
-											onFileSelect={(file) => {
+											onFileChange={(file) => {
 												field.onChange(file)
 											}}
 										/>
@@ -199,10 +200,10 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 								<FormItem className="space-y-4">
 									<FormLabel>Lettre de motivation</FormLabel>
 									<FormControl>
-										<DocumentUploader
+										<Dropzone
 											accept="application/pdf"
 											maxSize={10 * 1024 * 1024}
-											onFileSelect={(file) => {
+											onFileChange={(file) => {
 												field.onChange(file)
 											}}
 										/>

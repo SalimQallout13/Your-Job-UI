@@ -26,13 +26,16 @@ const SignupPageContent = () => {
 			<div className="flex w-full flex-col overflow-auto bg-white p-8 xl:w-1/2 xl:px-16 xl:pb-16 xl:pt-12">
 				<div className={cn(
 					"mx-auto max-w-xl",
+					// Pour la page successStep, la partie de droite est centrée verticalement
 					currentStep === "successStep" && "flex h-full flex-col items-center justify-center"
 				)}>
+					{/* Pour la page successStep, on affiche le logo directement dans le composant SignupSuccessStep */}
 					<div className={currentStep === 'successStep' ? "hidden" : ""}>
 						<Logo />
 					</div>
 					<div className={cn(
 						"space-y-8",
+						// Pour la page successStep, la partie de droite est centrée verticalement
 						currentStep === "successStep" && "flex flex-col gap-6"
 					)}>
 						{currentStep === 'firstStep' && (
