@@ -10,7 +10,12 @@ export const SignupImageSection = ({ currentStep, userRole }: { currentStep: Sig
 	<div className="relative hidden xl:block xl:w-1/2">
 		<div className="fixed h-screen w-1/2"> {/* Ajout de fixed et w-1/2 */}
 			<img
-				src={currentStep === 'firstStep' ? firstStepImage : currentStep === "secondStep" ? secondStepImage : currentStep === "successStep" ? signupSuccessStepImage : (userRole === 'candidate' ? signupThirdStepCandidate : signupThirdStepEmployer)}
+				src={
+				currentStep === 'firstStep' ? firstStepImage
+					: currentStep === "secondStep" ? secondStepImage
+						: currentStep === "thirdStep" ? (userRole === 'candidate' ? signupThirdStepCandidate : signupThirdStepEmployer)
+							: signupSuccessStepImage
+			}
 				alt="Professional"
 				className="size-full rounded-3xl object-cover p-3"
 			/>
