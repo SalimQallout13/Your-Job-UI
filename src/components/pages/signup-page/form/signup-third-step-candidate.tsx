@@ -104,7 +104,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 										<ImageUploader
 											accept="image/*"
 											maxSizeInBytes={5 * 1024 * 1024}
-											onImageChange={field.onChange}  // Passer directement field.onChange
+											onImageChange={field.onChange}
 											uploadButton={
 												<Button type="button" variant="gradient" className="rounded-full">
 													Choisir une photo

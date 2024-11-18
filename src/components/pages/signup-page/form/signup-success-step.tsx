@@ -17,7 +17,7 @@ export const SignupSuccessStep = () => {
 					Complétez ces informations pour publier des offres et gérer vos candidatures.
 				</p>
 			</div>
-			<Button variant="gradient" size="lg" asChild className="h-12 w-fit mx-auto xl:mx-0">
+			<Button variant="gradient" size="lg" asChild className="mx-auto h-12 w-fit xl:mx-0">
 				<Link to={ROUTES.HOME_PATH} className="flex items-center gap-3">
 					Aller au tableau de bord
 				</Link>

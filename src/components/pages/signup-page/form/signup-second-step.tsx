@@ -122,7 +122,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 											<div className="relative">
 												<Input placeholder="06 66 41 62 67" {...field} />
 												{isLoadingPhone && (
-													<span className="absolute right-2 top-2 animate-spin rounded-full border-2 border-purple border-t-transparent h-5 w-5"></span>
+													<span className="absolute right-2 top-2 size-5 animate-spin rounded-full border-2 border-purple border-t-transparent"></span>
 												)}
 											</div>
 										</FormControl>
@@ -139,7 +139,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 											<div className="relative">
 												<Input placeholder="tpuget@levupp.com" {...field} />
 												{isLoadingEmail && (
-													<span className="absolute right-2 top-2 animate-spin rounded-full border-2 border-purple border-t-transparent h-5 w-5"></span>
+													<span className="absolute right-2 top-2 size-5 animate-spin rounded-full border-2 border-purple border-t-transparent"></span>
 												)}
 											</div>
 										</FormControl>
