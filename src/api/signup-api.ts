@@ -3,7 +3,17 @@ import { axiosInstance } from "@/api/axios-instance.ts"
 import { SignupFormData } from "@/lib/context/signup-context.tsx"
 import { SignupThirdStepCandidateSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 
-export const checkEmail = async (email: string): Promise<unknown> => {
+interface CheckEmailResponse {
+	isEmailTaken: boolean;
+	message?: string;
+}
+
+interface CheckPhoneResponse {
+	isPhoneTaken: boolean;
+	message?: string;
+}
+
+export const checkEmail = async (email: string): Promise<CheckEmailResponse> => {
 	try {
 		const response = await axiosInstance.get('/users/existsByEmail', {
 			params: { email },
@@ -17,7 +27,7 @@ export const checkEmail = async (email: string): Promise<unknown> => {
 	}
 };
 
-export const checkPhone = async (phone: string): Promise<unknown> => {
+export const checkPhone = async (phone: string): Promise<CheckPhoneResponse> => {
 	try {
 		const response = await axiosInstance.get('/users/existsByPhone', {
 			params: { phone },
