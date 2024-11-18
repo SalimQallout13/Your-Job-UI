@@ -41,33 +41,33 @@ export const checkPhone = async (phone: string): Promise<CheckPhoneResponse> => 
 	}
 };
 
-export interface Sector {
+export interface SecteurActivite {
 	id: string;
 	nom: string;
 }
 
-export interface GetSectorsResponse {
-	sectors: Sector[];
+export interface GetSecteursActiviteResponse {
+	secteursActivite: SecteurActivite[];
 	message?: string;
 }
 
-export const getSectors = async (): Promise<GetSectorsResponse> => {
+export const getSecteursActivite = async (): Promise<GetSecteursActiviteResponse> => {
 	try {
 		const response = await axiosInstance.get('/domaines');
 
 		// Vérification et transformation des données
 		if (Array.isArray(response.data)) {
 			return {
-				sectors: response.data.map(sector => ({
-					id: sector._id,
-					nom: sector.nom
+				secteursActivite: response.data.map(secteurActivite => ({
+					id: secteurActivite._id,
+					nom: secteurActivite.nom
 				}))
 			};
 		}
 
 		console.error("Format de réponse invalide:", response.data);
 		return {
-			sectors: [],
+			secteursActivite: [],
 			message: "Format de réponse invalide"
 		};
 
@@ -76,13 +76,13 @@ export const getSectors = async (): Promise<GetSectorsResponse> => {
 
 		if (axios.isAxiosError(error)) {
 			return {
-				sectors: [],
+				secteursActivite: [],
 				message: error.response?.data?.message || "Une erreur est survenue lors de la récupération des secteurs d'activité"
 			};
 		}
 
 		return {
-			sectors: [],
+			secteursActivite: [],
 			message: "Erreur réseau ou serveur"
 		};
 	}
@@ -106,15 +106,15 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 
 	try {
 		const isCandidateData = (data: Partial<unknown>): data is SignupThirdStepCandidateSchema => {
-			return 'cv' in data && 'motivationLetter' in data && 'photo' in data;
+			return 'cv' in data && 'lettreMotivation' in data && 'photo' in data;
 		};
 
 		const baseUserData = {
 			email: formData.secondStepData.email,
 			password: formData.secondStepData.password,
-			nom: formData.secondStepData.lastName,
-			prenom: formData.secondStepData.firstName,
-			telephone: formData.secondStepData.phoneNumber,
+			nom: formData.secondStepData.nom,
+			prenom: formData.secondStepData.prenom,
+			telephone: formData.secondStepData.telephone,
 			role: formData.firstStepData.userType === 'candidate' ? 1 : 2,
 			ville: formData.thirdStepData.ville,
 			codePostal: formData.thirdStepData.codePostal,
@@ -124,16 +124,16 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 		const specificData = formData.firstStepData.userType === 'candidate' && isCandidateData(formData.thirdStepData)
 			? {
 				cv: formData.thirdStepData.cv?.name ?? null,
-				lettreMotivation: formData.thirdStepData.motivationLetter?.name ?? null,
+				lettreMotivation: formData.thirdStepData.lettreMotivation?.name ?? null,
 				photo: formData.thirdStepData.photo?.name ?? null,
 				currentPoste: formData.thirdStepData.currentPoste,
 			}
 			: formData.firstStepData.userType === 'employer' && !isCandidateData(formData.thirdStepData) && {
 				companyName: formData.thirdStepData.companyName,
-				secteurActivite: formData.thirdStepData.sector,
+				secteurActivite: formData.thirdStepData.secteurActivite,
 				logo: formData.thirdStepData.logo?.name ?? null,
 				employeCount: formData.thirdStepData.employeesCount.toString() ?? null,
-				contactPoste: formData.thirdStepData.contactPosition,
+				contactPoste: formData.thirdStepData.contactPoste,
 			};
 
 		const userData = {

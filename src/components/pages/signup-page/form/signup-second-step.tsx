@@ -22,9 +22,9 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 	const signupFormSchema = useForm<SignupSecondStepSchema>({
 		resolver: zodResolver(signupSecondStepSchema),
 		defaultValues: {
-			firstName: '',
-			lastName: '',
-			phoneNumber: '',
+			prenom: '',
+			nom: '',
+			telephone: '',
 			email: '',
 			password: '',
 			confirmPassword: '',
@@ -48,11 +48,11 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 			}
 
 			setIsLoadingPhone(true);
-			const phoneCheck = await checkPhone(data.phoneNumber);
+			const phoneCheck = await checkPhone(data.telephone);
 			setIsLoadingPhone(false);
 
 			if (phoneCheck.isPhoneTaken) {
-				setError('phoneNumber', {
+				setError('telephone', {
 					type: 'manual',
 					message: phoneCheck.message || 'Ce numéro de téléphone est déjà utilisé',
 				});
@@ -88,7 +88,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 					<form onSubmit={handleSubmit(onNext)} className="space-y-7">
 						<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 							<FormField
-								name="firstName"
+								name="prenom"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Prénom</FormLabel>
@@ -100,7 +100,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 								)}
 							/>
 							<FormField
-								name="lastName"
+								name="nom"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Nom</FormLabel>
@@ -114,7 +114,7 @@ export const SignupSecondStep = ({ updateFormData }: SignupSecondStepProps) => {
 						</div>
 						<div className="grid grid-cols-1 gap-5 md:grid-cols-2">
 							<FormField
-								name="phoneNumber"
+								name="telephone"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel>Numéro de téléphone</FormLabel>

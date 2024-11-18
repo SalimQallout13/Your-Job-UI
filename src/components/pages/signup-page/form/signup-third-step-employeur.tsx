@@ -10,7 +10,7 @@ import { FileUploader } from "@/components/ui/file-uploader.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState, useEffect } from "react"
-import { getSectors, Sector, signup } from "@/api/signup-api.ts"
+import { getSecteursActivite, SecteurActivite, signup } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 
@@ -18,8 +18,8 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
 	const { setCurrentStep, formData } = useSignupPageContext();
-	const [sectors, setSectors] = useState<Sector[]>([]);
-	const [isLoadingSectors, setIsLoadingSectors] = useState(false);
+	const [secteurActivites, setSecteurActivites] = useState<SecteurActivite[]>([]);
+	const [isLoadingSecteurActivite, setIsLoadingSecteurActivite] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { setUserData } = useNavigationContext();
 
@@ -27,23 +27,23 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 		resolver: zodResolver(signupThirdStepEmployeur),
 		defaultValues: {
 			companyName: "",
-			contactName: formData.secondStepData?.firstName + ' ' + formData.secondStepData?.lastName,
-			contactPosition: "",
+			contactName: formData.secondStepData?.prenom + ' ' + formData.secondStepData?.nom,
+			contactPoste: "",
 			ville: "",
 			adresse: "",
 			codePostal: "",
-			sector: "",
+			secteurActivite: "",
 			employeesCount: "0",
 			logo: null,
 		},
 	});
 
 	useEffect(() => {
-		const fetchSectors = async () => {
-			setIsLoadingSectors(true);
+		const fetchSecteurActivite = async () => {
+			setIsLoadingSecteurActivite(true);
 			try {
-				const response = await getSectors();
-				setSectors(response.sectors);
+				const response = await getSecteursActivite();
+				setSecteurActivites(response.secteursActivite);
 
 				if (response.message) {
 					toast({
@@ -58,11 +58,11 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 					description: "Impossible de charger les secteurs d'activité",
 				});
 			} finally {
-				setIsLoadingSectors(false);
+				setIsLoadingSecteurActivite(false);
 			}
 		};
 
-		fetchSectors().catch(console.error);
+		fetchSecteurActivite().catch(console.error);
 	}, []);
 
 	const onSubmit = async (data: SignupThirdStepEmployeurSchema) => {
@@ -102,8 +102,8 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 
 			// Sauvegarde dans le local storage
 			localStorage.setItem("userData", JSON.stringify(flatUserData));
-			if (updatedFormData.secondStepData?.firstName !== undefined) {
-				setUserData({prenom: updatedFormData.secondStepData?.firstName});
+			if (updatedFormData.secondStepData?.prenom !== undefined) {
+				setUserData({prenom: updatedFormData.secondStepData?.prenom});
 			}
 		} catch (error) {
 			toast({
@@ -158,7 +158,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
 							control={form.control}
-							name="contactPosition"
+							name="contactPoste"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Poste du contact</FormLabel>
@@ -215,12 +215,12 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
 							control={form.control}
-							name="sector"
+							name="secteurActivite"
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Secteur d'activité</FormLabel>
 									<Select
-										disabled={isLoadingSectors}
+										disabled={isLoadingSecteurActivite}
 										onValueChange={field.onChange}
 										value={field.value}
 									>
@@ -228,13 +228,13 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 											<SelectValue placeholder="Sélectionnez un secteur d'activité" />
 										</SelectTrigger>
 										<SelectContent>
-											{sectors.map((sector) => (
+											{secteurActivites.map((secteurActivite) => (
 												<SelectItem
-													key={sector.id}
-													value={sector.id}
+													key={secteurActivite.id}
+													value={secteurActivite.id}
 													className="text-gray-900"
 												>
-													{sector.nom}
+													{secteurActivite.nom}
 												</SelectItem>
 											))}
 										</SelectContent>

@@ -28,7 +28,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 			adresse: "",
 			photo: undefined,
 			cv: undefined,
-			motivationLetter: undefined
+			lettreMotivation: undefined
 		},
 	});
 
@@ -70,8 +70,8 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 
 			// Sauvegarde dans le local storage
 			localStorage.setItem("userData", JSON.stringify(flatUserData));
-			if (updatedFormData.secondStepData?.firstName !== undefined) {
-				setUserData({prenom: updatedFormData.secondStepData?.firstName});
+			if (updatedFormData.secondStepData?.prenom !== undefined) {
+				setUserData({prenom: updatedFormData.secondStepData?.prenom});
 			}
 
 		} catch (error) {
@@ -194,7 +194,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 
 						<FormField
 							control={form.control}
-							name="motivationLetter"
+							name="lettreMotivation"
 							render={({ field }) => (
 								<FormItem className="space-y-4">
 									<FormLabel>Lettre de motivation</FormLabel>

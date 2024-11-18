@@ -1,17 +1,17 @@
 import { z } from "zod";
 
 export const signupSecondStepSchema = z.object({
-	firstName: z
+	prenom: z
 		.string()
 		.min(1, "Le prénom est requis.")
 		.max(50, "Le prénom ne doit pas dépasser 50 caractères."),
 
-	lastName: z
+	nom: z
 		.string()
 		.min(1, "Le nom est requis.")
 		.max(50, "Le nom ne doit pas dépasser 50 caractères."),
 
-	phoneNumber: z
+	telephone: z
 		.string()
 		.min(10, "Le numéro de téléphone doit contenir au moins 10 chiffres.")
 		.max(10, "Le numéro de téléphone ne doit pas dépasser 10 chiffres.")
@@ -103,7 +103,7 @@ export const signupThirdStepCandidateSchema = z.object({
 			{ message: "La taille du CV ne doit pas dépasser 10 Mo" }
 		),
 
-	motivationLetter: z.custom<File | null>()
+	lettreMotivation: z.custom<File | null>()
 		.nullable()
 		.refine((file) => file !== null && file !== undefined, {
 			message: "La lettre de motivation est requise"
@@ -139,7 +139,7 @@ export const signupThirdStepEmployeur = z.object({
 		.min(2, "Le nom doit contenir au moins 2 caractères")
 		.max(100, "Le nom ne peut pas dépasser 100 caractères"),
 
-	contactPosition: z.string()
+	contactPoste: z.string()
 		.min(1, "Le poste du contact est requis")
 		.min(2, "Le poste doit contenir au moins 2 caractères"),
 
@@ -160,7 +160,7 @@ export const signupThirdStepEmployeur = z.object({
 		.max(100, "L'adresse ne peut pas dépasser 100 caractères")
 		.regex(/^[a-zA-Z0-9À-ÿ\s,'-]+$/, "L'adresse contient des caractères non valides"),
 
-	sector: z.string()
+	secteurActivite: z.string()
 		.min(1, "Le secteur d'activité est requis"),
 
 	// il ne peut pas y avoir de chiffre négatif
