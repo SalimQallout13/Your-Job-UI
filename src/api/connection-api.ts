@@ -21,7 +21,7 @@ export class ConnectionApi implements IConnectionApi {
         }
     }
 
-    public async updateProfile(form: UpdateProfileRequest): Promise<ApiResponse<any>> {
+    public async updateProfile(form: UpdateProfileRequest): Promise<ApiResponse<unknown>> {
         try {
             const response = await axiosInstance.patch(ROUTES_BACK.UPDATE_PROFILE, form);
             return {status: 'success', data: response.data};

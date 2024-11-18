@@ -5,5 +5,5 @@ import { UpdateProfileRequest } from "@/lib/types/api/requests/UpdateProfileRequ
 
 export interface IConnectionApi {
 	login(credentials: UserSignInRequest): Promise<ApiResponse<UserSignInResponse>>;
-	updateProfile(form: UpdateProfileRequest): Promise<ApiResponse<any>>;
+	updateProfile(form: UpdateProfileRequest): Promise<ApiResponse<unknown>>;
 }

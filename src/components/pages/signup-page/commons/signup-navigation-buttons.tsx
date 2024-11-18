@@ -38,7 +38,7 @@ export const SignupNavigationButtons = ({
 		>
 			{isLoading ? (
 				<div className="flex items-center gap-2">
-					<Loader2 className="h-4 w-4 animate-spin" />
+					<Loader2 className="size-4 animate-spin" />
 					<span>En cours...</span>
 				</div>
 			) : (
