@@ -6,7 +6,9 @@ import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import LoginPage from "@/components/pages/login-page/login-page.tsx"
 import { Link } from "react-router-dom"
 import { ROUTES } from "@/lib/configs/routes.ts"
-
+import { Roles } from "@/lib/enums/Roles.ts"
+import { CandidatProfile } from "@/lib/interfaces/userData.ts"
+import { RecruteurProfile } from "@/lib/interfaces/userData.ts"
 type NavbarProps = {
 	isOpen: boolean;
 	setIsOpen: (value: boolean) => void,
@@ -21,6 +23,12 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen)
 	}
+
+	const photoProfile = userData
+		? userData.role === Roles.Candidat
+			? (userData.profile as CandidatProfile)?.photo
+			: (userData.profile as RecruteurProfile)?.logo
+		: undefined;
 
 	return (
 		<>
@@ -66,6 +74,9 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
               <span className="font-semibold text-white">
                 Bonjour, {userData.prenom}
               </span>
+								<div className="size-14 overflow-hidden rounded-full">
+									<img src={photoProfile} alt="Photo de profil" className="size-full object-cover" />
+								</div>
 								<Button variant="gradient2" size="sm" onClick={handleLogout}>
 									Déconnexion
 								</Button>

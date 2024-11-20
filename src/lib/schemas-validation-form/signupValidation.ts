@@ -82,7 +82,6 @@ export const signupThirdStepCandidateSchema = z.object({
 			},
 			{ message: "La taille de l'image ne doit pas dépasser 5 Mo" }
 		),
-
 	cv: z.custom<File | null>()
 		.nullable()
 		.refine((file) => file !== null && file !== undefined, {

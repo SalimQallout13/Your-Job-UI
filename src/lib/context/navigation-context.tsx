@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ROUTES } from "@/lib/configs/routes"
+import { UserData } from "@/lib/interfaces/userData.ts"
 
 // Définition du type des données fournies par le contexte
 interface NavigationContextType {
@@ -11,8 +12,9 @@ interface NavigationContextType {
 	stopSubmitting: () => void;
 	redirectToHome: () => void;
 	displayErrorMessage: (error: string) => void;
-	userData: { prenom: string } | null;
-	setUserData: (user: { prenom: string } | null) => void;
+	userData: UserData | null;
+	setUserData: (user: UserData | null) => void;
+	updateUserData: (updates: Partial<UserData>) => void;
 }
 
 // Création du contexte
@@ -33,13 +35,18 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 	}
 
 	const clearErrorMessageAfterDelay = () => {
-		setTimeout(() => setErrorMessage(null), 105000)
+		const timeoutId = setTimeout(() => setErrorMessage(null), 5000)
+		return () => clearTimeout(timeoutId) // Nettoie le timeout
 	}
 
-	const [userData, setUserData] = useState<{ prenom: string } | null>(() => {
+	const [userData, setUserData] = useState<UserData | null>(() => {
 		const storedUser = localStorage.getItem("userData")
 		return storedUser ? JSON.parse(storedUser) : null
 	})
+
+	const updateUserData = (updates: Partial<UserData>) => {
+		setUserData((prev) => (prev ? { ...prev, ...updates } : null));
+	};
 
 
 	useEffect(() => {
@@ -59,7 +66,9 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 				stopSubmitting,
 				redirectToHome,
 				displayErrorMessage,
-				userData, setUserData
+				userData,
+				setUserData,
+				updateUserData
 			}}
 		>
 			{children}
