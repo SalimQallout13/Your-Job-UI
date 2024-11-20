@@ -17,7 +17,7 @@ import { ImageUploader } from "@/components/others/image-uploader.tsx"
 export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
 	const { setCurrentStep, formData } = useSignupPageContext();
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { setUserData } = useNavigationContext();
+	const { updateUserData } = useNavigationContext();
 
 	const form = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
@@ -69,9 +69,9 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 			};
 
 			// Sauvegarde dans le local storage
-			localStorage.setItem("userData", JSON.stringify(flatUserData));
+			updateUserData(flatUserData)
 			if (updatedFormData.secondStepData?.prenom !== undefined) {
-				setUserData({prenom: updatedFormData.secondStepData?.prenom});
+				updateUserData({prenom: updatedFormData.secondStepData?.prenom});
 			}
 
 		} catch (error) {

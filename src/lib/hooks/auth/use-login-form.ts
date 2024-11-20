@@ -7,6 +7,7 @@ import { UserSignInResponse } from "@/lib/types/api/responses/UserSignInResponse
 import { UserSignInRequest } from "@/lib/types/api/requests/UserSignInRequest.ts"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useNavigate } from "react-router-dom"
+import { UserData } from "@/lib/interfaces/userData.ts"
 
 export const useLoginForm = (connectionApi: IConnectionApi) => {
 	const {
@@ -26,12 +27,21 @@ export const useLoginForm = (connectionApi: IConnectionApi) => {
 		}
 	})
 
-	const navigate = useNavigate();
+	const navigate = useNavigate()
 
 	const storeUserInLocalStorage = (user: UserSignInResponse) => {
 		localStorage.setItem("userData", JSON.stringify(user))
 		localStorage.setItem("justLoggedIn", "true")
 	}
+	// Fonction pour mapper UserSignInResponse en UserData
+	const mapUserSignInResponseToUserData = (response: UserSignInResponse): UserData => {
+		return {
+			...response,
+			createdAt: response.createdAt || new Date().toISOString(), // Fournir une valeur par défaut
+			updatedAt: response.updatedAt || new Date().toISOString()
+		}
+	}
+
 
 	const handleFormSubmit = async ({ email, password }: UserSignInRequest) => {
 		startSubmitting()
@@ -39,8 +49,12 @@ export const useLoginForm = (connectionApi: IConnectionApi) => {
 		stopSubmitting()
 
 		if (response.status === "success") {
-			storeUserInLocalStorage(response.data)
-			setUserData(response.data) // Mise à jour immédiate du contexte
+			// Mapper UserSignInResponse en UserData
+			const userData = mapUserSignInResponseToUserData(response.data)
+
+			// Stocker et mettre à jour le contexte
+			storeUserInLocalStorage(userData)
+			setUserData(userData) // Pas d'erreur ici
 			navigate("/profile")
 		} else if (response.status === "error") {
 			displayErrorMessage(response.error)

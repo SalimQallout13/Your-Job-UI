@@ -1,13 +1,14 @@
-import { UserRole, useSignupPageContext } from "@/lib/context/signup-context.tsx"
+import { useSignupPageContext } from "@/lib/context/signup-context.tsx"
 import { Icons } from "@/components/others/icons.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 import { SignupCard } from "@/components/pages/signup-page/commons/signup-card.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { LoginLink } from "@/components/pages/signup-page/commons/login-link.tsx"
+import { Roles } from "@/lib/enums/Roles.ts"
 
 type SignupFirstStepProps = {
-	userRole: UserRole;
-	setUserRole: (type: UserRole) => void;
+	userRole: Roles;
+	setUserRole: (type: Roles) => void;
 };
 
 export const SignupFirstStep = ({ userRole, setUserRole }: SignupFirstStepProps) => {
@@ -29,15 +30,15 @@ export const SignupFirstStep = ({ userRole, setUserRole }: SignupFirstStepProps)
 			<div className="space-y-7">
 				<div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
 					<SignupCard
-						isSelected={userRole === 'candidate'}
-						onClick={() => setUserRole('candidate')}
+						isSelected={userRole === Roles.Candidat}
+						onClick={() => setUserRole(Roles.Candidat)}
 						title="Trouver un emploi"
 						description="Prêt à découvrir de nouvelles opportunités ?"
 						icon={<Icons.signupCandidat className="size-8" />}
 					/>
 					<SignupCard
-						isSelected={userRole === 'employer'}
-						onClick={() => setUserRole('employer')}
+						isSelected={userRole === Roles.Entreprise}
+						onClick={() => setUserRole(Roles.Entreprise)}
 						title="Recruter des profils"
 						description="Trouvez les talents qui feront la différence."
 						icon={<Icons.signupEmployeur className="size-8" />}

@@ -1,8 +1,6 @@
-export type UserSignInResponse = {
-	id: number;
-	identifiant: string;
-	nom: string;
-	prenom: string;
-	email: string;
-	role: number;
+import { UserData } from "@/lib/interfaces/userData.ts"
+
+export type UserSignInResponse = Omit<UserData, "createdAt" | "updatedAt"> & {
+	createdAt?: string; // Rendez certaines propriétés optionnelles ou spécifiques
+	updatedAt?: string;
 };

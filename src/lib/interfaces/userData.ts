@@ -27,7 +27,6 @@ export interface UserData {
 	nom: string;
 	prenom: string;
 	email: string;
-	password: string;
 	role: 1 | 2 | 0; // 1: Candidat, 2: Recruteur, 0: Administrateur
 	telephone: string;
 	adresse: string;

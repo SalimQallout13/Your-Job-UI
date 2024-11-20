@@ -30,19 +30,21 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 	const stopSubmitting = () => setIsSubmitting(false)
 	const redirectToHome = () => navigate(ROUTES.HOME_PATH)
 	const displayErrorMessage = (error: string) => {
-		setErrorMessage(error)
-		clearErrorMessageAfterDelay()
-	}
+		setErrorMessage(error);
+		const timeoutId = setTimeout(() => setErrorMessage(null), 5000);
+		return () => clearTimeout(timeoutId);
+	};
 
-	const clearErrorMessageAfterDelay = () => {
-		const timeoutId = setTimeout(() => setErrorMessage(null), 5000)
-		return () => clearTimeout(timeoutId) // Nettoie le timeout
-	}
 
 	const [userData, setUserData] = useState<UserData | null>(() => {
-		const storedUser = localStorage.getItem("userData")
-		return storedUser ? JSON.parse(storedUser) : null
-	})
+		try {
+			const storedUser = localStorage.getItem("userData");
+			return storedUser ? JSON.parse(storedUser) : null;
+		} catch (error) {
+			console.error("Failed to parse userData from localStorage:", error);
+			return null;
+		}
+	});
 
 	const updateUserData = (updates: Partial<UserData>) => {
 		setUserData((prev) => (prev ? { ...prev, ...updates } : null));
