@@ -1,46 +1,17 @@
 import React from "react"
 import { Progress } from "@/components/ui/progress"
-import Navbar from "@/components/pages/home-page/sections/navbar.tsx"
 import ProfileForm from "@/components/pages/profile/profile-form.tsx"
-import { NavLink } from "react-router-dom"
-import { useSigninContext } from "@/lib/context/signin-context.tsx"
+import ProfileNav from "@/components/pages/profile/commons/profile-nav.tsx"
+import { Title } from "@/components/pages/profile/commons/title.tsx"
 
 const ProfilePage: React.FC = () => {
-	const { isOpen, setIsOpen, openLoginDialog } = useSigninContext()
-
 	return (
 		<>
-			<Navbar isOpen={isOpen} setIsOpen={setIsOpen} openLoginDialog={openLoginDialog} />
-			<nav className="flex space-x-8 bg-[#F2F2F2] p-4">
-				<NavLink
-					to="/dashboard"
-					className={({ isActive }) =>
-						isActive ? "text-black font-bold border-b-2 border-gray-800 pb-1" : "text-gray-500 hover:text-black"
-					}
-				>
-					Tableau de bord
-				</NavLink>
-				<NavLink
-					to="/profile"
-					className={({ isActive }) =>
-						isActive ? "text-black font-bold border-b-2 border-gray-800 pb-1" : "text-gray-500 hover:text-black"
-					}
-				>
-					Mon profil
-				</NavLink>
-				<NavLink
-					to="/offers"
-					className={({ isActive }) =>
-						isActive ? "text-black font-bold border-b-2 border-gray-800 pb-1" : "text-gray-500 hover:text-black"
-					}
-				>
-					Mes offres
-				</NavLink>
-			</nav>
-			<main className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-				{/* Left Column - Profile Summary */}
-				<section className="rounded-lg bg-white p-6 shadow">
-					<h2 className="mb-4 text-2xl font-bold">Profil</h2>
+			<ProfileNav />
+			<main className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+				{/* Left Column - 25% */}
+				<section className="rounded-lg bg-white p-6 col-span-1">
+					<Title>Profil</Title>
 
 					{/* Profile Completion */}
 					<div className="mt-8">
@@ -57,11 +28,13 @@ const ProfilePage: React.FC = () => {
 					</div>
 				</section>
 
-				{/* Middle Column - Contact Information */}
-				<section className="col-span-2 rounded-lg bg-white p-6 shadow">
+				{/* Right Column - 75% */}
+				<section className="rounded-lg bg-white p-6 col-span-3">
 					<ProfileForm />
 				</section>
 			</main>
+
+
 		</>
 	)
 }
