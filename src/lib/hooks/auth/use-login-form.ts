@@ -47,10 +47,7 @@ export const useLoginForm = () => {
 				})
 			}
 		} catch (error) {
-			toast({
-				title: "Erreur",
-				description: error instanceof Error ? error.message : "Une erreur est survenue lors de la connexion"
-			})
+			throw new Error(error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription")
 		} finally {
 			setIsSubmitting(false)
 		}

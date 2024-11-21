@@ -39,6 +39,7 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 
 	// Synchronisation des données utilisateur avec localStorage
 	useEffect(() => {
+		console.log("userData", userData);
 		if (userData) {
 			localStorage.setItem("userData", JSON.stringify(userData));
 		} else {

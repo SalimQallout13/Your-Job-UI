@@ -9,12 +9,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "@/lib/hooks/use-toast.tsx"
 import { signup } from "@/api/signup-api.ts"
 
-
 export const useThirdStepCandidate = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
 	const { setCurrentStep, formData } = useSignupPageContext()
-	const { isSubmitting, setIsSubmitting, updateUserData } = useNavigationContext()
+	const { isSubmitting, setIsSubmitting, setUserData } = useNavigationContext()
 
 	const signupFormCandidat = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
@@ -49,35 +48,27 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 			}
 			updateFormData(updatedFormData)
 
-			// Appel à l'API d'inscription
-			await signup(updatedFormData)
+			const response = await signup(updatedFormData)
 
-			setCurrentStep("successStep")
-			// Transformation en un objet unique contenant tous les champs
-			const flatUserData = {
-				...updatedFormData.firstStepData,
-				...updatedFormData.secondStepData,
-				...updatedFormData.thirdStepData
+			if (response.status === "success") {
+				setCurrentStep("successStep")
+
+				setUserData(response.data)
+
+				toast({
+					title: "Inscription réussie",
+					description: "Votre inscription a bien été prise en compte"
+				})
+			} else {
+				// Gérer les erreurs renvoyées par l'API
+				toast({
+					title: "Erreur",
+					description: response.error
+				})
 			}
-
-			console.log(flatUserData)
-			// Sauvegarde dans le local storage
-			updateUserData(flatUserData)
-			if (updatedFormData.secondStepData?.prenom !== undefined) {
-				updateUserData({ prenom: updatedFormData.secondStepData?.prenom })
-			}
-
-			toast({
-				title: "Inscription réussie",
-				description: "Votre inscription a bien été prise en compte"
-			})
 
 		} catch (error) {
-			toast({
-				title: "Erreur",
-				description: error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription",
-				variant: "destructive"
-			})
+			throw new Error(error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription")
 		} finally {
 			setIsSubmitting(false)
 		}

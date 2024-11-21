@@ -7,6 +7,9 @@ import {
 } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
 import { Roles } from "@/lib/enums/Roles.ts"
+import { ApiResponse } from "@/lib/types/api/ApiResponse.ts"
+import { UserData } from "@/lib/interfaces/userData.ts"
+import { handleAxiosError } from "@/api/login-api.ts"
 
 interface CheckEmailResponse {
 	isEmailTaken: boolean;
@@ -18,12 +21,6 @@ interface CheckPhoneResponse {
 	message?: string;
 }
 
-interface ValidationError {
-	msg: string;
-	param?: string;
-	location?: string;
-}
-
 export interface SecteurActivite {
 	id: string;
 	nom: string;
@@ -32,10 +29,6 @@ export interface SecteurActivite {
 export interface GetSecteursActiviteResponse {
 	secteursActivite: SecteurActivite[];
 	message?: string;
-}
-
-const isValidationError = (error: any): error is { errors: ValidationError[] } => {
-	return Array.isArray(error.errors) && error.errors.every((err: any) => "msg" in err)
 }
 
 export const checkEmail = async (email: string): Promise<CheckEmailResponse> => {
@@ -103,7 +96,7 @@ export const getSecteursActivite = async (): Promise<GetSecteursActiviteResponse
 	}
 }
 
-export const signup = async (formData: SignupFormData): Promise<unknown> => {
+export const signup = async (formData: SignupFormData): Promise<ApiResponse<UserData>> => {
 	// Vérification des données requises
 	if (!formData.secondStepData || !formData.thirdStepData || !formData.firstStepData?.userRole) {
 		throw new Error("Données du formulaire incomplètes")
@@ -113,7 +106,6 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 		const isCandidateData = (data: SignupThirdStepCandidateSchema | SignupThirdStepEmployeurSchema): data is SignupThirdStepCandidateSchema => {
 			return "photo" in data && "cv" in data && "lettreMotivation" in data
 		}
-
 
 		// Création de l'objet FormData pour les fichiers
 		const fileFormData = new FormData()
@@ -143,35 +135,11 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 
 		}
 
-		const response = await axiosInstance.post<unknown>(ROUTES_BACK.SIGNUP, fileFormData, {
+		const response = await axiosInstance.post<UserData>(ROUTES_BACK.SIGNUP, fileFormData, {
 			headers: { "Content-Type": "multipart/form-data" }
 		})
-		return response.data
+		return { status: "success", data: response.data }
 	} catch (error) {
-		if (axios.isAxiosError(error)) {
-			// Erreur de validation du backend
-			if (error.response?.status) {
-				if (isValidationError(error.response.data)) {
-					const validationErrors = error.response.data.errors
-						.map(err => err.msg)
-						.join(", ")
-					throw new Error(validationErrors)
-				}
-
-				// Erreur spécifique (comme email déjà utilisé)
-				if (error.response.data.error) {
-					throw new Error(error.response.data.error)
-				}
-			}
-
-			// Autres erreurs HTTP
-			if (error.response?.status === 500) {
-				throw new Error("Erreur serveur, veuillez réessayer plus tard")
-			}
-		}
-
-		// Erreurs non-HTTP
-		console.error("Erreur lors de l'inscription:", error)
-		throw new Error("Une erreur inattendue est survenue")
+		return handleAxiosError<UserData>(error)
 	}
 }

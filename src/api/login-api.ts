@@ -7,7 +7,7 @@ import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
 import { UpdateProfileRequest } from "@/lib/types/api/requests/UpdateProfileRequest.ts" // Requête pour la mise à jour
 
 // Fonction utilitaire générique pour gérer les erreurs
-const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
+export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
 	if (axios.isAxiosError(error)) {
 		const errorMessage =
 			error.response?.data?.errors?.[0]?.msg || // Tableau d'erreurs
@@ -27,9 +27,9 @@ export const login = async (credentials: UserSignInRequest): Promise<ApiResponse
 	}
 }
 
-export const updateProfile = async (form: UpdateProfileRequest): Promise<ApiResponse<unknown>> => {
+export const updateProfile = async (formData: UpdateProfileRequest): Promise<ApiResponse<unknown>> => {
 	try {
-		const response = await axiosInstance.patch<unknown>(ROUTES_BACK.UPDATE_PROFILE, form)
+		const response = await axiosInstance.patch<unknown>(ROUTES_BACK.UPDATE_PROFILE, formData)
 		return { status: "success", data: response.data }
 	} catch (error) {
 		return handleAxiosError<unknown>(error)
