@@ -5,7 +5,7 @@ import type {
 	ToastProps
 } from "@/components/ui/toast.tsx"
 import { ReloadIcon } from "@radix-ui/react-icons"
-import { BadgeCheck } from "lucide-react"
+import { BadgeAlert, BadgeCheck } from "lucide-react"
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000
@@ -202,4 +202,17 @@ const showToast = (title: string, description: string, isSpinning: boolean = fal
 	})
 }
 
-export { useToast, toast, showToast }
+const showErrorToast = (description: string) => {
+	toast({
+		title: "Erreur",
+		description: (
+			<div className="flex">
+				<BadgeAlert className="mr-2 size-4 text-red-600" />
+				{description}
+			</div>
+		),
+		duration: 5000
+	})
+}
+
+export { useToast, toast, showToast, showErrorToast }

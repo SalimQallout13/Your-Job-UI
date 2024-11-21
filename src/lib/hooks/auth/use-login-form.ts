@@ -4,7 +4,7 @@ import { LoginSchema, loginSchema } from "@/lib/schemas-validation-form/loginVal
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useNavigate } from "react-router-dom"
 import { login } from "@/api/login-api.ts"
-import { showToast, toast } from "@/lib/hooks/use-toast.tsx"
+import { showToast, showErrorToast } from "@/lib/hooks/use-toast.tsx"
 import { useSigninContext } from "@/lib/context/signin-context.tsx"
 
 export const useLoginForm = () => {
@@ -37,10 +37,7 @@ export const useLoginForm = () => {
 				showToast("Succès", "Connexion réussie", false)
 			} else {
 				// Gérer les erreurs renvoyées par l'API
-				toast({
-					title: "Erreur",
-					description: response.error
-				})
+				showErrorToast(response.error)
 			}
 		} catch (error) {
 			throw new Error(error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription")

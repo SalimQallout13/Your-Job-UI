@@ -10,17 +10,15 @@ export const useLogout = (): UseLogout => {
 	const navigate = useNavigate()
 	const { setUserData } = useNavigationContext()
 
-	// Fonction logout asynchrone sans délai de simulation
-	const logout = async () => {
-		// Supprime les données de l'utilisateur
-		setUserData(null)
-	}
-
 	const handleLogout = async () => {
-		showToast("Déconnexion", "Déconnexion en cours", true)
-		await logout() // Attendre la fin de `logout` (même si instantané)
-		showToast("Déconnexion", "Déconnexion réussie", false)
-		navigate("/")
+		try {
+			showToast("Déconnexion", "Déconnexion en cours", true)
+			setUserData(null)
+			showToast("Déconnexion", "Déconnexion réussie", false)
+			navigate("/")
+		} catch (error) {
+			throw new Error(error instanceof Error ? error.message : "Une erreur est survenue lors de la déconnexion")
+		}
 	}
 
 	return { handleLogout }

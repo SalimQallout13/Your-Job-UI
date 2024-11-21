@@ -6,7 +6,7 @@ import {
 	SignupThirdStepCandidateSchema
 } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { showToast, toast } from "@/lib/hooks/use-toast.tsx"
+import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
 import { signup } from "@/api/signup-api.ts"
 
 export const useThirdStepCandidate = ({ updateFormData }: {
@@ -52,10 +52,7 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 				showToast("Succès", "Votre inscription a bien été prise en compte", false)
 			} else {
 				// Gérer les erreurs renvoyées par l'API
-				toast({
-					title: "Erreur",
-					description: response.error
-				})
+				showErrorToast(response.error)
 			}
 
 		} catch (error) {

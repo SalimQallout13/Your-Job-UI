@@ -3,14 +3,14 @@ import { useForm } from "react-hook-form"
 import { profileSchema, ProfileSchema } from "@/lib/schemas-validation-form/profileValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updateProfile } from "@/api/login-api.ts"
-import { toast } from "@/lib/hooks/use-toast.tsx"
+import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
 
 export const useProfileForm = () => {
 
 	const {
 		isSubmitting,
 		errorMessage,
-		setIsSubmitting,
+		setIsSubmitting
 	} = useNavigationContext()
 
 	const profileFormSchema = useForm({
@@ -31,12 +31,9 @@ export const useProfileForm = () => {
 			setIsSubmitting(true)
 			const response = await updateProfile(data)
 			if (response.status === "success") {
-				// Do something with the response
+				showToast("Succès", "Profil mis à jour", false)
 			} else {
-				toast({
-					title: "Erreur",
-					description: response.error
-				})
+				showErrorToast(response.error)
 			}
 		} catch (error) {
 			throw new Error(error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription")
