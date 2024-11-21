@@ -2,7 +2,7 @@ import { Icons } from "@/components/others/icons.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { Link } from "react-router-dom"
 import { ROUTES } from "@/lib/configs/routes.ts"
-import { Logo } from "@/components/pages/signup-page/commons/logo.tsx"
+import { Logo } from "@/components/commons/logo.tsx"
 
 export const SignupSuccessStep = () => {
 	return (

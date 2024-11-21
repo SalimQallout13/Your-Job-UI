@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { Button } from "@/components/ui/button.tsx"
-import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
+import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState, useEffect } from "react"
@@ -120,7 +120,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	return (
 
 		<>
-			<SignupHeader
+			<SignUpHeader
 				title="Créez un compte entreprise et trouvez vos futurs talents."
 				description="Complétez ces informations pour publier des offres et gérer vos candidatures."
 			/>

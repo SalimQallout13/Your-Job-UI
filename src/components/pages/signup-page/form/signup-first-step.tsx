@@ -1,6 +1,6 @@
 import { useSignupPageContext } from "@/lib/context/signup-context.tsx"
 import { Icons } from "@/components/others/icons.tsx"
-import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
+import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { SignupCard } from "@/components/pages/signup-page/commons/signup-card.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { LoginLink } from "@/components/pages/signup-page/commons/login-link.tsx"
@@ -23,7 +23,7 @@ export const SignupFirstStep = ({ userRole, setUserRole }: SignupFirstStepProps)
 
 	return (
 		<>
-			<SignupHeader
+			<SignUpHeader
 				title="Comment souhaitez-vous utiliser YourJob ?"
 				description="Choisissez votre voie et commencez votre aventure dans le monde du travail, que vous soyez en quête de talents ou de votre prochaine opportunité."
 			/>

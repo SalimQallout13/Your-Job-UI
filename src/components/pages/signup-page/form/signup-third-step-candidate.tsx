@@ -2,7 +2,7 @@ import { SignupFormData } from "@/lib/context/signup-context.tsx"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
-import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
+import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 
 import Dropzone from "@/components/others/dropzone.tsx"
@@ -22,7 +22,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: {
 
 	return (
 		<>
-			<SignupHeader
+			<SignUpHeader
 				title="Créez votre profil et trouvez votre prochain défi professionnel."
 				description="Renseignez ces informations pour compléter votre profil et accéder aux meilleures offres d'emploi."
 			/>
