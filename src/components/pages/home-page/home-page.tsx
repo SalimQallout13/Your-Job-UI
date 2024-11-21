@@ -4,14 +4,11 @@ import Emplois from "@/components/pages/home-page/sections/emplois.tsx"
 import CvAndAvis from "./sections/cv-and-avis"
 import EmailAlerts from "./sections/email-alerts"
 import Footer from "@/components/pages/home-page/sections/footer.tsx"
-import { useState } from "react"
+import { useSigninContext } from "@/lib/context/signin-context.tsx"
 
 const HomePage = () => {
 
-	const [isOpen, setIsOpen] = useState(false)
-
-	// Fonction pour ouvrir le modal
-	const openLoginDialog = () => setIsOpen(true)
+	const { isOpen, setIsOpen, openLoginDialog } = useSigninContext()
 
 	return (
 		<div>

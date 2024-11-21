@@ -1,14 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import { Progress } from "@/components/ui/progress"
 import Navbar from "@/components/pages/home-page/sections/navbar.tsx"
 import ProfileForm from "@/components/pages/profile/profile-form.tsx"
 import { NavLink } from "react-router-dom"
+import { useSigninContext } from "@/lib/context/signin-context.tsx"
 
 const ProfilePage: React.FC = () => {
-	const [isOpen, setIsOpen] = useState(false)
-
-	// Fonction pour ouvrir le modal
-	const openLoginDialog = () => setIsOpen(true)
+	const { isOpen, setIsOpen, openLoginDialog } = useSigninContext()
 
 	return (
 		<>

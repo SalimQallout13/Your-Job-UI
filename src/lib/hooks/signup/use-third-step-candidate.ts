@@ -6,7 +6,7 @@ import {
 	SignupThirdStepCandidateSchema
 } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { toast } from "@/lib/hooks/use-toast.tsx"
+import { showToast, toast } from "@/lib/hooks/use-toast.tsx"
 import { signup } from "@/api/signup-api.ts"
 
 export const useThirdStepCandidate = ({ updateFormData }: {
@@ -30,12 +30,7 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 
 	const submitSignInForm = async (data: SignupThirdStepCandidateSchema) => {
 		if (!formData.secondStepData) {
-			toast({
-				title: "Erreur",
-				description: "Données du formulaire incomplètes",
-				variant: "destructive"
-			})
-			return
+			throw new Error("Données du formulaire incomplètes")
 		}
 
 		try {
@@ -51,14 +46,10 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 			const response = await signup(updatedFormData)
 
 			if (response.status === "success") {
+				showToast("Succès", "Inscription en cours", true)
 				setCurrentStep("successStep")
-
 				setUserData(response.data)
-
-				toast({
-					title: "Inscription réussie",
-					description: "Votre inscription a bien été prise en compte"
-				})
+				showToast("Succès", "Votre inscription a bien été prise en compte", false)
 			} else {
 				// Gérer les erreurs renvoyées par l'API
 				toast({

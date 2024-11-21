@@ -1,21 +1,16 @@
-import React from "react"
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form.tsx"
 import { Link } from "react-router-dom"
 import { useLoginForm } from "@/lib/hooks/auth/use-login-form.ts"
 import { Message } from "@/components/ui/alert.tsx"
-import { SignUpLink } from "@/components/commons/signUp-link.tsx"
+import { SignUpLink } from "@/components/commons/sign-up-link.tsx"
 import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { Logo } from "@/components/commons/logo.tsx"
 
-interface LoginFormProps {
-	closeDialog: () => void;
-}
+export const LoginForm = () => {
 
-export const LoginForm: React.FC<LoginFormProps> = ({ closeDialog }) => {
-
-	const { loginFormSchema, isSubmitting, errorMessage, submitLoginForm } = useLoginForm()
+	const { loginFormSchema, isSubmitting, errorMessage, closeLoginDialog, submitLoginForm } = useLoginForm()
 
 	return (
 		<>
@@ -62,7 +57,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ closeDialog }) => {
 							</Link>
 						</div>
 						<div className="mb-10 flex items-center justify-end gap-4">
-							<Button type="button" variant="outline" onClick={closeDialog}>
+							<Button type="button" variant="outline" onClick={closeLoginDialog}>
 								Annuler
 							</Button>
 							<FormControl>

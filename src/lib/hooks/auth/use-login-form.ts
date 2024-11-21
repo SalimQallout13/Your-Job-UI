@@ -4,10 +4,12 @@ import { LoginSchema, loginSchema } from "@/lib/schemas-validation-form/loginVal
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useNavigate } from "react-router-dom"
 import { login } from "@/api/login-api.ts"
-import { toast } from "@/lib/hooks/use-toast.tsx"
+import { showToast, toast } from "@/lib/hooks/use-toast.tsx"
+import { useSigninContext } from "@/lib/context/signin-context.tsx"
 
 export const useLoginForm = () => {
 	const { isSubmitting, errorMessage, setIsSubmitting, setUserData } = useNavigationContext()
+	const {closeLoginDialog} = useSigninContext()
 
 	const loginFormSchema = useForm<LoginSchema>({
 		resolver: zodResolver(loginSchema),
@@ -28,17 +30,11 @@ export const useLoginForm = () => {
 
 			// Vérifiez si la réponse contient des données valides
 			if (response.status === "success") {
-				// Stocker et mettre à jour le contexte utilisateur
+				showToast("Succès", "Connexion en cours", true)
 				setUserData(response.data)
-
-				// Message de succès
-				toast({
-					title: "Succès",
-					description: "Connexion réussie."
-				})
-
-				// Rediriger l'utilisateur
+				closeLoginDialog()
 				navigate("/profile")
+				showToast("Succès", "Connexion réussie", false)
 			} else {
 				// Gérer les erreurs renvoyées par l'API
 				toast({
@@ -57,6 +53,7 @@ export const useLoginForm = () => {
 		loginFormSchema,
 		isSubmitting,
 		errorMessage,
+		closeLoginDialog,
 		submitLoginForm
 	}
 }

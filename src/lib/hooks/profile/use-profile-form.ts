@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { profileSchema, ProfileSchema } from "@/lib/schemas-validation-form/profileValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updateProfile } from "@/api/login-api.ts"
+import { toast } from "@/lib/hooks/use-toast.tsx"
 
 export const useProfileForm = () => {
 
@@ -10,7 +11,6 @@ export const useProfileForm = () => {
 		isSubmitting,
 		errorMessage,
 		setIsSubmitting,
-		displayErrorMessage
 	} = useNavigationContext()
 
 	const profileFormSchema = useForm({
@@ -33,10 +33,13 @@ export const useProfileForm = () => {
 			if (response.status === "success") {
 				// Do something with the response
 			} else {
-				displayErrorMessage(response.error)
+				toast({
+					title: "Erreur",
+					description: response.error
+				})
 			}
 		} catch (error) {
-			displayErrorMessage(error instanceof Error ? error.message : "Une erreur réseau est survenue.")
+			throw new Error(error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription")
 		} finally {
 			setIsSubmitting(false)
 		}

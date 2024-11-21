@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import { UserData } from "@/lib/interfaces/userData.ts";
+import { createContext, useContext, useState, ReactNode, useEffect } from "react"
+import { UserData } from "@/lib/interfaces/userData.ts"
 
 // Définition du type des données fournies par le contexte
 interface NavigationContextType {
@@ -13,39 +13,39 @@ interface NavigationContextType {
 }
 
 // Création du contexte
-const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
+const NavigationContext = createContext<NavigationContextType | undefined>(undefined)
 
 // Provider pour le contexte
 export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 	// Gestion des états
-	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-	const [errorMessage, setErrorMessage] = useState<string | null>(null);
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const [userData, setUserData] = useState<UserData | null>(() => {
-		const storedUserData = localStorage.getItem("userData");
-		return storedUserData ? JSON.parse(storedUserData) : null;
-	});
+		const storedUserData = localStorage.getItem("userData")
+		return storedUserData ? JSON.parse(storedUserData) : null
+	})
 
 	// Affichage des messages d'erreur avec timeout
 	const displayErrorMessage = (error: string) => {
-		setErrorMessage(error);
-		const timeoutId = setTimeout(() => setErrorMessage(null), 5000);
-		return () => clearTimeout(timeoutId);
-	};
+		setErrorMessage(error)
+		const timeoutId = setTimeout(() => setErrorMessage(null), 5000)
+		return () => clearTimeout(timeoutId)
+	}
 
 	// Mise à jour des données utilisateur
 	const updateUserData = (updates: Partial<UserData>) => {
-		setUserData((prev) => (prev ? { ...prev, ...updates } : null));
-	};
+		setUserData((prev) => (prev ? { ...prev, ...updates } : null))
+	}
 
 	// Synchronisation des données utilisateur avec localStorage
 	useEffect(() => {
-		console.log("userData", userData);
+		console.log("userData", userData)
 		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData));
+			localStorage.setItem("userData", JSON.stringify(userData))
 		} else {
-			localStorage.removeItem("userData");
+			localStorage.removeItem("userData")
 		}
-	}, [userData]);
+	}, [userData])
 
 	return (
 		<NavigationContext.Provider
@@ -56,19 +56,19 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 				displayErrorMessage,
 				userData,
 				setUserData,
-				updateUserData,
+				updateUserData
 			}}
 		>
 			{children}
 		</NavigationContext.Provider>
-	);
-};
+	)
+}
 
 // Hook pour utiliser le contexte
 export const useNavigationContext = (): NavigationContextType => {
-	const context = useContext(NavigationContext);
+	const context = useContext(NavigationContext)
 	if (context === undefined) {
-		throw new Error("useNavigationContext must be used within a NavigationProvider");
+		throw new Error("useNavigationContext must be used within a NavigationProvider")
 	}
-	return context;
-};
+	return context
+}

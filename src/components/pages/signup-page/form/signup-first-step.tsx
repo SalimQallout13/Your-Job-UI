@@ -5,6 +5,7 @@ import { SignupCard } from "@/components/pages/signup-page/commons/signup-card.t
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { LoginLink } from "@/components/pages/signup-page/commons/login-link.tsx"
 import { Roles } from "@/lib/enums/Roles.ts"
+import { useSigninContext } from "@/lib/context/signin-context.tsx"
 
 type SignupFirstStepProps = {
 	userRole: Roles;
@@ -12,14 +13,15 @@ type SignupFirstStepProps = {
 };
 
 export const SignupFirstStep = ({ userRole, setUserRole }: SignupFirstStepProps) => {
-	const { setCurrentStep, updateFormData } = useSignupPageContext();
+	const { setCurrentStep, updateFormData } = useSignupPageContext()
+	const { openLoginDialog } = useSigninContext()
 
 	const handleNext = () => {
 		updateFormData({
 			firstStepData: { userRole: userRole }
-		});
-		setCurrentStep('secondStep');
-	};
+		})
+		setCurrentStep("secondStep")
+	}
 
 	return (
 		<>
@@ -49,8 +51,8 @@ export const SignupFirstStep = ({ userRole, setUserRole }: SignupFirstStepProps)
 					onNext={handleNext}
 					nextDisabled={!userRole}
 				/>
-				<LoginLink />
+				<LoginLink openLoginDialog={openLoginDialog} />
 			</div>
 		</>
-	);
-};
+	)
+}
