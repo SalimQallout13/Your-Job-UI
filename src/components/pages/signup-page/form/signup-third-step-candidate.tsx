@@ -1,88 +1,24 @@
-import { SignupFormData, useSignupPageContext } from "@/lib/context/signup-context.tsx"
-import { useForm } from "react-hook-form"
-import { signupThirdStepCandidateSchema, SignupThirdStepCandidateSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { SignupFormData } from "@/lib/context/signup-context.tsx"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { SignupHeader } from "@/components/pages/signup-page/commons/signup-header.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
-import { toast } from "@/lib/hooks/use-toast.tsx"
-import { signup } from "@/api/signup-api.ts"
-import { useState } from "react"
-import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
+
 import Dropzone from "@/components/others/dropzone.tsx"
 import { ImageUploader } from "@/components/others/image-uploader.tsx"
+import { useThirdStepCandidate } from "@/lib/hooks/signup/use-third-step-candidate.ts"
 
-export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (data: Partial<SignupFormData>) => void }) => {
-	const { setCurrentStep, formData } = useSignupPageContext();
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { updateUserData } = useNavigationContext();
+export const SignupThirdSTepCandidate = ({ updateFormData }: {
+	updateFormData: (data: Partial<SignupFormData>) => void
+}) => {
 
-	const form = useForm<SignupThirdStepCandidateSchema>({
-		resolver: zodResolver(signupThirdStepCandidateSchema),
-		defaultValues: {
-			currentPoste: "",
-			ville: "",
-			codePostal: "",
-			adresse: "",
-			photo: undefined,
-			cv: undefined,
-			lettreMotivation: undefined
-		},
-	});
-
-	const onSubmit = async (data: SignupThirdStepCandidateSchema) => {
-		if (!formData.secondStepData) {
-			toast({
-				title: "Erreur",
-				description: "Données du formulaire incomplètes",
-				variant: "destructive",
-			});
-			return;
-		}
-
-		try {
-			setIsSubmitting(true);
-
-			// Mise à jour du context avec les nouvelles données
-			const updatedFormData = {
-				...formData,
-				thirdStepData: data
-			};
-			updateFormData(updatedFormData);
-
-			// Appel à l'API d'inscription
-			await signup(updatedFormData);
-
-			toast({
-				title: "Succès",
-				description: "Votre compte a été créé avec succès",
-			});
-
-			setCurrentStep("successStep");
-			// Transformation en un objet unique contenant tous les champs
-			const flatUserData = {
-				...updatedFormData.firstStepData,
-				...updatedFormData.secondStepData,
-				...updatedFormData.thirdStepData,
-			};
-
-			// Sauvegarde dans le local storage
-			updateUserData(flatUserData)
-			if (updatedFormData.secondStepData?.prenom !== undefined) {
-				updateUserData({prenom: updatedFormData.secondStepData?.prenom});
-			}
-
-		} catch (error) {
-			toast({
-				title: "Erreur",
-				description: error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription",
-			});
-		} finally {
-			setIsSubmitting(false);
-		}
-	};
+	const {
+		signupFormCandidat,
+		submitSignInForm,
+		setCurrentStep,
+		isSubmitting
+	} = useThirdStepCandidate({ updateFormData })
 
 	return (
 		<>
@@ -90,12 +26,12 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 				title="Créez votre profil et trouvez votre prochain défi professionnel."
 				description="Renseignez ces informations pour compléter votre profil et accéder aux meilleures offres d'emploi."
 			/>
-			<Form {...form}>
-				<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<Form {...signupFormCandidat}>
+				<form onSubmit={signupFormCandidat.handleSubmit(submitSignInForm)} className="space-y-8">
 					{/* Champs spécifiques au candidat */}
 					<div className="space-y-4">
 						<FormField
-							control={form.control}
+							control={signupFormCandidat.control}
 							name="photo"
 							render={({ field }) => (
 								<FormItem>
@@ -174,7 +110,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
-							control={form.control}
+							control={signupFormCandidat.control}
 							name="cv"
 							render={({ field }) => (
 								<FormItem className="space-y-4">
@@ -194,7 +130,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 						/>
 
 						<FormField
-							control={form.control}
+							control={signupFormCandidat.control}
 							name="lettreMotivation"
 							render={({ field }) => (
 								<FormItem className="space-y-4">
@@ -215,7 +151,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 					</div>
 
 					<SignupNavigationButtons
-						onBack={() => setCurrentStep('secondStep')}
+						onBack={() => setCurrentStep("secondStep")}
 						isSubmit={true}
 						isLoading={isSubmitting}
 						nextLabel="Créer mon compte candidat"
@@ -223,5 +159,5 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: { updateFormData: (
 				</form>
 			</Form>
 		</>
-	);
-};
+	)
+}

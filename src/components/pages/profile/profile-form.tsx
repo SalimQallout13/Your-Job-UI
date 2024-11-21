@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useDropzone } from "react-dropzone"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { ConnectionApi } from "@/api/connection-api.ts"
 import { useProfileForm } from "@/lib/hooks/profile/use-profile-form.ts"
 import { Message } from "@/components/ui/alert.tsx"
 
@@ -14,7 +13,7 @@ const ProfileForm: React.FC = () => {
 		onDrop: acceptedFiles => console.log(acceptedFiles)
 	})
 
-	const { profileFormSchema, isSubmitting, errorMessage, submitProfileForm } = useProfileForm(new ConnectionApi())
+	const { profileFormSchema, isSubmitting, errorMessage, submitProfileForm } = useProfileForm()
 
 
 	return (

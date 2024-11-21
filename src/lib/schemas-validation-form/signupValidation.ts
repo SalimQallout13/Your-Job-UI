@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const signupSecondStepSchema = z.object({
 	prenom: z
@@ -33,12 +33,12 @@ export const signupSecondStepSchema = z.object({
 	confirmPassword: z
 		.string()
 		.min(8, "La confirmation du mot de passe doit contenir au moins 8 caractères.")
-		.max(100, "La confirmation du mot de passe ne doit pas dépasser 100 caractères."),
+		.max(100, "La confirmation du mot de passe ne doit pas dépasser 100 caractères.")
 })
 	.refine((data) => data.password === data.confirmPassword, {
 		message: "Les mots de passe ne correspondent pas.",
-		path: ["confirmPassword"],
-	});
+		path: ["confirmPassword"]
+	})
 
 export type SignupSecondStepSchema = z.infer<typeof signupSecondStepSchema>;
 
@@ -64,24 +64,18 @@ export const signupThirdStepCandidateSchema = z.object({
 		.regex(/^[a-zA-Z0-9À-ÿ\s,'-]+$/, "L'adresse contient des caractères non valides"),
 
 	photo: z.custom<File | null>()
-		.nullable()
-		.refine((file) => file !== null && file !== undefined, {
-			message: "La photo de profil est requise"
+		.refine((file) => file === null || file instanceof File, {
+			message: "Format de fichier invalide"
 		})
 		.refine(
-			(file) => {
-				if (!file) return false;
-				return file instanceof File && file.type.startsWith('image/');
-			},
-			{ message: "Le fichier doit être une image" }
+			(file) => !file || file.type.startsWith("image/"),
+			"Le fichier doit être une image"
 		)
 		.refine(
-			(file) => {
-				if (!file) return false;
-				return file.size <= 5 * 1024 * 1024;
-			},
-			{ message: "La taille de l'image ne doit pas dépasser 5 Mo" }
-		),
+			(file) => !file || file.size <= 5 * 1024 * 1024,
+			"La taille de l'image ne doit pas dépasser 5 Mo"
+		)
+		.optional(),
 	cv: z.custom<File | null>()
 		.nullable()
 		.refine((file) => file !== null && file !== undefined, {
@@ -89,15 +83,15 @@ export const signupThirdStepCandidateSchema = z.object({
 		})
 		.refine(
 			(file) => {
-				if (!file) return false;
-				return file instanceof File && file.type === 'application/pdf';
+				if (!file) return false
+				return file instanceof File && file.type === "application/pdf"
 			},
 			{ message: "Le fichier doit être au format PDF" }
 		)
 		.refine(
 			(file) => {
-				if (!file) return false;
-				return file.size <= 10 * 1024 * 1024;
+				if (!file) return false
+				return file.size <= 10 * 1024 * 1024
 			},
 			{ message: "La taille du CV ne doit pas dépasser 10 Mo" }
 		),
@@ -109,22 +103,21 @@ export const signupThirdStepCandidateSchema = z.object({
 		})
 		.refine(
 			(file) => {
-				if (!file) return false;
-				return file instanceof File && file.type === 'application/pdf';
+				if (!file) return false
+				return file instanceof File && file.type === "application/pdf"
 			},
 			{ message: "Le fichier doit être au format PDF" }
 		)
 		.refine(
 			(file) => {
-				if (!file) return false;
-				return file.size <= 10 * 1024 * 1024;
+				if (!file) return false
+				return file.size <= 10 * 1024 * 1024
 			},
 			{ message: "La taille de la lettre de motivation ne doit pas dépasser 10 Mo" }
-		),
-});
+		)
+})
 
 export type SignupThirdStepCandidateSchema = z.infer<typeof signupThirdStepCandidateSchema>;
-
 
 
 export const signupThirdStepEmployeur = z.object({
@@ -171,7 +164,7 @@ export const signupThirdStepEmployeur = z.object({
 			message: "Format de fichier invalide"
 		})
 		.refine(
-			(file) => !file || file.type.startsWith('image/'),
+			(file) => !file || file.type.startsWith("image/"),
 			"Le fichier doit être une image"
 		)
 		.refine(
@@ -179,6 +172,6 @@ export const signupThirdStepEmployeur = z.object({
 			"La taille de l'image ne doit pas dépasser 5 Mo"
 		)
 		.optional()
-});
+})
 
 export type SignupThirdStepEmployeurSchema = z.infer<typeof signupThirdStepEmployeur>;

@@ -18,6 +18,26 @@ interface CheckPhoneResponse {
 	message?: string;
 }
 
+interface ValidationError {
+	msg: string;
+	param?: string;
+	location?: string;
+}
+
+export interface SecteurActivite {
+	id: string;
+	nom: string;
+}
+
+export interface GetSecteursActiviteResponse {
+	secteursActivite: SecteurActivite[];
+	message?: string;
+}
+
+const isValidationError = (error: any): error is { errors: ValidationError[] } => {
+	return Array.isArray(error.errors) && error.errors.every((err: any) => "msg" in err)
+}
+
 export const checkEmail = async (email: string): Promise<CheckEmailResponse> => {
 	try {
 		const response = await axiosInstance.get(ROUTES_BACK.VERIFY_EMAIL, {
@@ -44,16 +64,6 @@ export const checkPhone = async (phone: string): Promise<CheckPhoneResponse> => 
 		}
 		throw new Error("Erreur réseau ou serveur")
 	}
-}
-
-export interface SecteurActivite {
-	id: string;
-	nom: string;
-}
-
-export interface GetSecteursActiviteResponse {
-	secteursActivite: SecteurActivite[];
-	message?: string;
 }
 
 export const getSecteursActivite = async (): Promise<GetSecteursActiviteResponse> => {
@@ -93,16 +103,6 @@ export const getSecteursActivite = async (): Promise<GetSecteursActiviteResponse
 	}
 }
 
-interface ValidationError {
-	msg: string;
-	param?: string;
-	location?: string;
-}
-
-const isValidationError = (error: any): error is { errors: ValidationError[] } => {
-	return Array.isArray(error.errors) && error.errors.every((err: any) => "msg" in err)
-}
-
 export const signup = async (formData: SignupFormData): Promise<unknown> => {
 	// Vérification des données requises
 	if (!formData.secondStepData || !formData.thirdStepData || !formData.firstStepData?.userRole) {
@@ -110,85 +110,47 @@ export const signup = async (formData: SignupFormData): Promise<unknown> => {
 	}
 
 	try {
-		const isCandidateData = (
-			data: SignupThirdStepCandidateSchema | SignupThirdStepEmployeurSchema
-		): data is SignupThirdStepCandidateSchema => {
+		const isCandidateData = (data: SignupThirdStepCandidateSchema | SignupThirdStepEmployeurSchema): data is SignupThirdStepCandidateSchema => {
 			return "photo" in data && "cv" in data && "lettreMotivation" in data
 		}
 
 
 		// Création de l'objet FormData pour les fichiers
 		const fileFormData = new FormData()
+		fileFormData.append("email", formData.secondStepData.email)
+		fileFormData.append("password", formData.secondStepData.password)
+		fileFormData.append("nom", formData.secondStepData.nom)
+		fileFormData.append("prenom", formData.secondStepData.prenom)
+		fileFormData.append("telephone", formData.secondStepData.telephone)
+		fileFormData.append("role", formData.firstStepData.userRole.toString())
+		fileFormData.append("ville", formData.thirdStepData.ville)
+		fileFormData.append("codePostal", formData.thirdStepData.codePostal)
+		fileFormData.append("adresse", formData.thirdStepData.adresse)
 
-		if (formData.firstStepData.userRole === Roles.Candidat && isCandidateData(formData.thirdStepData)) {
+		if (formData.firstStepData.userRole == Roles.Candidat && isCandidateData(formData.thirdStepData)) {
 			// Nous sommes dans le contexte d'un candidat
-			if (formData.thirdStepData.photo) {
-				fileFormData.append("photo", formData.thirdStepData.photo)
-			}
-			if (formData.thirdStepData.cv) {
-				fileFormData.append("cv", formData.thirdStepData.cv)
-			}
-			if (formData.thirdStepData.lettreMotivation) {
-				fileFormData.append("lettreMotivation", formData.thirdStepData.lettreMotivation)
-			}
-		} else if (formData.firstStepData.userRole === Roles.Entreprise) {
+			if (formData.thirdStepData.photo) fileFormData.append("photo", formData.thirdStepData.photo)
+			fileFormData.append("cv", formData.thirdStepData.cv)
+			fileFormData.append("lettreMotivation", formData.thirdStepData.lettreMotivation)
+			if (formData.thirdStepData.currentPoste) fileFormData.append("currentPoste", formData.thirdStepData.currentPoste)
+		} else if (formData.firstStepData.userRole == Roles.Entreprise && !isCandidateData(formData.thirdStepData)) {
 			// Nous sommes dans le contexte d'un employeur
-			if ("logo" in formData.thirdStepData && formData.thirdStepData.logo) {
-				fileFormData.append("logo", formData.thirdStepData.logo)
-			}
+			fileFormData.append("companyName", formData.thirdStepData.companyName)
+			fileFormData.append("secteurActivite", formData.thirdStepData.secteurActivite)
+			if (formData.thirdStepData.logo) fileFormData.append("logo", formData.thirdStepData.logo)
+			fileFormData.append("employeCount", formData.thirdStepData.employeCount.toString())
+			fileFormData.append("contactPoste", formData.thirdStepData.contactPoste)
+
 		}
 
-
-		// Upload des fichiers avant d'envoyer les données utilisateur
-		const fileUploadResponse = await axiosInstance.post(ROUTES_BACK.UPLOAD_FILE, fileFormData, {
+		const response = await axiosInstance.post<unknown>(ROUTES_BACK.SIGNUP, fileFormData, {
 			headers: { "Content-Type": "multipart/form-data" }
 		})
-
-		// Récupération des noms de fichiers ou des URLs depuis la réponse
-		const uploadedFiles = fileUploadResponse.data
-
-		// Assignation des fichiers uploadés aux données utilisateur
-		const baseUserData = {
-			email: formData.secondStepData.email,
-			password: formData.secondStepData.password,
-			nom: formData.secondStepData.nom,
-			prenom: formData.secondStepData.prenom,
-			telephone: formData.secondStepData.telephone,
-			role: formData.firstStepData.userRole === Roles.Candidat ? 0 : 2,
-			ville: formData.thirdStepData.ville,
-			codePostal: formData.thirdStepData.codePostal,
-			adresse: formData.thirdStepData.adresse
-		}
-
-		const specificData = formData.firstStepData.userRole === Roles.Candidat && isCandidateData(formData.thirdStepData)
-			? {
-				cv: uploadedFiles.cv ?? null,
-				lettreMotivation: uploadedFiles.lettreMotivation ?? null,
-				photo: uploadedFiles.photo ?? null,
-				currentPoste: formData.thirdStepData.currentPoste
-			}
-			: formData.firstStepData.userRole === Roles.Entreprise && !isCandidateData(formData.thirdStepData) && {
-			companyName: formData.thirdStepData.companyName,
-			secteurActivite: formData.thirdStepData.secteurActivite,
-			logo: uploadedFiles.logo ?? null,
-			employeCount: formData.thirdStepData.employeCount.toString() ?? null,
-			contactPoste: formData.thirdStepData.contactPoste
-		}
-
-		const userData = {
-			...baseUserData,
-			...specificData,
-			dateCreation: new Date(),
-			dateModification: new Date()
-		}
-
-		const response = await axiosInstance.post<unknown>(ROUTES_BACK.SIGNUP, userData)
 		return response.data
-
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
 			// Erreur de validation du backend
-			if (error.response?.status === 400) {
+			if (error.response?.status) {
 				if (isValidationError(error.response.data)) {
 					const validationErrors = error.response.data.errors
 						.map(err => err.msg)

@@ -5,7 +5,6 @@ import {Form, FormField, FormItem, FormLabel, FormControl, FormMessage} from '@/
 import {Card, CardContent} from '@/components/ui/card.tsx';
 import {Link} from 'react-router-dom';
 import {useLoginForm} from "@/lib/hooks/auth/use-login-form.ts";
-import {ConnectionApi} from "@/api/connection-api.ts";
 import {Message} from "@/components/ui/alert.tsx"
 import Paragraph from "@/components/ui/paragraph.tsx";
 
@@ -15,7 +14,7 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ closeDialog }) => {
 
-    const {loginFormSchema, isSubmitting, errorMessage, submitLoginForm} = useLoginForm(new ConnectionApi());
+    const {loginFormSchema, isSubmitting, errorMessage, submitLoginForm} = useLoginForm();
 
     return (
         <Card className="mb-20 w-full border-none px-2 shadow-none">

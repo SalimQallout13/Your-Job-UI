@@ -21,7 +21,6 @@ export interface RecruteurProfile {
 
 type Profile = CandidatProfile | RecruteurProfile;
 
-
 export interface UserData {
 	_id: string;
 	nom: string;

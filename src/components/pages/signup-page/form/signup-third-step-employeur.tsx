@@ -21,7 +21,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	const [secteurActivites, setSecteurActivites] = useState<SecteurActivite[]>([]);
 	const [isLoadingSecteurActivite, setIsLoadingSecteurActivite] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { setUserData } = useNavigationContext();
+	const { updateUserData } = useNavigationContext();
 
 	const form = useForm<SignupThirdStepEmployeurSchema>({
 		resolver: zodResolver(signupThirdStepEmployeur),
@@ -101,10 +101,11 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			};
 
 			// Sauvegarde dans le local storage
-			localStorage.setItem("userData", JSON.stringify(flatUserData));
+			updateUserData(flatUserData)
 			if (updatedFormData.secondStepData?.prenom !== undefined) {
-				setUserData({prenom: updatedFormData.secondStepData?.prenom});
+				updateUserData({ prenom: updatedFormData.secondStepData?.prenom })
 			}
+
 		} catch (error) {
 			toast({
 				title: "Erreur",
