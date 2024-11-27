@@ -2,13 +2,13 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginSchema, loginSchema } from "@/lib/schemas-validation-form/loginValidation.ts"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
-import { useNavigate } from "react-router-dom"
 import { login } from "@/api/login-api.ts"
 import { showToast, showErrorToast } from "@/lib/hooks/use-toast.tsx"
 import { useSigninContext } from "@/lib/context/signin-context.tsx"
+import { ROUTES } from "@/lib/configs/routes.ts"
 
 export const useLoginForm = () => {
-	const { isSubmitting, errorMessage, setIsSubmitting, setUserData } = useNavigationContext()
+	const { isSubmitting, errorMessage, setIsSubmitting, setUserData, navigateTo } = useNavigationContext()
 	const {closeLoginDialog} = useSigninContext()
 
 	const loginFormSchema = useForm<LoginSchema>({
@@ -18,9 +18,6 @@ export const useLoginForm = () => {
 			password: ""
 		}
 	})
-
-	const navigate = useNavigate()
-
 	// Fonction pour soumettre le formulaire de connexion
 	const submitLoginForm = async (data: LoginSchema) => {
 		try {
@@ -33,7 +30,7 @@ export const useLoginForm = () => {
 				showToast("Succès", "Connexion en cours", true)
 				setUserData(response.data)
 				closeLoginDialog()
-				navigate("/profile")
+				navigateTo(ROUTES.PROFILE_PATH)
 				showToast("Succès", "Connexion réussie", false)
 			} else {
 				// Gérer les erreurs renvoyées par l'API

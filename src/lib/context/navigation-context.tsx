@@ -1,5 +1,7 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react"
 import { UserData } from "@/lib/interfaces/userData.ts"
+import { ROUTES } from "@/lib/configs/routes.ts"
+import { useNavigate } from "react-router-dom"
 
 // Définition du type des données fournies par le contexte
 interface NavigationContextType {
@@ -10,6 +12,7 @@ interface NavigationContextType {
 	userData: UserData | null;
 	setUserData: (data: UserData | null) => void;
 	updateUserData: (updates: Partial<UserData>) => void;
+	navigateTo: (path: typeof ROUTES[keyof typeof ROUTES]) => void;
 }
 
 // Création du contexte
@@ -24,12 +27,18 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 		const storedUserData = localStorage.getItem("userData")
 		return storedUserData ? JSON.parse(storedUserData) : null
 	})
+	const navigate = useNavigate()
+
 
 	// Affichage des messages d'erreur avec timeout
 	const displayErrorMessage = (error: string) => {
 		setErrorMessage(error)
 		const timeoutId = setTimeout(() => setErrorMessage(null), 5000)
 		return () => clearTimeout(timeoutId)
+	}
+
+	const navigateTo = (path: typeof ROUTES[keyof typeof ROUTES]) => {
+		navigate(path)
 	}
 
 	// Mise à jour des données utilisateur
@@ -56,7 +65,8 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 				displayErrorMessage,
 				userData,
 				setUserData,
-				updateUserData
+				updateUserData,
+				navigateTo
 			}}
 		>
 			{children}

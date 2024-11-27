@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Button } from "@/components/ui/button.jsx"
 import { Menu } from "lucide-react"
-import { useLogout } from "@/lib/hooks/auth/use-logout.tsx"
+import { useLogout } from "@/lib/hooks/signin/use-logout.tsx"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import LoginPage from "@/components/pages/signin-page/login-page.tsx"
 import { Link } from "react-router-dom"

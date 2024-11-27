@@ -12,16 +12,16 @@ type LoginPageProps = {
 const LoginPage: React.FC<LoginPageProps> = ({ isOpen, setIsOpen }) => {
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
-			<DialogContent className="h-screen p-0 min-w-full">
+			<DialogContent className="h-screen min-w-full p-0">
 				<DialogHeader>
 					<DialogTitle className="hidden" />
 					<DialogDescription className="hidden" />
 				</DialogHeader>
 				<div className="flex min-h-screen overflow-hidden xl:flex-row">
-					<div className="flex w-full flex-col justify-center overflow-auto bg-white p-8 xl:w-1/2 xl:ps-56 xl:pe-16 xl:pb-16 xl:pt-12">
+					<div className="flex w-full flex-col justify-center overflow-auto bg-white p-8 xl:w-1/2 xl:pb-16 xl:pe-16 xl:ps-56 xl:pt-12">
 						<LoginForm />
 					</div>
-					<div className="relative hidden left-56 bottom-10 xl:block xl:w-1/2">
+					<div className="relative bottom-10 left-56 hidden xl:block xl:w-1/2">
 						<div className="fixed h-screen w-1/2">
 							<img className="object-cover" src={frame} alt="Frame" />
 						</div>

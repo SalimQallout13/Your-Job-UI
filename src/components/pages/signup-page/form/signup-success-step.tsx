@@ -18,7 +18,7 @@ export const SignupSuccessStep = () => {
 				</p>
 			</div>
 			<Button variant="gradient" size="lg" asChild className="mx-auto h-12 w-fit xl:mx-0">
-				<Link to={ROUTES.HOME_PATH} className="flex items-center gap-3">
+				<Link to={ROUTES.PROFILE_PATH} className="flex items-center gap-3">
 					Aller au tableau de bord
 				</Link>
 			</Button>

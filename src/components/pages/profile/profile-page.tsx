@@ -10,7 +10,7 @@ const ProfilePage: React.FC = () => {
 			<ProfileNav />
 			<main className="grid grid-cols-1 gap-8 lg:grid-cols-4">
 				{/* Left Column - 25% */}
-				<section className="rounded-lg bg-white p-6 col-span-1">
+				<section className="col-span-1 rounded-lg bg-white p-6">
 					<Title>Profil</Title>
 
 					{/* Profile Completion */}
@@ -29,7 +29,7 @@ const ProfilePage: React.FC = () => {
 				</section>
 
 				{/* Right Column - 75% */}
-				<section className="rounded-lg bg-white p-6 col-span-3">
+				<section className="col-span-3 rounded-lg bg-white p-6">
 					<ProfileForm />
 				</section>
 			</main>
