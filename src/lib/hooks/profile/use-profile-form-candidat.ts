@@ -1,33 +1,34 @@
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { updateProfile } from "@/api/login-api.ts"
+import { updateProfileCandidat } from "@/api/login-api.ts"
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
 import {
-	signupSecondStepSchema,
-	SignupSecondStepSchema
+	SignupThirdStepCandidateSchema,
+	signupThirdStepCandidateSchema
 } from "@/lib/schemas-validation-form/signupValidation.ts"
 
-export const useProfileForm = () => {
+export const useProfileFormCandidat = () => {
 
 	const { isSubmitting, errorMessage, setIsSubmitting } = useNavigationContext()
 
-	const profileFormOneSchema = useForm<SignupSecondStepSchema>({
-		resolver: zodResolver(signupSecondStepSchema),
+	const profileFormSecondSchema = useForm<SignupThirdStepCandidateSchema>({
+		resolver: zodResolver(signupThirdStepCandidateSchema),
 		defaultValues: {
-			prenom: "",
-			nom: "",
-			telephone: "",
-			email: "",
-			password: "",
-			confirmPassword: ""
+			currentPoste: "",
+			ville: "",
+			codePostal: "",
+			adresse: "",
+			photo: null,
+			cv: undefined,
+			lettreMotivation: undefined
 		}
 	})
 
-	const submitProfileFormOne = async (data: SignupSecondStepSchema) => {
+	const submitProfileFormSecond = async (data: SignupThirdStepCandidateSchema) => {
 		try {
 			setIsSubmitting(true)
-			const response = await updateProfile(data)
+			const response = await updateProfileCandidat(data)
 			if (response.status === "success") {
 				showToast("Succès", "Profil mis à jour", false)
 			} else {
@@ -41,9 +42,9 @@ export const useProfileForm = () => {
 	}
 
 	return {
-		profileFormOneSchema,
+		profileFormSecondSchema,
 		isSubmitting,
 		errorMessage,
-		submitProfileFormOne
+		submitProfileFormSecond
 	}
 }

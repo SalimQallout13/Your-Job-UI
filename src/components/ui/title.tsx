@@ -2,7 +2,7 @@ import * as React from "react";
 import { cva, VariantProps } from "class-variance-authority";
 
 const titleVariants = cva(
-	"font-inter text-[26px] font-normal leading-[31.47px] tracking-[-0.06em] text-left underline-offset-auto decoration-skip-ink-none",
+	"font-inter decoration-skip-ink-none text-left text-[26px] font-normal leading-[31.47px] tracking-[-0.06em] underline-offset-auto",
 	{
 		variants: {
 			variant: {

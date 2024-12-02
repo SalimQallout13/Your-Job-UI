@@ -6,10 +6,10 @@ const avatarVariants = cva(
 	{
 		variants: {
 			size: {
-				sm: "w-8 h-8",
-				md: "w-12 h-12",
-				lg: "w-16 h-16",
-				xl: "w-20 h-20"
+				sm: "size-8",
+				md: "size-12",
+				lg: "size-16",
+				xl: "size-20"
 			}
 		},
 		defaultVariants: {
@@ -19,7 +19,7 @@ const avatarVariants = cva(
 );
 
 type AvatarProps = {
-	photoProfile: string;
+	photoProfile: string | undefined;
 } & VariantProps<typeof avatarVariants>;
 
 const Avatar: React.FC<AvatarProps> = ({ photoProfile, size }) => {
@@ -28,7 +28,7 @@ const Avatar: React.FC<AvatarProps> = ({ photoProfile, size }) => {
 			<img
 				src={`${import.meta.env.VITE_API_URL.replace('/api', '/uploads')}/${photoProfile}`}
 				alt="Photo de profil"
-				className="w-full h-full object-cover"
+				className="size-full object-cover"
 			/>
 		</div>
 	);

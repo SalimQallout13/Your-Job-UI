@@ -7,7 +7,7 @@ const HeaderNav = () => {
 	return (
 		<>
 			<Navbar isOpen={isOpen} setIsOpen={setIsOpen} openLoginDialog={openLoginDialog} />
-			<nav className="flex space-x-8 bg-[#F2F2F2] pt-4 ps-32">
+			<nav className="flex space-x-8 bg-[#F2F2F2] ps-32 pt-4">
 				<NavLink to="/dashboard"
 								 className={({ isActive }) => isActive ? "text-black font-semibold border-b-4 border-gray-800 pb-2.5" : "text-gray-500 hover:text-black"}>
 					Tableau de bord

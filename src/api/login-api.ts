@@ -4,7 +4,10 @@ import { UserData } from "@/lib/interfaces/userData.ts" // Type des données uti
 import { ApiResponse } from "@/lib/types/api/ApiResponse.ts"
 import { UserSignInRequest } from "@/lib/types/api/requests/UserSignInRequest.ts" // Requête pour l'authentification
 import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
-import { UpdateProfileRequest } from "@/lib/types/api/requests/UpdateProfileRequest.ts" // Requête pour la mise à jour
+import {
+	SignupSecondStepSchema,
+	SignupThirdStepCandidateSchema
+} from "@/lib/schemas-validation-form/signupValidation.ts" // Requête pour la mise à jour
 
 // Fonction utilitaire générique pour gérer les erreurs
 export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
@@ -27,7 +30,16 @@ export const login = async (credentials: UserSignInRequest): Promise<ApiResponse
 	}
 }
 
-export const updateProfile = async (formData: UpdateProfileRequest): Promise<ApiResponse<unknown>> => {
+export const updateProfile = async (formData: SignupSecondStepSchema): Promise<ApiResponse<unknown>> => {
+	try {
+		const response = await axiosInstance.patch<unknown>(ROUTES_BACK.UPDATE_PROFILE, formData)
+		return { status: "success", data: response.data }
+	} catch (error) {
+		return handleAxiosError<unknown>(error)
+	}
+}
+
+export const updateProfileCandidat = async (formData: SignupThirdStepCandidateSchema): Promise<ApiResponse<unknown>> => {
 	try {
 		const response = await axiosInstance.patch<unknown>(ROUTES_BACK.UPDATE_PROFILE, formData)
 		return { status: "success", data: response.data }
