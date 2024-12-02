@@ -2,7 +2,7 @@ import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils/utils.ts"
-import { Icons } from "../others/icons";
+import { Icons } from "@/components/ui/icons";
 
 const alertVariants = cva(
   "relative flex w-full animate-fadeIn items-center gap-3 rounded-lg border-[0.3px] px-4 py-3 text-sm",

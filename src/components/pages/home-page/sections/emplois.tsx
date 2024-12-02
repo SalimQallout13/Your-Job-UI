@@ -5,7 +5,7 @@ import TriIcon from "@/assets/icons/tri-icon.png";
 import CocaColaLogo from "@/assets/img/cocacola.png";
 import LevuppLogo from "@/assets/img/levup.png";
 import PernodRicardLogo from "@/assets/img/pernod-ricard.png";
-import { Icons } from "@/components/others/icons.jsx";
+import { Icons } from "@/components/ui/icons.tsx";
 import { useLocalStorage } from 'usehooks-ts';
 import React from "react"
 import { Link } from "react-router-dom"

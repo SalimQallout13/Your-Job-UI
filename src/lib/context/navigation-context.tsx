@@ -1,5 +1,4 @@
-import { createContext, useContext, useState, ReactNode, useEffect } from "react"
-import { UserData } from "@/lib/interfaces/userData.ts"
+import { createContext, useContext, useState, ReactNode } from "react"
 import { ROUTES } from "@/lib/configs/routes.ts"
 import { useNavigate } from "react-router-dom"
 
@@ -9,9 +8,6 @@ interface NavigationContextType {
 	setIsSubmitting: (isSubmitting: boolean) => void;
 	errorMessage: string | null;
 	displayErrorMessage: (error: string) => void;
-	userData: UserData | null;
-	setUserData: (data: UserData | null) => void;
-	updateUserData: (updates: Partial<UserData>) => void;
 	navigateTo: (path: typeof ROUTES[keyof typeof ROUTES]) => void;
 }
 
@@ -23,12 +19,7 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 	// Gestion des états
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
-	const [userData, setUserData] = useState<UserData | null>(() => {
-		const storedUserData = localStorage.getItem("userData")
-		return storedUserData ? JSON.parse(storedUserData) : null
-	})
 	const navigate = useNavigate()
-
 
 	// Affichage des messages d'erreur avec timeout
 	const displayErrorMessage = (error: string) => {
@@ -40,22 +31,6 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 	const navigateTo = (path: typeof ROUTES[keyof typeof ROUTES]) => {
 		navigate(path)
 	}
-
-	// Mise à jour des données utilisateur
-	const updateUserData = (updates: Partial<UserData>) => {
-		setUserData((prev) => (prev ? { ...prev, ...updates } : null))
-	}
-
-	// Synchronisation des données utilisateur avec localStorage
-	useEffect(() => {
-		console.log("userData", userData)
-		if (userData) {
-			localStorage.setItem("userData", JSON.stringify(userData))
-		} else {
-			localStorage.removeItem("userData")
-		}
-	}, [userData])
-
 	return (
 		<NavigationContext.Provider
 			value={{
@@ -63,9 +38,6 @@ export const NavigationProvider = ({ children }: { children: ReactNode }) => {
 				setIsSubmitting,
 				errorMessage,
 				displayErrorMessage,
-				userData,
-				setUserData,
-				updateUserData,
 				navigateTo
 			}}
 		>

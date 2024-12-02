@@ -8,12 +8,15 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod"
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
 import { signup } from "@/api/signup-api.ts"
+import { useSessionContext } from "@/lib/context/session-context.tsx"
 
 export const useThirdStepCandidate = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
 }) => {
 	const { setCurrentStep, formData } = useSignupPageContext()
-	const { isSubmitting, setIsSubmitting, setUserData } = useNavigationContext()
+	const { isSubmitting, setIsSubmitting } = useNavigationContext()
+	const { setUserData } = useSessionContext()
+
 
 	const signupFormCandidat = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),

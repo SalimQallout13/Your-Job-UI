@@ -1,32 +1,28 @@
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useForm } from "react-hook-form"
-import { profileSchema, ProfileSchema } from "@/lib/schemas-validation-form/profileValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updateProfile } from "@/api/login-api.ts"
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
+import { SignupSecondStepSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 
 export const useProfileForm = () => {
 
-	const {
-		isSubmitting,
-		errorMessage,
-		setIsSubmitting
-	} = useNavigationContext()
+	const { isSubmitting, errorMessage, setIsSubmitting } = useNavigationContext()
 
-	const profileFormSchema = useForm({
-		resolver: zodResolver(profileSchema),
+	const profileFormOneSchema = useForm({
+		resolver: zodResolver(SignupSecondStepSchema.omit({
+			password: true,
+			confirmPassword: true
+		})),
 		defaultValues: {
 			prenom: "",
 			nom: "",
 			telephone: "",
 			email: "",
-			biographie: "",
-			poste: "",
-			localisation: ""
 		}
 	})
 
-	const submitProfileForm = async (data: ProfileSchema) => {
+	const submitProfileFormOne = async (data: profileFormOneSchema) => {
 		try {
 			setIsSubmitting(true)
 			const response = await updateProfile(data)
@@ -43,9 +39,9 @@ export const useProfileForm = () => {
 	}
 
 	return {
-		profileFormSchema,
+		profileFormOneSchema,
 		isSubmitting,
 		errorMessage,
-		submitProfileForm
+		submitProfileForm: submitProfileFormOne
 	}
 }

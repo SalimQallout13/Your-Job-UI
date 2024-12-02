@@ -30,8 +30,8 @@ const SignupPageContext = createContext<SignupPageContextType | undefined>(undef
 
 export const SignupPageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	const [userRole, setUserRole] = useState<Roles>(Roles.Candidat)
-	const [currentStep, setCurrentStep] = useState<SignupStep>("firstStep")
-	const [formData, setFormData] = useState<SignupFormData>({})
+	const [currentStep, setCurrentStep] = useState<SignupStep>("firstStep") // Gere l'étape du formulaire d'inscription
+	const [formData, setFormData] = useState<SignupFormData>({}) // Gere le formulaire d'inscription
 
 	const updateFormData = (data: Partial<SignupFormData>) => {
 		setFormData(prev => ({ ...prev, ...data }))

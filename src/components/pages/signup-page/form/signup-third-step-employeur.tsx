@@ -11,8 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useState, useEffect } from "react"
 import { getSecteursActivite, SecteurActivite, signup } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"
-import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
-import { ImageUploader } from "@/components/others/image-uploader.tsx"
+import { ImageUploader } from "@/components/ui/image-uploader.tsx"
+import { useSessionContext } from "@/lib/context/session-context.tsx"
 
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
@@ -21,7 +21,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	const [secteurActivites, setSecteurActivites] = useState<SecteurActivite[]>([]);
 	const [isLoadingSecteurActivite, setIsLoadingSecteurActivite] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { updateUserData } = useNavigationContext();
+	const { updateUserData } = useSessionContext();
 
 	const form = useForm<SignupThirdStepEmployeurSchema>({
 		resolver: zodResolver(signupThirdStepEmployeur),

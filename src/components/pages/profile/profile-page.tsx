@@ -1,35 +1,35 @@
 import React from "react"
-import { Progress } from "@/components/ui/progress"
 import ProfileForm from "@/components/pages/profile/profile-form.tsx"
-import ProfileNav from "@/components/pages/profile/commons/profile-nav.tsx"
-import { Title } from "@/components/pages/profile/commons/title.tsx"
+import HeaderNav from "@/components/pages/profile/commons/header-nav.tsx"
+import HeaderTitle from "@/components/pages/profile/commons/header-title.tsx"
+import Title from "@/components/ui/title.tsx"
+import Avatar from "@/components/ui/avatar.tsx"
+import { useSessionContext } from "@/lib/context/session-context.tsx"
 
 const ProfilePage: React.FC = () => {
+	const { userData, photoProfile } = useSessionContext()
 	return (
 		<>
-			<ProfileNav />
+			<HeaderNav />
 			<main className="grid grid-cols-1 gap-8 lg:grid-cols-4">
+				<HeaderTitle>Profil</HeaderTitle>
 				{/* Left Column - 25% */}
-				<section className="col-span-1 rounded-lg bg-white p-6">
-					<Title>Profil</Title>
-
-					{/* Profile Completion */}
-					<div className="mt-8">
-						<p className="mb-2 text-sm text-gray-700">Complétez votre profil</p>
-						<Progress value={65} className="bg-purple-500 h-2" />
-					</div>
-
-					{/* Profile Stats */}
-					<div className="mt-8">
-						<h3 className="mb-2 text-lg font-semibold">Votre recherche</h3>
-						<p className="text-gray-700">163 Offres vues</p>
-						<p className="text-gray-700">29 Candidatures</p>
-						<p className="text-gray-700">4 Entretiens</p>
+				<section className="col-span-1 rounded-lg ps-24">
+					<Title>Vos informations</Title>
+					<div className="flex flex-row py-8 mt-4">
+						<div className="basis-1/4">
+						<Avatar size="lg" photoProfile={photoProfile} />
+						</div>
+						<div className="basis-1/2 text-left">
+							<p className="font-poppins text-[24px] font-bold leading-[39px] tracking-[-0.06em]">{userData?.nom + " " + userData?.prenom}</p>
+							<p className="font-inter text-[20px] font-bold leading-[24.2px] tracking-[-0.06em]">{userData?.currentPoste}</p>
+							<p className="font-inter text-gray-600 text-[12px] font-normal leading-[14.52px] tracking-[-0.06em]">{userData?.ville}</p>
+						</div>
 					</div>
 				</section>
 
 				{/* Right Column - 75% */}
-				<section className="col-span-3 rounded-lg bg-white p-6">
+				<section className="col-span-3 rounded-lg p-6">
 					<ProfileForm />
 				</section>
 			</main>

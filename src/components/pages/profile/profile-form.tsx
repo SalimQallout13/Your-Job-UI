@@ -6,6 +6,7 @@ import { useDropzone } from "react-dropzone"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { useProfileForm } from "@/lib/hooks/profile/use-profile-form.ts"
 import { Message } from "@/components/ui/alert.tsx"
+import { ImageUploader } from "@/components/ui/image-uploader.tsx"
 
 const ProfileForm: React.FC = () => {
 
@@ -20,15 +21,29 @@ const ProfileForm: React.FC = () => {
 		<Form {...profileFormSchema}>
 			{errorMessage && <Message message={errorMessage} type={"alert"} />}
 			<form>
-				<div className="flex flex-col items-center">
-					<img src="/path/to/profile-pic.jpg" alt="Profile" className="mb-2 size-24 rounded-full" />
-					<p className="text-lg font-semibold">Thomas Puget</p>
-					<p className="text-sm text-gray-500">Graphic Designer</p>
-					<p className="text-sm text-gray-500">Marseille, France</p>
-					<div className="mt-4 flex space-x-2">
-						<Button variant="outline">Modifier la photo</Button>
-						<Button variant="destructive">Supprimer</Button>
-					</div>
+				<div className="flex flex-row gap-4">
+					<div>
+						<FormField
+							control={profileFormSchema.control}
+							name="photo"
+							render={({ field }) => (
+								<FormItem>
+									<FormControl>
+										<ImageUploader
+											accept="image/*"
+											maxSizeInBytes={5 * 1024 * 1024}
+											onImageChange={field.onChange}
+											uploadButton={
+												<Button type="button" variant="gradient" className="rounded-full">
+													Modifier la photo
+												</Button>
+											}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/></div>
 				</div>
 				<h2 className="mb-6 text-2xl font-bold">Informations de contact</h2>
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">

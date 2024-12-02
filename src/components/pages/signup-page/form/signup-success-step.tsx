@@ -1,4 +1,4 @@
-import { Icons } from "@/components/others/icons.tsx"
+import { Icons } from "@/components/ui/icons.tsx"
 import { Button } from "@/components/ui/button.tsx"
 import { Link } from "react-router-dom"
 import { ROUTES } from "@/lib/configs/routes.ts"

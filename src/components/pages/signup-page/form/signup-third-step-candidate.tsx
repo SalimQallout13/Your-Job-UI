@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input.tsx"
 import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 
-import Dropzone from "@/components/others/dropzone.tsx"
-import { ImageUploader } from "@/components/others/image-uploader.tsx"
+import Dropzone from "@/components/ui/dropzone.tsx"
+import { ImageUploader } from "@/components/ui/image-uploader.tsx"
 import { useThirdStepCandidate } from "@/lib/hooks/signup/use-third-step-candidate.ts"
 
 export const SignupThirdSTepCandidate = ({ updateFormData }: {

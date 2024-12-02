@@ -6,10 +6,12 @@ import { login } from "@/api/login-api.ts"
 import { showToast, showErrorToast } from "@/lib/hooks/use-toast.tsx"
 import { useSigninContext } from "@/lib/context/signin-context.tsx"
 import { ROUTES } from "@/lib/configs/routes.ts"
+import { useSessionContext } from "@/lib/context/session-context.tsx"
 
 export const useLoginForm = () => {
-	const { isSubmitting, errorMessage, setIsSubmitting, setUserData, navigateTo } = useNavigationContext()
-	const {closeLoginDialog} = useSigninContext()
+	const { isSubmitting, errorMessage, setIsSubmitting, navigateTo } = useNavigationContext()
+	const { setUserData } = useSessionContext()
+	const { closeLoginDialog } = useSigninContext()
 
 	const loginFormSchema = useForm<LoginSchema>({
 		resolver: zodResolver(loginSchema),

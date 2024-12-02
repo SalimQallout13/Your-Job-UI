@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, X } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
+import Progress from '@/components/ui/progress';
 import { cn } from "@/lib/utils/utils";
 import { Icons } from './icons';
 

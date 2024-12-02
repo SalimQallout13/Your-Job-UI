@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card.tsx"
 import { cn } from "@/lib/utils/utils.ts"
-import { Icons } from "@/components/others/icons.tsx"
+import { Icons } from "@/components/ui/icons.tsx"
 import React from "react"
 
 type SignupCardProps = {

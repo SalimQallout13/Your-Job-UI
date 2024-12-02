@@ -1,5 +1,5 @@
 import { useSignupPageContext } from "@/lib/context/signup-context.tsx"
-import { Icons } from "@/components/others/icons.tsx"
+import { Icons } from "@/components/ui/icons.tsx"
 import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { SignupCard } from "@/components/pages/signup-page/commons/signup-card.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"

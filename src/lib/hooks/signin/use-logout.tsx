@@ -1,13 +1,15 @@
 import { showToast } from "@/lib/hooks/use-toast.tsx"
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { ROUTES } from "@/lib/configs/routes.ts"
+import { useSessionContext } from "@/lib/context/session-context.tsx"
 
 interface UseLogout {
 	handleLogout: () => void;
 }
 
 export const useLogout = (): UseLogout => {
-	const { setUserData, navigateTo } = useNavigationContext()
+	const { navigateTo } = useNavigationContext()
+	const { setUserData } = useSessionContext()
 
 	const handleLogout = async () => {
 		try {

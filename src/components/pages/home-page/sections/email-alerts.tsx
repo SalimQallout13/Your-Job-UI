@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button.jsx";
-import { Icons } from "@/components/others/icons.jsx";
+import { Icons } from "@/components/ui/icons.tsx";
 
 const EmailAlerts = () => {
   return (

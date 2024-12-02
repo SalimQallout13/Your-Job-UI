@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button.jsx";
 import { Link } from "react-router-dom";
-import { Icons } from "@/components/others/icons.jsx";
+import { Icons } from "@/components/ui/icons.tsx";
 import { useLocalStorage } from 'usehooks-ts';
 import React from "react"
 import { ROUTES } from "@/lib/configs/routes.ts"

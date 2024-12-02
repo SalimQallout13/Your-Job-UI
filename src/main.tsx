@@ -9,19 +9,22 @@ import { TooltipProvider } from "./components/ui/tooltip.tsx"
 import { ToastProvider } from "@/components/ui/toast.tsx"
 import { NavigationProvider } from "@/lib/context/navigation-context.tsx"
 import { SigninPageProvider } from "@/lib/context/signin-context.tsx"
+import { SessionProvider } from "@/lib/context/session-context.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-				<TooltipProvider>
-					<ToastProvider>
-						<NavigationProvider>
+			<TooltipProvider>
+				<ToastProvider>
+					<NavigationProvider>
+						<SessionProvider>
 							<SigninPageProvider>
 								<App />
 							</SigninPageProvider>
-						</NavigationProvider>
-					</ToastProvider>
-				</TooltipProvider>
+						</SessionProvider>
+					</NavigationProvider>
+				</ToastProvider>
+			</TooltipProvider>
 		</Router>
 	</React.StrictMode>
 )

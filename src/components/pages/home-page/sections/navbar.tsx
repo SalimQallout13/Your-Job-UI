@@ -2,13 +2,11 @@ import React, { useState } from "react"
 import { Button } from "@/components/ui/button.jsx"
 import { Menu } from "lucide-react"
 import { useLogout } from "@/lib/hooks/signin/use-logout.tsx"
-import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import LoginPage from "@/components/pages/signin-page/login-page.tsx"
 import { Link } from "react-router-dom"
 import { ROUTES } from "@/lib/configs/routes.ts"
-import { Roles } from "@/lib/enums/Roles.ts"
-import { CandidatProfile } from "@/lib/interfaces/userData.ts"
-import { RecruteurProfile } from "@/lib/interfaces/userData.ts"
+import Avatar from "@/components/ui/avatar.tsx"
+import { useSessionContext } from "@/lib/context/session-context.tsx"
 
 type NavbarProps = {
 	isOpen: boolean;
@@ -19,18 +17,11 @@ type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const { handleLogout } = useLogout() // Utilisation du hook `useLogout`
-	const { userData } = useNavigationContext()
+	const { userData, photoProfile } = useSessionContext()
 
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen)
 	}
-
-	const photoProfile = userData
-		? userData.role === Roles.Candidat
-			? (userData.profile as CandidatProfile)?.photo
-			: (userData.profile as RecruteurProfile)?.logo
-		: undefined
-
 	return (
 		<>
 			<LoginPage isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -75,10 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
               <span className="font-semibold text-white">
                 Bonjour, {userData.prenom}
               </span>
-								<div className="size-14 overflow-hidden rounded-full">
-									<img src={`${import.meta.env.VITE_API_URL.replace('/api', '/uploads')}/${photoProfile}`} alt="Photo de profil"
-											 className="size-full object-cover" />
-								</div>
+								<Avatar photoProfile={photoProfile}/>
 								<Button variant="gradient2" size="sm" onClick={handleLogout}>
 									Déconnexion
 								</Button>

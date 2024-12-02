@@ -3,7 +3,7 @@ import heroImage from "@/assets/img/hero-image.png";
 import SearchIcon from "@/assets/icons/search-icon.png";
 import TriIcon from "@/assets/icons/tri-icon.png";
 import { MapPin } from "lucide-react";
-import { Icons } from "@/components/others/icons.jsx";
+import { Icons } from "@/components/ui/icons.tsx";
 
 const Hero = () => {
 	return (
