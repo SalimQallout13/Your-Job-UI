@@ -4,7 +4,8 @@ export const ROUTES_BACK = {
 
 	UPLOAD_FILE: "/uploadFiles",
 
-	UPDATE_PROFILE: "/users/:id",
+	UPDATE_USER: "/users/",
+	UPDATE_PROFILE_CANDIDAT: "/users/profile/",
 	VERIFY_EMAIL: "/users/existsByEmail",
 	VERIFY_PHONE: "/users/existsByPhone",
 

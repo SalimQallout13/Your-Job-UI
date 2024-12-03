@@ -30,20 +30,20 @@ export const login = async (credentials: UserSignInRequest): Promise<ApiResponse
 	}
 }
 
-export const updateProfile = async (formData: SignupSecondStepSchema): Promise<ApiResponse<unknown>> => {
+export const updateProfile = async (targetId: UserData["_id"], formData: SignupSecondStepSchema): Promise<ApiResponse<UserData>> => {
 	try {
-		const response = await axiosInstance.patch<unknown>(ROUTES_BACK.UPDATE_PROFILE, formData)
+		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_USER + targetId, formData)
 		return { status: "success", data: response.data }
 	} catch (error) {
-		return handleAxiosError<unknown>(error)
+		return handleAxiosError<UserData>(error)
 	}
 }
 
-export const updateProfileCandidat = async (formData: SignupThirdStepCandidateSchema): Promise<ApiResponse<unknown>> => {
+export const updateProfileCandidat = async (targetId: UserData["_id"], formData: SignupThirdStepCandidateSchema): Promise<ApiResponse<UserData>> => {
 	try {
-		const response = await axiosInstance.patch<unknown>(ROUTES_BACK.UPDATE_PROFILE, formData)
+		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_PROFILE_CANDIDAT + targetId, formData)
 		return { status: "success", data: response.data }
 	} catch (error) {
-		return handleAxiosError<unknown>(error)
+		return handleAxiosError<UserData>(error)
 	}
 }

@@ -7,18 +7,21 @@ import {
 	SignupThirdStepCandidateSchema,
 	signupThirdStepCandidateSchema
 } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { useSessionContext } from "@/lib/context/session-context.tsx"
+import { CandidatProfile } from "@/lib/interfaces/userData.ts"
 
 export const useProfileFormCandidat = () => {
 
 	const { isSubmitting, errorMessage, setIsSubmitting } = useNavigationContext()
+	const { userData, updateUserData } = useSessionContext()
 
 	const profileFormSecondSchema = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
 		defaultValues: {
-			currentPoste: "",
-			ville: "",
-			codePostal: "",
-			adresse: "",
+			currentPoste: (userData?.profile as CandidatProfile)?.currentPoste || "",
+			ville: userData?.ville || "",
+			codePostal: userData?.codePostal || "",
+			adresse: userData?.adresse || "",
 			photo: null,
 			cv: undefined,
 			lettreMotivation: undefined
@@ -28,11 +31,16 @@ export const useProfileFormCandidat = () => {
 	const submitProfileFormSecond = async (data: SignupThirdStepCandidateSchema) => {
 		try {
 			setIsSubmitting(true)
-			const response = await updateProfileCandidat(data)
-			if (response.status === "success") {
-				showToast("Succès", "Profil mis à jour", false)
+			if (userData) {
+				const response = await updateProfileCandidat(userData._id, data)
+				if (response.status === "success") {
+					showToast("Succès", "Profil mis à jour", false)
+					updateUserData(response.data)
+				} else {
+					showErrorToast(response.error)
+				}
 			} else {
-				showErrorToast(response.error)
+				throw new Error("Impossible de mettre à jour le profil : utilisateur introuvable")
 			}
 		} catch (error) {
 			throw new Error(error instanceof Error ? error.message : "Une erreur est survenue lors de l'inscription")
