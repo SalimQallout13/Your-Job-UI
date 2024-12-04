@@ -1,7 +1,7 @@
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { updateProfileCandidat } from "@/api/login-api.ts"
+import { updateProfileCandidat } from "@/api/profile-api.ts"
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
 import {
 	SignupThirdStepCandidateSchema,
@@ -13,18 +13,23 @@ import { CandidatProfile } from "@/lib/interfaces/userData.ts"
 export const useProfileFormCandidat = () => {
 
 	const { isSubmitting, errorMessage, setIsSubmitting } = useNavigationContext()
-	const { userData, updateUserData } = useSessionContext()
+	const { userData, updateUserData, currentPoste, isCandidatProfile, convertToFile } = useSessionContext()
+	const cv = isCandidatProfile ? (userData?.profile as CandidatProfile)?.cv : undefined
+	const lettreMotivation = isCandidatProfile ? (userData?.profile as CandidatProfile)?.lettreMotivation : undefined
 
 	const profileFormSecondSchema = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
-		defaultValues: {
-			currentPoste: (userData?.profile as CandidatProfile)?.currentPoste || "",
-			ville: userData?.ville || "",
-			codePostal: userData?.codePostal || "",
-			adresse: userData?.adresse || "",
-			photo: null,
-			cv: undefined,
-			lettreMotivation: undefined
+		defaultValues: async () => {
+			const defaultCV = await convertToFile(cv)
+			const defaultLettreMotivation = await convertToFile(lettreMotivation)
+			return {
+				currentPoste: currentPoste,
+				ville: userData?.ville || "",
+				codePostal: userData?.codePostal || "",
+				adresse: userData?.adresse || "",
+				cv: defaultCV,
+				lettreMotivation: defaultLettreMotivation
+			}
 		}
 	})
 
@@ -53,6 +58,6 @@ export const useProfileFormCandidat = () => {
 		profileFormSecondSchema,
 		isSubmitting,
 		errorMessage,
-		submitProfileFormSecond
+		submitProfileFormSecond,
 	}
 }

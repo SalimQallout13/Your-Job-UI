@@ -1,12 +1,13 @@
-import React, { useCallback, useState } from "react"
-import { useDropzone } from "react-dropzone"
-import { cn } from "@/lib/utils/utils.ts"
-import { Button } from "@/components/ui/button.tsx"
-import { Trash2 } from "lucide-react"
+import React, { useCallback, useState, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
+import { cn } from "@/lib/utils/utils.ts";
+import { Button } from "@/components/ui/button.tsx";
+import { Trash2 } from "lucide-react";
 
 interface ImageUploaderProps {
 	accept: string;
 	maxSizeInBytes: number;
+	value?: File | null; // Ajout de `value`
 	onImageChange: (file: File | null) => void;
 	uploadButton: React.ReactNode;
 	isFullWidth?: boolean;
@@ -15,11 +16,25 @@ interface ImageUploaderProps {
 export const ImageUploader: React.FC<ImageUploaderProps> = ({
 																															accept,
 																															maxSizeInBytes,
+																															value,
 																															onImageChange,
 																															uploadButton,
 																															isFullWidth = false,
 																														}) => {
 	const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+
+	// Synchroniser `value` externe avec l'état interne
+	useEffect(() => {
+		if (value) {
+			const fileReader = new FileReader();
+			fileReader.onloadend = () => {
+				setImagePreviewUrl(fileReader.result as string);
+			};
+			fileReader.readAsDataURL(value);
+		} else {
+			setImagePreviewUrl(null);
+		}
+	}, [value]);
 
 	const handleFileDrop = useCallback(
 		(acceptedFiles: File[]) => {
@@ -61,10 +76,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 			>
 				<input {...getInputProps()} />
 				{imagePreviewUrl ? (
-					<PreviewImage
-						src={imagePreviewUrl}
-						onDelete={handleImageDelete}
-					/>
+					<PreviewImage src={imagePreviewUrl} onDelete={handleImageDelete} />
 				) : (
 					uploadButton
 				)}

@@ -17,7 +17,7 @@ type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 	const { handleLogout } = useLogout() // Utilisation du hook `useLogout`
-	const { userData, photoProfile } = useSessionContext()
+	const { userData } = useSessionContext()
 
 	const toggleMobileMenu = () => {
 		setIsMobileMenuOpen(!isMobileMenuOpen)
@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = ({ isOpen, setIsOpen, openLoginDialog }) =
               <span className="font-semibold text-white">
                 Bonjour, {userData.prenom}
               </span>
-								<Avatar photoProfile={photoProfile}/>
+								<Avatar photoProfile={userData.photo}/>
 								<Button variant="gradient2" size="sm" onClick={handleLogout}>
 									Déconnexion
 								</Button>

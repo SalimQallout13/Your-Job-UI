@@ -14,7 +14,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: {
 }) => {
 
 	const {
-		signupFormCandidat,
+		signupThirdStepDataCandidat,
 		submitSignInForm,
 		setCurrentStep,
 		isSubmitting
@@ -26,12 +26,12 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: {
 				title="Créez votre profil et trouvez votre prochain défi professionnel."
 				description="Renseignez ces informations pour compléter votre profil et accéder aux meilleures offres d'emploi."
 			/>
-			<Form {...signupFormCandidat}>
-				<form onSubmit={signupFormCandidat.handleSubmit(submitSignInForm)} className="space-y-8">
+			<Form {...signupThirdStepDataCandidat}>
+				<form onSubmit={signupThirdStepDataCandidat.handleSubmit(submitSignInForm)} className="space-y-8">
 					{/* Champs spécifiques au candidat */}
 					<div className="space-y-4">
 						<FormField
-							control={signupFormCandidat.control}
+							control={signupThirdStepDataCandidat.control}
 							name="photo"
 							render={({ field }) => (
 								<FormItem>
@@ -110,7 +110,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: {
 
 					<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
-							control={signupFormCandidat.control}
+							control={signupThirdStepDataCandidat.control}
 							name="cv"
 							render={({ field }) => (
 								<FormItem className="space-y-4">
@@ -130,7 +130,7 @@ export const SignupThirdSTepCandidate = ({ updateFormData }: {
 						/>
 
 						<FormField
-							control={signupFormCandidat.control}
+							control={signupThirdStepDataCandidat.control}
 							name="lettreMotivation"
 							render={({ field }) => (
 								<FormItem className="space-y-4">

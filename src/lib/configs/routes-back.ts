@@ -6,6 +6,8 @@ export const ROUTES_BACK = {
 
 	UPDATE_USER: "/users/",
 	UPDATE_PROFILE_CANDIDAT: "/users/profile/",
+	UPDATE_PHOTO_PROFILE: "/users/photoProfile/",
+
 	VERIFY_EMAIL: "/users/existsByEmail",
 	VERIFY_PHONE: "/users/existsByPhone",
 

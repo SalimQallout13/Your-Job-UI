@@ -3,7 +3,6 @@ export interface CandidatProfile {
 	currentPoste?: string;
 	cv?: string;
 	lettreMotivation?: string;
-	photo?: string;
 	permisConduire?: boolean;
 	description?: string;
 	dateNaissance?: string;
@@ -23,6 +22,7 @@ type Profile = CandidatProfile | RecruteurProfile;
 
 export interface UserData {
 	_id: string;
+	photo?: string;
 	nom: string;
 	prenom: string;
 	email: string;

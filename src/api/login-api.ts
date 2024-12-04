@@ -1,47 +1,12 @@
-import { axiosInstance } from "@/api/axios-instance.ts"
-import axios from "axios"
+import { axiosInstance, handleAxiosError } from "@/api/axios-instance.ts"
 import { UserData } from "@/lib/interfaces/userData.ts" // Type des données utilisateur
 import { ApiResponse } from "@/lib/types/api/ApiResponse.ts"
 import { UserSignInRequest } from "@/lib/types/api/requests/UserSignInRequest.ts" // Requête pour l'authentification
 import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
-import {
-	SignupSecondStepSchema,
-	SignupThirdStepCandidateSchema
-} from "@/lib/schemas-validation-form/signupValidation.ts" // Requête pour la mise à jour
-
-// Fonction utilitaire générique pour gérer les erreurs
-export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
-	if (axios.isAxiosError(error)) {
-		const errorMessage =
-			error.response?.data?.errors?.[0]?.msg || // Tableau d'erreurs
-			error.response?.data?.error || // Message erreur unique
-			"Une erreur est survenue."
-		return { status: "error", error: errorMessage }
-	}
-	return { status: "error", error: "Erreur réseau ou serveur." }
-}
 
 export const login = async (credentials: UserSignInRequest): Promise<ApiResponse<UserData>> => {
 	try {
 		const response = await axiosInstance.post<UserData>(ROUTES_BACK.SIGNIN, credentials)
-		return { status: "success", data: response.data }
-	} catch (error) {
-		return handleAxiosError<UserData>(error)
-	}
-}
-
-export const updateProfile = async (targetId: UserData["_id"], formData: SignupSecondStepSchema): Promise<ApiResponse<UserData>> => {
-	try {
-		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_USER + targetId, formData)
-		return { status: "success", data: response.data }
-	} catch (error) {
-		return handleAxiosError<UserData>(error)
-	}
-}
-
-export const updateProfileCandidat = async (targetId: UserData["_id"], formData: SignupThirdStepCandidateSchema): Promise<ApiResponse<UserData>> => {
-	try {
-		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_PROFILE_CANDIDAT + targetId, formData)
 		return { status: "success", data: response.data }
 	} catch (error) {
 		return handleAxiosError<UserData>(error)

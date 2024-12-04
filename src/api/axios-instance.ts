@@ -1,5 +1,6 @@
 // axios-instance.ts
 import axios, { AxiosInstance } from "axios"
+import { ApiResponse } from "@/lib/types/api/ApiResponse.ts"
 
 class ApiInstance {
 	private readonly axiosInstance: AxiosInstance
@@ -30,6 +31,16 @@ class ApiInstance {
 }
 
 const apiInstance = new ApiInstance(import.meta.env.VITE_API_URL);
-const axiosInstance = apiInstance.getInstance()
+export const axiosInstance = apiInstance.getInstance()
 
-export { axiosInstance }
+// Fonction utilitaire générique pour gérer les erreurs
+export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
+	if (axios.isAxiosError(error)) {
+		const errorMessage =
+			error.response?.data?.errors?.[0]?.msg || // Tableau d'erreurs
+			error.response?.data?.error || // Message erreur unique
+			"Une erreur est survenue."
+		return { status: "error", error: errorMessage }
+	}
+	return { status: "error", error: "Erreur réseau ou serveur." }
+}

@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react"
-import { CandidatProfile, RecruteurProfile, UserData } from "@/lib/interfaces/userData.ts"
-import { Roles } from "@/lib/enums/Roles.ts"
+import { CandidatProfile, UserData } from "@/lib/interfaces/userData.ts"
 
 // Définition du type des données fournies par le contexte
 interface SessionContextType {
@@ -8,6 +7,9 @@ interface SessionContextType {
 	setUserData: (data: UserData | null) => void;
 	updateUserData: (updates: Partial<UserData>) => void;
 	photoProfile?: string;
+	currentPoste?: string;
+	isCandidatProfile?: boolean;
+	convertToFile: (fileName: string | undefined) => Promise<File | null>;
 }
 
 // Création du contexte
@@ -25,11 +27,22 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 		setUserData((prev) => (prev ? { ...prev, ...updates } : null))
 	}
 
-	const photoProfile = userData
-		? userData.role === Roles.Candidat
-			? (userData.profile as CandidatProfile)?.photo
-			: (userData.profile as RecruteurProfile)?.logo
-		: undefined
+	const isCandidatProfile = userData?.profileModel === "CandidatProfile";
+
+	const currentPoste = isCandidatProfile ? (userData?.profile as CandidatProfile)?.currentPoste : undefined;
+
+	const convertToFile = async (fileName: string | undefined): Promise<File | null> => {
+		if (!fileName) return null // Si aucune photo n'est présente
+		try {
+			const response = await fetch(`${import.meta.env.VITE_API_URL.replace("/api", "/uploads")}/${fileName}`)
+			const blob = await response.blob()
+			return new File([blob], fileName, { type: blob.type })
+		} catch (error) {
+			console.error("Erreur lors de la conversion de l'URL en File:", error)
+			return null // Retourne undefined en cas d'échec
+		}
+	}
+
 
 	// Synchronisation des données utilisateur avec localStorage
 	useEffect(() => {
@@ -47,7 +60,9 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 				userData,
 				setUserData,
 				updateUserData,
-				photoProfile
+				currentPoste,
+				isCandidatProfile,
+				convertToFile
 			}}
 		>
 			{children}

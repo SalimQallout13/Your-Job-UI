@@ -2,8 +2,8 @@ import { SignupFormData, useSignupPageContext } from "@/lib/context/signup-conte
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useForm } from "react-hook-form"
 import {
-	signupThirdStepCandidateSchema,
-	SignupThirdStepCandidateSchema
+	completeSignupCandidateSchema,
+	CompleteSignupCandidateSchema,
 } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
@@ -17,9 +17,8 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 	const { isSubmitting, setIsSubmitting } = useNavigationContext()
 	const { setUserData } = useSessionContext()
 
-
-	const signupFormCandidat = useForm<SignupThirdStepCandidateSchema>({
-		resolver: zodResolver(signupThirdStepCandidateSchema),
+	const signupThirdStepDataCandidat = useForm<CompleteSignupCandidateSchema>({
+		resolver: zodResolver(completeSignupCandidateSchema),
 		defaultValues: {
 			currentPoste: "",
 			ville: "",
@@ -30,8 +29,7 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 			lettreMotivation: undefined
 		}
 	})
-
-	const submitSignInForm = async (data: SignupThirdStepCandidateSchema) => {
+	const submitSignInForm = async (data: CompleteSignupCandidateSchema) => {
 		if (!formData.secondStepData) {
 			throw new Error("Données du formulaire incomplètes")
 		}
@@ -66,7 +64,7 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 	}
 
 	return {
-		signupFormCandidat,
+		signupThirdStepDataCandidat,
 		submitSignInForm,
 		setCurrentStep,
 		isSubmitting

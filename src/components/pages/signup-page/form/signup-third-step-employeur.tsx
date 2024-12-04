@@ -9,10 +9,11 @@ import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useState, useEffect } from "react"
-import { getSecteursActivite, SecteurActivite, signup } from "@/api/signup-api.ts"
+import {SecteurActivite, signup } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"
 import { ImageUploader } from "@/components/ui/image-uploader.tsx"
 import { useSessionContext } from "@/lib/context/session-context.tsx"
+import { getSecteursActivite } from "@/api/domaine-api.ts"
 
 export const SignupThirdStepEmployeur = ({ updateFormData }: {
 	updateFormData: (data: Partial<SignupFormData>) => void
