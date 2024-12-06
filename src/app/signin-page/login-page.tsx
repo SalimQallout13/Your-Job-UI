@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog"
-import { LoginForm } from "@/components/pages/signin-page/login-form"
+import { LoginForm } from "@/app/signin-page/login-form"
 import frame from "@/assets/img/Frame_39.png"
 import React from "react"
 

@@ -1,9 +1,9 @@
-import Navbar from "@/components/pages/home-page/sections/navbar.tsx"
+import Navbar from "@/app/home-page/sections/navbar.tsx"
 import Hero from "./sections/hero"
-import Emplois from "@/components/pages/home-page/sections/emplois.tsx"
+import Emplois from "@/app/home-page/sections/emplois.tsx"
 import CvAndAvis from "./sections/cv-and-avis"
 import EmailAlerts from "./sections/email-alerts"
-import Footer from "@/components/pages/home-page/sections/footer.tsx"
+import Footer from "@/app/home-page/sections/footer.tsx"
 import { useSigninContext } from "@/lib/context/signin-context.tsx"
 
 const HomePage = () => {

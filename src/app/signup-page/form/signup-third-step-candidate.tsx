@@ -3,7 +3,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
-import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
+import { SignupNavigationButtons } from "@/app/signup-page/commons/signup-navigation-buttons.tsx"
 
 import Dropzone from "@/components/ui/dropzone.tsx"
 import { ImageUploader } from "@/components/ui/image-uploader.tsx"

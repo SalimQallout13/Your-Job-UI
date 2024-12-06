@@ -1,10 +1,29 @@
-import React, { useCallback, useState, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
-import { cn } from "@/lib/utils/utils.ts";
-import { Button } from "@/components/ui/button.tsx";
-import { Trash2 } from "lucide-react";
+import React, { useCallback, useState, useEffect } from "react"
+import { useDropzone } from "react-dropzone"
+import { cn } from "@/lib/utils/utils.ts"
+import { Button } from "@/components/ui/button.tsx"
+import { Trash2 } from "lucide-react"
+import { cva, VariantProps } from "class-variance-authority"
 
-interface ImageUploaderProps {
+
+// Définir les variantes pour les tailles
+const previewSizeVariants = cva("overflow-hidden rounded-full", {
+	variants: {
+		size: {
+			sm: "h-8 w-8",  // 32px
+			md: "w-14 h-14", // 56px
+			lg: "w-20 h-20", // 80px
+			xl: "w-48 h-48" // 200px
+		}
+	},
+	defaultVariants: {
+		size: "md" // Taille par défaut
+	}
+})
+
+export type PreviewSizeProps = VariantProps<typeof previewSizeVariants>;
+
+interface ImageUploaderProps extends PreviewSizeProps {
 	accept: string;
 	maxSizeInBytes: number;
 	value?: File | null; // Ajout de `value`
@@ -20,89 +39,116 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 																															onImageChange,
 																															uploadButton,
 																															isFullWidth = false,
+																															size = "md"
 																														}) => {
-	const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+	const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null)
 
-	// Synchroniser `value` externe avec l'état interne
+	// Synchroniser `value` (fichier ou URL) avec l'état interne
 	useEffect(() => {
-		if (value) {
-			const fileReader = new FileReader();
+		if (typeof value === "string") {
+			// Si c'est une URL, utilisez-la directement
+			setImagePreviewUrl(value)
+		} else if (value instanceof File) {
+			// Si c'est un fichier, lisez-le pour générer une URL d'aperçu
+			const fileReader = new FileReader()
 			fileReader.onloadend = () => {
-				setImagePreviewUrl(fileReader.result as string);
-			};
-			fileReader.readAsDataURL(value);
+				setImagePreviewUrl(fileReader.result as string)
+			}
+			fileReader.readAsDataURL(value)
 		} else {
-			setImagePreviewUrl(null);
+			setImagePreviewUrl(null) // Si `value` est null, réinitialisez
 		}
-	}, [value]);
+	}, [value])
 
 	const handleFileDrop = useCallback(
 		(acceptedFiles: File[]) => {
-			const selectedFile = acceptedFiles[0];
+			const selectedFile = acceptedFiles[0]
 			if (selectedFile && selectedFile.size <= maxSizeInBytes) {
-				onImageChange(selectedFile);
+				onImageChange(selectedFile)
 
-				const fileReader = new FileReader();
+				const fileReader = new FileReader()
 				fileReader.onloadend = () => {
-					setImagePreviewUrl(fileReader.result as string);
-				};
-				fileReader.readAsDataURL(selectedFile);
+					setImagePreviewUrl(fileReader.result as string)
+				}
+				fileReader.readAsDataURL(selectedFile)
 			}
 		},
 		[maxSizeInBytes, onImageChange]
-	);
+	)
 
 	const handleImageDelete = () => {
-		setImagePreviewUrl(null);
-		onImageChange(null);
-	};
+		setImagePreviewUrl(null)
+		onImageChange(null)
+	}
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop: handleFileDrop,
 		accept: accept ? { [accept]: [] } : undefined,
 		maxSize: maxSizeInBytes,
-		multiple: false,
-	});
+		multiple: false
+	})
 
 	return (
 		<div className="flex items-center gap-4">
-			<div
-				{...getRootProps()}
-				className={cn(
-					"cursor-pointer transition-colors rounded-full",
-					isDragActive && "bg-purple/5",
-					isFullWidth && "w-full"
-				)}
-			>
-				<input {...getInputProps()} />
-				{imagePreviewUrl ? (
-					<PreviewImage src={imagePreviewUrl} onDelete={handleImageDelete} />
-				) : (
-					uploadButton
-				)}
-			</div>
+			{imagePreviewUrl ? (
+				<PreviewImage size={size} src={imagePreviewUrl} onDelete={handleImageDelete} getRootProps={getRootProps}
+											getInputProps={getInputProps} isDragActive={isDragActive} isFullWidth={isFullWidth} />
+			) : (
+				<div
+					{...getRootProps()}
+					className={cn(
+						"cursor-pointer transition-colors rounded-full",
+						isDragActive && "bg-purple/5",
+						isFullWidth && "w-full"
+					)}
+				>
+					<input {...getInputProps()} />
+					{uploadButton}
+				</div>
+			)}
 		</div>
-	);
-};
-
-interface PreviewImageProps {
-	src: string;
-	onDelete: () => void;
+	)
 }
 
-const PreviewImage = ({ src, onDelete }: PreviewImageProps) => (
-	<div className="flex items-center gap-4">
-		<div className="size-14 overflow-hidden rounded-full">
-			<img src={src} alt="Aperçu" className="size-full object-cover" />
+interface PreviewImageProps extends PreviewSizeProps {
+	src: string;
+	onDelete: () => void;
+	getRootProps: () => Record<string, unknown>; // Ajouter getRootProps
+	getInputProps: () => Record<string, unknown>; // Ajouter getInputProps
+	isDragActive: boolean;
+	isFullWidth?: boolean;
+}
+
+const PreviewImage = ({
+												src,
+												onDelete,
+												size,
+												getRootProps,
+												getInputProps,
+												isDragActive,
+												isFullWidth = false
+											}: PreviewImageProps) => (
+	<>
+		<div
+			{...getRootProps()}
+			className={cn(
+				"cursor-pointer transition-colors rounded-full",
+				isDragActive && "bg-purple/5",
+				isFullWidth && "w-full"
+			)}
+		>
+			<input {...getInputProps()} />
+			<div className={previewSizeVariants({ size })}>
+				<img src={src} alt="Aperçu" className="w-full h-full object-cover" />
+			</div>
 		</div>
 		<Button
 			type="button"
 			variant="outline"
 			className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700"
-			onClick={onDelete}
-		>
+			onClick={onDelete}>
 			<Trash2 className="size-4" />
 			Supprimer
 		</Button>
-	</div>
-);
+	</>
+)

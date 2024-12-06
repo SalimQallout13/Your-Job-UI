@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button.tsx"
 import { Link } from "react-router-dom"
 import { ROUTES } from "@/lib/configs/routes.ts"
 import { Logo } from "@/components/commons/logo.tsx"
+import { useSigninContext } from "@/lib/context/signin-context.tsx"
 
 export const SignupSuccessStep = () => {
+	const { closeLoginDialog } = useSigninContext()
+
 	return (
 		<>
-			<Icons.signUpSuccessValid className="mx-auto size-16 xl:mx-0"/>
+			<Icons.signUpSuccessValid className="mx-auto size-16 xl:mx-0" />
 			<Logo />
 			<div className="pt-4 text-center xl:text-left">
 				<h2 className="mb-6 text-3xl font-semibold text-black-primary">
@@ -18,10 +21,10 @@ export const SignupSuccessStep = () => {
 				</p>
 			</div>
 			<Button variant="gradient" size="lg" asChild className="mx-auto h-12 w-fit xl:mx-0">
-				<Link to={ROUTES.PROFILE_PATH} className="flex items-center gap-3">
+				<Link to={ROUTES.PROFILE_PATH} onClick={closeLoginDialog} className="flex items-center gap-3">
 					Aller au tableau de bord
 				</Link>
 			</Button>
 		</>
-	);
-};
+	)
+}

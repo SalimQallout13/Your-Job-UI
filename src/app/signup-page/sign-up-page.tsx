@@ -1,12 +1,12 @@
 import { SignupPageProvider, useSignupPageContext } from "@/lib/context/signup-context"
 import { cn } from "@/lib/utils/utils"
-import { SignupThirdSTepCandidate } from "@/components/pages/signup-page/form/signup-third-step-candidate.tsx"
-import { SignupThirdStepEmployeur } from "@/components/pages/signup-page/form/signup-third-step-employeur.tsx"
-import { SignupImageSection } from "@/components/pages/signup-page/commons/signup-image-section.tsx"
+import { SignupThirdSTepCandidate } from "@/app/signup-page/form/signup-third-step-candidate.tsx"
+import { SignupThirdStepEmployeur } from "@/app/signup-page/form/signup-third-step-employeur.tsx"
+import { SignupImageSection } from "@/app/signup-page/commons/signup-image-section.tsx"
 import { Logo } from "@/components/commons/logo.tsx"
-import { SignupSecondStep } from "@/components/pages/signup-page/form/signup-second-step.tsx"
-import { SignupSuccessStep } from "@/components/pages/signup-page/form/signup-success-step.tsx"
-import { SignupFirstStep } from "@/components/pages/signup-page/form/signup-first-step.tsx"
+import { SignupSecondStep } from "@/app/signup-page/form/signup-second-step.tsx"
+import { SignupSuccessStep } from "@/app/signup-page/form/signup-success-step.tsx"
+import { SignupFirstStep } from "@/app/signup-page/form/signup-first-step.tsx"
 import { Roles } from "@/lib/enums/Roles.ts"
 
 const SignupPageContent = () => {

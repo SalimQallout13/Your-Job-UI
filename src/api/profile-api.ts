@@ -1,15 +1,21 @@
 import { UserData } from "@/lib/interfaces/userData.ts"
-import {
-	SignupSecondStepSchema,
-	SignupThirdStepCandidateSchema
-} from "@/lib/schemas-validation-form/signupValidation.ts"
+import { SignupThirdStepCandidateSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { ApiResponse } from "@/lib/types/api/ApiResponse.ts"
 import { axiosInstance, handleAxiosError } from "@/api/axios-instance.ts"
 import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
+import { UpdateProfileSchema } from "@/lib/schemas-validation-form/updateProfile.ts"
 
-export const updateProfile = async (targetId: UserData["_id"], formData: SignupSecondStepSchema): Promise<ApiResponse<UserData>> => {
+export const updateProfile = async (targetId: UserData["_id"], formData: UpdateProfileSchema): Promise<ApiResponse<UserData>> => {
 	try {
-		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_USER + targetId, formData)
+		const fileFormData = new FormData()
+		if (formData.photo) fileFormData.append("photo", formData.photo)
+		fileFormData.append("prenom", formData.prenom)
+		fileFormData.append("nom", formData.nom)
+		fileFormData.append("telephone", formData.telephone)
+		fileFormData.append("email", formData.email)
+		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_USER + targetId, fileFormData, {
+			headers: { "Content-Type": "multipart/form-data" }
+		})
 		return { status: "success", data: response.data }
 	} catch (error) {
 		return handleAxiosError<UserData>(error)

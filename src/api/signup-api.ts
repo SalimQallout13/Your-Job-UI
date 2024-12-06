@@ -48,7 +48,6 @@ export const checkPhone = async (phone: string): Promise<CheckPhoneResponse> => 
 	}
 }
 
-
 export const signup = async (formData: SignupFormData): Promise<ApiResponse<UserData>> => {
 	// Vérification des données requises
 	if (!formData.secondStepData || !formData.thirdStepData || !formData.firstStepData?.userRole) {
@@ -62,7 +61,6 @@ export const signup = async (formData: SignupFormData): Promise<ApiResponse<User
 
 		// Création de l'objet FormData pour les fichiers
 		const fileFormData = new FormData()
-		if (formData.secondStepData.photo) fileFormData.append("photo", formData.secondStepData.photo)
 		fileFormData.append("email", formData.secondStepData.email)
 		fileFormData.append("password", formData.secondStepData.password)
 		fileFormData.append("nom", formData.secondStepData.nom)
@@ -74,15 +72,14 @@ export const signup = async (formData: SignupFormData): Promise<ApiResponse<User
 		fileFormData.append("adresse", formData.thirdStepData.adresse)
 
 		if (formData.firstStepData.userRole == Roles.Candidat && isCandidateData(formData.thirdStepData)) {
-			// Nous sommes dans le contexte d'un candidat
+			if (formData.thirdStepData.photo) fileFormData.append("photo", formData.thirdStepData.photo)
 			if (formData.thirdStepData.currentPoste) fileFormData.append("currentPoste", formData.thirdStepData.currentPoste)
 			if (formData.thirdStepData.cv) fileFormData.append("cv", formData.thirdStepData.cv)
 			if (formData.thirdStepData.lettreMotivation) fileFormData.append("lettreMotivation", formData.thirdStepData.lettreMotivation)
 		} else if (formData.firstStepData.userRole == Roles.Entreprise && !isCandidateData(formData.thirdStepData)) {
-			// Nous sommes dans le contexte d'un employeur
+			if (formData.thirdStepData.photo) fileFormData.append("logo", formData.thirdStepData.photo)
 			fileFormData.append("companyName", formData.thirdStepData.companyName)
 			fileFormData.append("secteurActivite", formData.thirdStepData.secteurActivite)
-			if (formData.thirdStepData.logo) fileFormData.append("logo", formData.thirdStepData.logo)
 			fileFormData.append("employeCount", formData.thirdStepData.employeCount.toString())
 			fileFormData.append("contactPoste", formData.thirdStepData.contactPoste)
 

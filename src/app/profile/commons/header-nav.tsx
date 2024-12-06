@@ -1,4 +1,4 @@
-import Navbar from "@/components/pages/home-page/sections/navbar.tsx"
+import Navbar from "@/app/home-page/sections/navbar.tsx"
 import { NavLink } from "react-router-dom"
 import { useSigninContext } from "@/lib/context/signin-context.tsx"
 

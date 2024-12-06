@@ -1,13 +1,13 @@
 import { useRoutes } from "react-router-dom"
 import { TailwindIndicator } from "@/components/others/tailwind-indicator.tsx"
 import { useDisableIosTextFieldZoom } from "@/lib/hooks/use-disable-ios-text-field-zoom.ts" // Import du nouveau hook
-import NotFoundPage from "@/components/pages/not-found-page/not-found-page.tsx"
+import NotFoundPage from "@/app/not-found-page/not-found-page.tsx"
 import { Toaster } from "@/components/ui/toaster.tsx"
 import "typeface-inter"
 import React from "react"
-import HomePage from "@/components/pages/home-page/home-page.tsx"
-import ProfilePage from "@/components/pages/profile/profile-page.tsx"
-import SignUpPage from "./components/pages/signup-page/sign-up-page"
+import HomePage from "@/app/home-page/home-page.tsx"
+import ProfilePage from "@/app/profile/profile-page.tsx"
+import SignUpPage from "@/app/signup-page/sign-up-page"
 import "@/lib/schemas-validation-form/zodConfig";
 
 const routes = [

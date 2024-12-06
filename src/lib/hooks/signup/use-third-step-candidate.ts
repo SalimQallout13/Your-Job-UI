@@ -2,8 +2,7 @@ import { SignupFormData, useSignupPageContext } from "@/lib/context/signup-conte
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx"
 import { useForm } from "react-hook-form"
 import {
-	completeSignupCandidateSchema,
-	CompleteSignupCandidateSchema,
+	SignupThirdStepCandidateSchema, signupThirdStepCandidateSchema
 } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
@@ -17,19 +16,20 @@ export const useThirdStepCandidate = ({ updateFormData }: {
 	const { isSubmitting, setIsSubmitting } = useNavigationContext()
 	const { setUserData } = useSessionContext()
 
-	const signupThirdStepDataCandidat = useForm<CompleteSignupCandidateSchema>({
-		resolver: zodResolver(completeSignupCandidateSchema),
+	const signupThirdStepDataCandidat = useForm<SignupThirdStepCandidateSchema>({
+		resolver: zodResolver(signupThirdStepCandidateSchema),
 		defaultValues: {
+			photo: undefined,
 			currentPoste: "",
 			ville: "",
 			codePostal: "",
 			adresse: "",
-			photo: undefined,
 			cv: undefined,
 			lettreMotivation: undefined
 		}
 	})
-	const submitSignInForm = async (data: CompleteSignupCandidateSchema) => {
+	const submitSignInForm = async (data: SignupThirdStepCandidateSchema) => {
+		console.log(formData)
 		if (!formData.secondStepData) {
 			throw new Error("Données du formulaire incomplètes")
 		}

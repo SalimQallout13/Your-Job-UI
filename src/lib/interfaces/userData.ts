@@ -12,7 +12,6 @@ export interface CandidatProfile {
 export interface RecruteurProfile {
 	_id: string;
 	companyName: string;
-	logo?: string;
 	secteurActivite?: string; // ObjectId, généralement une chaîne
 	contactPoste?: string;
 	employeCount?: number;

@@ -27,19 +27,29 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 		setUserData((prev) => (prev ? { ...prev, ...updates } : null))
 	}
 
-	const isCandidatProfile = userData?.profileModel === "CandidatProfile";
+	const isCandidatProfile = userData?.profileModel === "CandidatProfile"
 
-	const currentPoste = isCandidatProfile ? (userData?.profile as CandidatProfile)?.currentPoste : undefined;
+	const currentPoste = isCandidatProfile ? (userData?.profile as CandidatProfile)?.currentPoste : undefined
 
 	const convertToFile = async (fileName: string | undefined): Promise<File | null> => {
 		if (!fileName) return null // Si aucune photo n'est présente
 		try {
-			const response = await fetch(`${import.meta.env.VITE_API_URL.replace("/api", "/uploads")}/${fileName}`)
+			const imageUrl = `${import.meta.env.VITE_API_URL.replace("/api", "/uploads")}/${fileName}`
+			const response = await fetch(imageUrl)
+
+			if (!response.ok) {
+				throw new Error(`Erreur réseau: ${response.status} ${response.statusText}`)
+			}
+
 			const blob = await response.blob()
+			if (blob.size === 0) {
+				throw new Error("L'image récupérée est vide.")
+			}
+
 			return new File([blob], fileName, { type: blob.type })
 		} catch (error) {
 			console.error("Erreur lors de la conversion de l'URL en File:", error)
-			return null // Retourne undefined en cas d'échec
+			return null
 		}
 	}
 

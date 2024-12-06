@@ -4,7 +4,7 @@ import { signupSecondStepSchema, SignupSecondStepSchema } from "@/lib/schemas-va
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form.tsx"
 import { Input } from "@/components/ui/input.tsx"
-import { SignupNavigationButtons } from "@/components/pages/signup-page/commons/signup-navigation-buttons.tsx"
+import { SignupNavigationButtons } from "@/app/signup-page/commons/signup-navigation-buttons.tsx"
 import { SignUpHeader } from "@/components/commons/sign-up-header.tsx"
 import { checkEmail, checkPhone } from "@/api/signup-api.ts"
 import { toast } from "@/lib/hooks/use-toast.tsx"

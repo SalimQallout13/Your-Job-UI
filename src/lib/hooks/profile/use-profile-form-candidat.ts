@@ -23,6 +23,7 @@ export const useProfileFormCandidat = () => {
 			const defaultCV = await convertToFile(cv)
 			const defaultLettreMotivation = await convertToFile(lettreMotivation)
 			return {
+				photo: await convertToFile(userData?.photo),
 				currentPoste: currentPoste,
 				ville: userData?.ville || "",
 				codePostal: userData?.codePostal || "",
