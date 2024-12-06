@@ -8,31 +8,34 @@ import {
 	signupThirdStepCandidateSchema
 } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { useSessionContext } from "@/lib/context/session-context.tsx"
-import { CandidatProfile } from "@/lib/interfaces/userData.ts"
+import { useEffect } from "react"
 
 export const useProfileFormCandidat = () => {
 
 	const { isSubmitting, errorMessage, setIsSubmitting } = useNavigationContext()
-	const { userData, updateUserData, currentPoste, isCandidatProfile, convertToFile } = useSessionContext()
-	const cv = isCandidatProfile ? (userData?.profile as CandidatProfile)?.cv : undefined
-	const lettreMotivation = isCandidatProfile ? (userData?.profile as CandidatProfile)?.lettreMotivation : undefined
+	const { userData, updateUserData, candidatData, convertToFile } = useSessionContext()
 
 	const profileFormSecondSchema = useForm<SignupThirdStepCandidateSchema>({
 		resolver: zodResolver(signupThirdStepCandidateSchema),
-		defaultValues: async () => {
-			const defaultCV = await convertToFile(cv)
-			const defaultLettreMotivation = await convertToFile(lettreMotivation)
-			return {
-				photo: await convertToFile(userData?.photo),
-				currentPoste: currentPoste,
-				ville: userData?.ville || "",
-				codePostal: userData?.codePostal || "",
-				adresse: userData?.adresse || "",
-				cv: defaultCV,
-				lettreMotivation: defaultLettreMotivation
+		defaultValues: {}
+	})
+
+	useEffect(() => {
+		const loadDefaults = async () => {
+			if (userData) {
+				const defaultValues = {
+					currentPoste: candidatData.currentPoste,
+					ville: userData?.ville || "",
+					codePostal: userData?.codePostal || "",
+					adresse: userData?.adresse || "",
+					cv: await convertToFile(candidatData.cv),
+					lettreMotivation: await convertToFile(candidatData.lettreMotivation)
+				}
+				profileFormSecondSchema.reset(defaultValues)
 			}
 		}
-	})
+		loadDefaults()
+	}, [userData, convertToFile, profileFormSecondSchema, candidatData])
 
 	const submitProfileFormSecond = async (data: SignupThirdStepCandidateSchema) => {
 		try {
@@ -59,6 +62,6 @@ export const useProfileFormCandidat = () => {
 		profileFormSecondSchema,
 		isSubmitting,
 		errorMessage,
-		submitProfileFormSecond,
+		submitProfileFormSecond
 	}
 }

@@ -25,7 +25,6 @@ export type SignupSecondStepSchema = z.infer<typeof signupSecondStepSchema>;
 
 
 export const signupThirdStepCandidateSchema = z.object({
-	photo: fileSchema("image/", 5 * 1024 * 1024),
 	currentPoste: z.string().optional(), // Champ facultatif
 	...baseLocalisationSchema,
 	cv: fileSchema("application/pdf", 10 * 1024 * 1024, true),

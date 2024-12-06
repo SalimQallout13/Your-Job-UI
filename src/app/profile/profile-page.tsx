@@ -7,7 +7,7 @@ import Avatar from "@/components/ui/avatar.tsx"
 import { useSessionContext } from "@/lib/context/session-context.tsx"
 
 const ProfilePage: React.FC = () => {
-	const { userData, currentPoste } = useSessionContext()
+	const { userData, candidatData } = useSessionContext()
 
 	return (
 		<>
@@ -24,7 +24,8 @@ const ProfilePage: React.FC = () => {
 						<div className="basis-1/2 text-left">
 							<p
 								className="font-poppins text-[24px] font-bold leading-[39px] tracking-[-0.06em]">{userData?.nom + " " + userData?.prenom}</p>
-							<p className="font-inter text-[20px] font-bold leading-[24.2px] tracking-[-0.06em]">{currentPoste}</p>
+							<p
+								className="font-inter text-[20px] font-bold leading-[24.2px] tracking-[-0.06em]">{candidatData.currentPoste}</p>
 							<p
 								className="font-inter text-[12px] font-normal leading-[14.52px] tracking-[-0.06em] text-gray-600">{userData?.ville}</p>
 						</div>

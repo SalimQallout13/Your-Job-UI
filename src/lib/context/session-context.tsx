@@ -7,7 +7,11 @@ interface SessionContextType {
 	setUserData: (data: UserData | null) => void;
 	updateUserData: (updates: Partial<UserData>) => void;
 	photoProfile?: string;
-	currentPoste?: string;
+	candidatData: {
+		currentPoste?: string;
+		cv?: string;
+		lettreMotivation?: string;
+	};
 	isCandidatProfile?: boolean;
 	convertToFile: (fileName: string | undefined) => Promise<File | null>;
 }
@@ -29,8 +33,11 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
 	const isCandidatProfile = userData?.profileModel === "CandidatProfile"
 
-	const currentPoste = isCandidatProfile ? (userData?.profile as CandidatProfile)?.currentPoste : undefined
-
+	const candidatData = {
+		currentPoste: isCandidatProfile ? (userData?.profile as CandidatProfile)?.currentPoste : undefined,
+		cv: isCandidatProfile ? (userData?.profile as CandidatProfile)?.cv : undefined,
+		lettreMotivation: isCandidatProfile ? (userData?.profile as CandidatProfile)?.lettreMotivation : undefined,
+	}
 	const convertToFile = async (fileName: string | undefined): Promise<File | null> => {
 		if (!fileName) return null // Si aucune photo n'est présente
 		try {
@@ -53,7 +60,6 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 		}
 	}
 
-
 	// Synchronisation des données utilisateur avec localStorage
 	useEffect(() => {
 		console.log("userData", userData)
@@ -70,7 +76,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 				userData,
 				setUserData,
 				updateUserData,
-				currentPoste,
+				candidatData,
 				isCandidatProfile,
 				convertToFile
 			}}
