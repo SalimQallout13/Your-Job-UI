@@ -12,9 +12,15 @@ const ProfileFormCandidat: React.FC = () => {
 		profileFormSecondSchema,
 		isSubmitting,
 		errorMessage,
-		submitProfileFormSecond
+		submitProfileFormSecond,
+		isLoading
 	} = useProfileFormCandidat()
 
+
+	if (isLoading) {
+		// Affichez un indicateur de chargement tant que les valeurs par défaut ne sont pas prêtes
+		return <div>Chargement...</div>
+	}
 
 	return (
 		<>
@@ -37,7 +43,7 @@ const ProfileFormCandidat: React.FC = () => {
 						)}
 					/>*/}
 
-					<div className="grid grid-cols-1 gap-6 md:grid-cols-2 mb-4">
+					<div className="mb-4 grid grid-cols-1 gap-6 md:grid-cols-2">
 						<FormField
 							control={profileFormSecondSchema.control}
 							name="currentPoste"
@@ -101,6 +107,7 @@ const ProfileFormCandidat: React.FC = () => {
 										<Dropzone
 											accept="application/pdf"
 											maxSize={10 * 1024 * 1024}
+											defaultFile={field.value}
 											onFileChange={(file) => {
 												field.onChange(file)
 											}}
@@ -121,6 +128,7 @@ const ProfileFormCandidat: React.FC = () => {
 										<Dropzone
 											accept="application/pdf"
 											maxSize={10 * 1024 * 1024}
+											defaultFile={field.value}
 											onFileChange={(file) => {
 												field.onChange(file)
 											}}

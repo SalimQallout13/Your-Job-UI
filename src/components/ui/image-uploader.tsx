@@ -10,10 +10,10 @@ import { cva, VariantProps } from "class-variance-authority"
 const previewSizeVariants = cva("overflow-hidden rounded-full", {
 	variants: {
 		size: {
-			sm: "h-8 w-8",  // 32px
-			md: "w-14 h-14", // 56px
-			lg: "w-20 h-20", // 80px
-			xl: "w-48 h-48" // 200px
+			sm: "size-8",  // 32px
+			md: "size-14", // 56px
+			lg: "size-20", // 80px
+			xl: "size-48" // 200px
 		}
 	},
 	defaultVariants: {
@@ -139,7 +139,7 @@ const PreviewImage = ({
 		>
 			<input {...getInputProps()} />
 			<div className={previewSizeVariants({ size })}>
-				<img src={src} alt="Aperçu" className="w-full h-full object-cover" />
+				<img src={src} alt="Aperçu" className="size-full object-cover" />
 			</div>
 		</div>
 		<Button

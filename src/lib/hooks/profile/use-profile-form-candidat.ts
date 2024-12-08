@@ -3,20 +3,20 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updateProfileCandidat } from "@/api/profile-api.ts"
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx"
-import {
-	SignupThirdStepCandidateSchema,
-	signupThirdStepCandidateSchema
-} from "@/lib/schemas-validation-form/signupValidation.ts"
 import { useSessionContext } from "@/lib/context/session-context.tsx"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { baseProfileCandidatSchema, BaseProfileCandidatSchema } from "@/lib/schemas-validation-form/userValidation.ts"
 
 export const useProfileFormCandidat = () => {
 
 	const { isSubmitting, errorMessage, setIsSubmitting } = useNavigationContext()
 	const { userData, updateUserData, candidatData, convertToFile } = useSessionContext()
 
-	const profileFormSecondSchema = useForm<SignupThirdStepCandidateSchema>({
-		resolver: zodResolver(signupThirdStepCandidateSchema),
+	const [isLoading, setIsLoading] = useState(true)
+
+
+	const profileFormSecondSchema = useForm<BaseProfileCandidatSchema>({
+		resolver: zodResolver(baseProfileCandidatSchema),
 		defaultValues: {}
 	})
 
@@ -31,13 +31,15 @@ export const useProfileFormCandidat = () => {
 					cv: await convertToFile(candidatData.cv),
 					lettreMotivation: await convertToFile(candidatData.lettreMotivation)
 				}
+				console.log("defaultValues", defaultValues)
 				profileFormSecondSchema.reset(defaultValues)
 			}
+			setIsLoading(false) // Indique que le chargement est terminé
 		}
 		loadDefaults()
 	}, [userData, convertToFile, profileFormSecondSchema, candidatData])
 
-	const submitProfileFormSecond = async (data: SignupThirdStepCandidateSchema) => {
+	const submitProfileFormSecond = async (data: BaseProfileCandidatSchema) => {
 		try {
 			setIsSubmitting(true)
 			if (userData) {
@@ -62,6 +64,7 @@ export const useProfileFormCandidat = () => {
 		profileFormSecondSchema,
 		isSubmitting,
 		errorMessage,
-		submitProfileFormSecond
+		submitProfileFormSecond,
+		isLoading
 	}
 }

@@ -44,7 +44,7 @@ const ProfileForm: React.FC = () => {
 				/>
 				</div>
 				<h2 className="mb-6 text-2xl font-bold">Informations de contact</h2>
-				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 mb-4">
+				<div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
 					<FormField
 						control={profileFormOneSchema.control}
 						name="prenom"

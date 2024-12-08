@@ -5,6 +5,7 @@ import HeaderTitle from "@/app/profile/commons/header-title.tsx"
 import Title from "@/components/ui/title.tsx"
 import Avatar from "@/components/ui/avatar.tsx"
 import { useSessionContext } from "@/lib/context/session-context.tsx"
+import ProfileFormCandidat from "@/app/profile/profile-form-candidat.tsx"
 
 const ProfilePage: React.FC = () => {
 	const { userData, candidatData } = useSessionContext()
@@ -15,7 +16,7 @@ const ProfilePage: React.FC = () => {
 			<main className="grid grid-cols-1 gap-8 xl:grid-cols-3">
 				<HeaderTitle>Profil</HeaderTitle>
 				{/* Left Column - 25% */}
-				<section className="hidden xl:block col-span-1 ps-24">
+				<section className="col-span-1 hidden ps-24 xl:block">
 					<Title>Vos informations</Title>
 					<div className="mt-4 flex flex-row py-8">
 						<div className="basis-1/4">
@@ -33,8 +34,9 @@ const ProfilePage: React.FC = () => {
 				</section>
 
 				{/* Right Column - 75% */}
-				<section className="col-span-2 md:col-span-3 p-6">
+				<section className="col-span-2 p-6 md:col-span-3">
 					<ProfileForm />
+					<ProfileFormCandidat/>
 				</section>
 			</main>
 

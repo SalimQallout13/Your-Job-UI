@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { updateProfileSchema, UpdateProfileSchema } from "@/lib/schemas-validation-form/updateProfile.ts";
+import { updateUserInfoSchema, UpdateProfileSchema } from "@/lib/schemas-validation-form/updateProfile.ts";
 import { useNavigationContext } from "@/lib/context/navigation-context.tsx";
 import { useSessionContext } from "@/lib/context/session-context.tsx";
-import { updateProfile } from "@/api/profile-api.ts";
+import { updateUserInfo } from "@/api/profile-api.ts";
 import { showErrorToast, showToast } from "@/lib/hooks/use-toast.tsx";
 
 export const useProfileForm = () => {
@@ -15,7 +15,7 @@ export const useProfileForm = () => {
 
 	// Initialisez le formulaire avec React Hook Form
 	const profileFormOneSchema = useForm<UpdateProfileSchema>({
-		resolver: zodResolver(updateProfileSchema),
+		resolver: zodResolver(updateUserInfoSchema),
 		defaultValues: {}, // Par défaut vide
 	});
 
@@ -42,7 +42,7 @@ export const useProfileForm = () => {
 		try {
 			setIsSubmitting(true);
 			if (userData) {
-				const response = await updateProfile(userData._id, data);
+				const response = await updateUserInfo(userData._id, data);
 				if (response.status === "success") {
 					showToast("Succès", "Profil mis à jour", false);
 					updateUserData(response.data);

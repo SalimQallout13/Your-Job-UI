@@ -1,29 +1,39 @@
-import React, { useCallback, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
-import { Upload, X } from 'lucide-react';
-import Progress from '@/components/ui/progress';
+import React, { useCallback, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Upload, X } from "lucide-react";
+import Progress from "@/components/ui/progress";
 import { cn } from "@/lib/utils/utils";
-import { Icons } from './icons';
+import { Icons } from "./icons";
 
 interface DropzoneProps {
 	accept: string;
 	maxSize: number;
 	onFileChange: (file: File | null) => void;
+	defaultFile?: File | null; // Fichier par défaut optionnel
 	children?: React.ReactNode;
 }
 
 const Dropzone: React.FC<DropzoneProps> = ({
 																						 accept,
 																						 maxSize,
-																						 onFileChange
+																						 onFileChange,
+																						 defaultFile = null,
 																					 }) => {
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [selectedFile, setSelectedFile] = useState<File | null>(defaultFile);
 	const [uploadProgress, setUploadProgress] = useState(0);
 	const [isUploading, setIsUploading] = useState(false);
 	const [uploadTimeRemaining, setUploadTimeRemaining] = useState(1);
 
+	// Charger le fichier par défaut au moment du montage
+	useEffect(() => {
+		if (defaultFile) {
+			setSelectedFile(defaultFile);
+			onFileChange(defaultFile);
+		}
+	}, [defaultFile, onFileChange]);
+
 	// Simulation de l'upload
-	React.useEffect(() => {
+	useEffect(() => {
 		const UPLOAD_DURATION_MS = 1000; // 1 seconde
 		const PROGRESS_INTERVAL_MS = 40; // 40ms entre chaque mise à jour
 		const PROGRESS_INCREMENT = 4; // 4% par mise à jour
@@ -37,7 +47,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
 			setUploadTimeRemaining(1);
 
 			progressTimer = setInterval(() => {
-				setUploadProgress(prev => {
+				setUploadProgress((prev) => {
 					if (prev >= 100) {
 						clearInterval(progressTimer);
 						setIsUploading(false);
@@ -48,7 +58,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
 			}, PROGRESS_INTERVAL_MS);
 
 			countdownTimer = setInterval(() => {
-				setUploadTimeRemaining(prev => Math.max(0, prev - 1));
+				setUploadTimeRemaining((prev) => Math.max(0, prev - 1));
 			}, UPLOAD_DURATION_MS);
 		}
 
@@ -78,7 +88,7 @@ const Dropzone: React.FC<DropzoneProps> = ({
 		onDrop: handleDrop,
 		accept: accept ? { [accept]: [] } : undefined,
 		maxSize,
-		multiple: false
+		multiple: false,
 	});
 
 	return (
@@ -120,7 +130,6 @@ const Dropzone: React.FC<DropzoneProps> = ({
 
 export default Dropzone;
 
-
 interface FileCardProps {
 	file: File;
 	onDelete: () => void;
@@ -134,7 +143,7 @@ const FileCard: React.FC<FileCardProps> = ({
 																						 onDelete,
 																						 uploadProgress,
 																						 uploadTimeRemaining,
-																						 isUploading
+																						 isUploading,
 																					 }) => {
 	const fileSize = (file.size / 1024).toFixed(0);
 
@@ -175,4 +184,3 @@ const FileCard: React.FC<FileCardProps> = ({
 		</div>
 	);
 };
-

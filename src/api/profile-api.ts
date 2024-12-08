@@ -1,11 +1,12 @@
-import { UserData } from "@/lib/interfaces/userData.ts"
-import { SignupThirdStepCandidateSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { CandidatProfile, UserData } from "@/lib/interfaces/userData.ts"
+import {SignupThirdStepEmployeurSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
 import { ApiResponse } from "@/lib/types/api/ApiResponse.ts"
 import { axiosInstance, handleAxiosError } from "@/api/axios-instance.ts"
 import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
 import { UpdateProfileSchema } from "@/lib/schemas-validation-form/updateProfile.ts"
+import { BaseProfileCandidatSchema } from "@/lib/schemas-validation-form/userValidation.ts"
 
-export const updateProfile = async (targetId: UserData["_id"], formData: UpdateProfileSchema): Promise<ApiResponse<UserData>> => {
+export const updateUserInfo = async (targetId: UserData["_id"], formData: UpdateProfileSchema): Promise<ApiResponse<UserData>> => {
 	try {
 		const fileFormData = new FormData()
 		if (formData.photo) fileFormData.append("photo", formData.photo)
@@ -22,18 +23,27 @@ export const updateProfile = async (targetId: UserData["_id"], formData: UpdateP
 	}
 }
 
-export const updateProfileCandidat = async (targetId: UserData["_id"], formData: SignupThirdStepCandidateSchema): Promise<ApiResponse<UserData>> => {
+export const updateProfileCandidat = async (targetId: UserData["_id"], formData: BaseProfileCandidatSchema): Promise<ApiResponse<CandidatProfile>> => {
 	try {
-		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_PROFILE_CANDIDAT + targetId, formData)
+		const fileFormData = new FormData()
+		if (formData.currentPoste) fileFormData.append("currentPoste", formData.currentPoste)
+		fileFormData.append("ville", formData.ville)
+		fileFormData.append("codePostal", formData.codePostal)
+		fileFormData.append("adresse", formData.adresse)
+		if (formData.cv) fileFormData.append("cv", formData.cv)
+		if (formData.lettreMotivation) fileFormData.append("lettreMotivation", formData.lettreMotivation)
+		const response = await axiosInstance.put<CandidatProfile>(ROUTES_BACK.UPDATE_PROFILE_CANDIDAT + targetId, formData, {
+			headers: { "Content-Type": "multipart/form-data" }
+		})
 		return { status: "success", data: response.data }
 	} catch (error) {
-		return handleAxiosError<UserData>(error)
+		return handleAxiosError<CandidatProfile>(error)
 	}
 }
 
-export const updatePhotoProfile = async (targetId: UserData["_id"], url: UserData["photo"]): Promise<ApiResponse<UserData>> => {
+export const updateProfileRecruteur = async (targetId: UserData["_id"], formData: SignupThirdStepEmployeurSchema): Promise<ApiResponse<UserData>> => {
 	try {
-		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_PHOTO_PROFILE + targetId, url)
+		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_PROFILE_RECRUTEUR + targetId, formData)
 		return { status: "success", data: response.data }
 	} catch (error) {
 		return handleAxiosError<UserData>(error)

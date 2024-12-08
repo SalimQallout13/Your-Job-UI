@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react"
 import { CandidatProfile, UserData } from "@/lib/interfaces/userData.ts"
+import { Roles } from "@/lib/enums/Roles.ts"
 
 // Définition du type des données fournies par le contexte
 interface SessionContextType {
@@ -31,7 +32,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 		setUserData((prev) => (prev ? { ...prev, ...updates } : null))
 	}
 
-	const isCandidatProfile = userData?.profileModel === "CandidatProfile"
+	const isCandidatProfile = userData?.role === Roles.Candidat
 
 	const candidatData = {
 		currentPoste: isCandidatProfile ? (userData?.profile as CandidatProfile)?.currentPoste : undefined,
