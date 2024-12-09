@@ -63,8 +63,7 @@ export const baseProfileCandidatSchema = z.object({
 
 export type BaseProfileCandidatSchema = z.infer<typeof baseProfileCandidatSchema>
 
-export const baseProfileEmployeurSchema = z.object({
-	...baseLocalisationSchema,
+export const specificProfileRecruteurSchema = z.object({
 	companyName: z.string()
 		.min(1, "Le nom de l'entreprise est requis")
 		.min(2, "Le nom doit contenir au moins 2 caractères")
@@ -72,14 +71,18 @@ export const baseProfileEmployeurSchema = z.object({
 	contactName: z.string()
 		.min(1, "Le nom du contact est requis")
 		.min(2, "Le nom doit contenir au moins 2 caractères")
-		.max(100, "Le nom ne peut pas dépasser 100 caractères"),
+		.max(100, "Le nom ne peut pas dépasser 100 caractères")
+})
+
+export const baseProfileRecruteurSchema = z.object({
 	contactPoste: z.string()
 		.min(1, "Le poste du contact est requis")
 		.min(2, "Le poste doit contenir au moins 2 caractères"),
 	secteurActivite: z.string()
 		.min(1, "Le secteur d'activité est requis"),
 	// il ne peut pas y avoir de chiffre négatif
-	employeCount: z.string()
-		.min(1, "Le nombre d'collaborateurs est requis")
-		.regex(/^[0-9]+$/, "Le nombre d'collaborateurs doit être un nombre entier")
+	employeCount: z.number().int().min(0, "Le nombre d'employés ne peut pas être négatif"),
+	...baseLocalisationSchema
 })
+
+export type BaseProfileRecruteurSchema = z.infer<typeof baseProfileRecruteurSchema>

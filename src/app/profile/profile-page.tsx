@@ -6,9 +6,10 @@ import Title from "@/components/ui/title.tsx"
 import Avatar from "@/components/ui/avatar.tsx"
 import { useSessionContext } from "@/lib/context/session-context.tsx"
 import ProfileFormCandidat from "@/app/profile/profile-form-candidat.tsx"
+import ProfileFormRecruteur from "@/app/profile/profile-form-recruteur.tsx"
 
 const ProfilePage: React.FC = () => {
-	const { userData, candidatData } = useSessionContext()
+	const { userData, candidatData, isCandidatProfile, isRecruteurProfile, recruteurData } = useSessionContext()
 
 	return (
 		<>
@@ -26,7 +27,7 @@ const ProfilePage: React.FC = () => {
 							<p
 								className="font-poppins text-[24px] font-bold leading-[39px] tracking-[-0.06em]">{userData?.nom + " " + userData?.prenom}</p>
 							<p
-								className="font-inter text-[20px] font-bold leading-[24.2px] tracking-[-0.06em]">{candidatData.currentPoste}</p>
+								className="font-inter text-[20px] font-bold leading-[24.2px] tracking-[-0.06em]">{isCandidatProfile ? candidatData.currentPoste : isRecruteurProfile ? recruteurData.contactPoste : undefined}</p>
 							<p
 								className="font-inter text-[12px] font-normal leading-[14.52px] tracking-[-0.06em] text-gray-600">{userData?.ville}</p>
 						</div>
@@ -36,7 +37,7 @@ const ProfilePage: React.FC = () => {
 				{/* Right Column - 75% */}
 				<section className="col-span-2 p-6 md:col-span-3">
 					<ProfileForm />
-					<ProfileFormCandidat/>
+					{isCandidatProfile ? <ProfileFormCandidat /> : isRecruteurProfile ? <ProfileFormRecruteur /> : null}
 				</section>
 			</main>
 

@@ -6,4 +6,11 @@ export const updateUserInfoSchema = z.object({
 	...baseInfoUserSchema
 })
 
+export const updateRecruteurInfoSchema = z.object({
+	...updateUserInfoSchema.shape,
+	companyName: z.string()
+})
+
 export type UpdateProfileSchema = z.infer<typeof updateUserInfoSchema>;
+
+export type UpdateRecruteurProfileSchema = z.infer<typeof updateRecruteurInfoSchema>;

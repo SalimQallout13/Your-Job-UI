@@ -39,8 +39,8 @@ export const SignupFirstStep = ({ userRole, setUserRole }: SignupFirstStepProps)
 						icon={<Icons.signupCandidat className="size-8" />}
 					/>
 					<SignupCard
-						isSelected={userRole === Roles.Entreprise}
-						onClick={() => setUserRole(Roles.Entreprise)}
+						isSelected={userRole === Roles.Recruteur}
+						onClick={() => setUserRole(Roles.Recruteur)}
 						title="Recruter des profils"
 						description="Trouvez les talents qui feront la différence."
 						icon={<Icons.signupEmployeur className="size-8" />}

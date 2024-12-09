@@ -15,7 +15,7 @@ const SignupPageContent = () => {
 	const renderThirdStep = () => {
 		if (userRole === Roles.Candidat) {
 			return <SignupThirdSTepCandidate updateFormData={updateFormData} />;
-		} else if (userRole === Roles.Entreprise) {
+		} else if (userRole === Roles.Recruteur) {
 			return <SignupThirdStepEmployeur updateFormData={updateFormData} />;
 		}
 		return null;

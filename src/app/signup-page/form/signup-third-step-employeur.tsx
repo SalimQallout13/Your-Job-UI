@@ -39,7 +39,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 			adresse: "",
 			codePostal: "",
 			secteurActivite: "",
-			employeCount: "0"
+			employeCount: 0
 		}
 	})
 
@@ -57,11 +57,7 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 					})
 				}
 			} catch (error) {
-				console.error("Erreur lors du fetch des secteurs:", error)
-				toast({
-					title: "Erreur",
-					description: "Impossible de charger les secteurs d'activité"
-				})
+				throw new Error(error instanceof Error ? error.message : "Une erreur est survenue")
 			} finally {
 				setIsLoadingSecteurActivite(false)
 			}
@@ -245,9 +241,11 @@ export const SignupThirdStepEmployeur = ({ updateFormData }: {
 							name="employeCount"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Nombre de collaborateurs (facultatif)</FormLabel>
+									<FormLabel>Nombre de collaborateurs</FormLabel>
 									<FormControl>
-										<Input type="number" className="h-12" {...field} />
+										<Input type="number" className="h-12" {...field}
+													 onChange={(e) => field.onChange(parseInt(e.target.value, 10) || 0)} // Conversion en entier
+										/>
 									</FormControl>
 									<FormMessage />
 								</FormItem>

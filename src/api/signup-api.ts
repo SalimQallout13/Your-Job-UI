@@ -76,7 +76,7 @@ export const signup = async (formData: SignupFormData): Promise<ApiResponse<User
             if (formData.thirdStepData.currentPoste) fileFormData.append("currentPoste", formData.thirdStepData.currentPoste)
             if (formData.thirdStepData.cv) fileFormData.append("cv", formData.thirdStepData.cv)
             if (formData.thirdStepData.lettreMotivation) fileFormData.append("lettreMotivation", formData.thirdStepData.lettreMotivation)
-        } else if (formData.firstStepData.userRole == Roles.Entreprise && !isCandidateData(formData.thirdStepData)) {
+        } else if (formData.firstStepData.userRole == Roles.Recruteur && !isCandidateData(formData.thirdStepData)) {
             if (formData.thirdStepData.photo) fileFormData.append("logo", formData.thirdStepData.photo)
             fileFormData.append("companyName", formData.thirdStepData.companyName)
             fileFormData.append("secteurActivite", formData.thirdStepData.secteurActivite)

@@ -1,8 +1,8 @@
 import { z } from "zod"
 import {
 	baseInfoUserSchema,
-	baseProfileCandidatSchema, baseProfileEmployeurSchema,
-	fileSchema
+	baseProfileCandidatSchema, baseProfileRecruteurSchema,
+	fileSchema, specificProfileRecruteurSchema
 } from "@/lib/schemas-validation-form/userValidation.ts"
 
 export const signupSecondStepSchema = z.object({
@@ -38,7 +38,8 @@ export type SignupThirdStepCandidateSchema = z.infer<typeof signupThirdStepCandi
 
 export const signupThirdStepEmployeur = z.object({
 	photo: fileSchema("image/", 5 * 1024 * 1024).optional(),
-	...baseProfileEmployeurSchema.shape
+	...baseProfileRecruteurSchema.shape,
+	...specificProfileRecruteurSchema.shape
 })
 
 export type SignupThirdStepEmployeurSchema = z.infer<typeof signupThirdStepEmployeur>;

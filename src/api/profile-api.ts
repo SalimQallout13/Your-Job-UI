@@ -1,10 +1,9 @@
-import { CandidatProfile, UserData } from "@/lib/interfaces/userData.ts"
-import {SignupThirdStepEmployeurSchema } from "@/lib/schemas-validation-form/signupValidation.ts"
+import { CandidatProfile, RecruteurProfile, UserData } from "@/lib/interfaces/userData.ts"
 import { ApiResponse } from "@/lib/types/api/ApiResponse.ts"
 import { axiosInstance, handleAxiosError } from "@/api/axios-instance.ts"
 import { ROUTES_BACK } from "@/lib/configs/routes-back.ts"
 import { UpdateProfileSchema } from "@/lib/schemas-validation-form/updateProfile.ts"
-import { BaseProfileCandidatSchema } from "@/lib/schemas-validation-form/userValidation.ts"
+import { BaseProfileCandidatSchema, BaseProfileRecruteurSchema } from "@/lib/schemas-validation-form/userValidation.ts"
 
 export const updateUserInfo = async (targetId: UserData["_id"], formData: UpdateProfileSchema): Promise<ApiResponse<UserData>> => {
 	try {
@@ -41,11 +40,11 @@ export const updateProfileCandidat = async (targetId: UserData["_id"], formData:
 	}
 }
 
-export const updateProfileRecruteur = async (targetId: UserData["_id"], formData: SignupThirdStepEmployeurSchema): Promise<ApiResponse<UserData>> => {
+export const updateProfileRecruteur = async (targetId: UserData["_id"], formData: BaseProfileRecruteurSchema): Promise<ApiResponse<RecruteurProfile>> => {
 	try {
-		const response = await axiosInstance.put<UserData>(ROUTES_BACK.UPDATE_PROFILE_RECRUTEUR + targetId, formData)
+		const response = await axiosInstance.put<RecruteurProfile>(ROUTES_BACK.UPDATE_PROFILE_RECRUTEUR + targetId, formData)
 		return { status: "success", data: response.data }
 	} catch (error) {
-		return handleAxiosError<UserData>(error)
+		return handleAxiosError<RecruteurProfile>(error)
 	}
 }
