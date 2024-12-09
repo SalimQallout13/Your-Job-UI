@@ -1,4 +1,4 @@
-import Navbar from "@/app/home-page/sections/navbar.tsx"
+import Navbar from "@/components/commons/navbar.tsx"
 import Hero from "./sections/hero"
 import Emplois from "@/app/home-page/sections/emplois.tsx"
 import CvAndAvis from "./sections/cv-and-avis"
